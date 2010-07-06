@@ -4,8 +4,8 @@ Created on Jun 23, 2010
 @author: leifj
 '''
 from django.contrib.auth.decorators import login_required
-from apps.invitation.forms import InvitationForm
-from apps.invitation.models import Invitation
+from coip.apps.invitation.forms import InvitationForm
+from coip.apps.invitation.models import Invitation
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 

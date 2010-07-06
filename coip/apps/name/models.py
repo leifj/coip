@@ -25,10 +25,17 @@ class Name(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True,related_name='children')
     partof = models.ForeignKey('self', blank=True, null=True,related_name='parts')
     acl = models.TextField(blank=True) # fully-qualified-name '#' rights
+    short = models.CharField(max_length=64,blank=True)
     description = models.TextField(blank=True)
     creator = models.ForeignKey(User)
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
+    
+    def shortname(self):
+        if self.short:
+            return self.short
+        else:
+            return self.__unicode__()
     
     def relative_name(self):
         if self.type:

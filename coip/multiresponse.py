@@ -2,11 +2,10 @@ import coip.mimeparse as mimeparse
 import re
 from django.conf import settings
 from django.shortcuts import render_to_response
-from django.core.exceptions import ObjectDoesNotExist
-from datetime import datetime
-from pprint import pprint
 from django.http import HttpResponse
 from django.core import serializers
+from coip.apps.userprofile.utils import user_profile
+from pprint import pprint
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -29,20 +28,7 @@ def make_response_dict(request,d={}):
  
     if request.user.is_authenticated():
         d['user'] = request.user
-        profile = None
-        try:
-            profile = request.user.profile.get();
-        except ObjectDoesNotExist:
-            profile = UserProfile()
-            d['profile'] = profile
-
-    #d['stomp_host'] = STOMP_HOST
-    #d['stomp_port'] = STOMP_PORT
-    #d['orbited_prefix'] = ORBITED_PREFIX
-    #d['announce_url'] = ANNOUNCE_URL
-    #d['date'] = timeAsrfc822(datetime.now())
-    #if DEBUG is not None:
-    #    d['debug'] = True
+        d['profile'] = user_profile(request)
 
     return d
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
+<head>
+        <link type="text/css" href="/site-media/css/flick/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.jnotify.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.tooltip.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.tagInput.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.multiselect2side.css" rel="stylesheet" />
+        <script type="text/javascript" src="/site-media/js/jquery-1.4.2.min.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery-ui-1.8.2.custom.min.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.tooltip.pack.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.gravatar.js"></script>
+        <script type="text/javascript" src="/site-media/js/md5.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.jnotify.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.cookie.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.timers.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.tagInput.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.multiselect2side.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+		<script type="text/javascript">
+		   function _i(message) {
+		   	  $('#notification').jnotifyAddMessage({
+		          text: message,
+		          permanent: false,
+		          type: 'info'
+		      });
+		   }
+		   function _e(message) {
+		   	  $('#notification').jnotifyAddMessage({
+		          text: message,
+		          permanent: true,
+		          type: 'error'
+		      });
+		   }
+		$(function() {
+		   $("input:submit, input:button, a",".button").button();
+		   $('#notification').jnotifyInizialize({
+		      oneAtTime: false,
+		      appendType: 'append'
+		   }).css({
+		      'font-size': "120%",
+		      'position': 'absolute',
+		      'marginTop': '20px',
+		      'padding': '15px',
+		      'right': '20px',
+		      'width': '250px',
+		      'z-index': '9999'
+		   });
+		   $('.tip').tooltip({showURL: false});
+		});
+		</script>
+        {% block js %}{% endblock %}
+        <style type="text/css">
+		   body{ font: 61.8% "Trebuchet MS", sans-serif; margin: 50px; width: 70% }
+		   label { display:block; }
+		   #modal-dialog { font-size: 110%; }
+		   #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
+		   #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
+		   #footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid black; margin-top: 50px; padding-top: 10px;}
+		   #footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
+		   #footer li { float: left; margin: 0 0.15em}
+		   .navlist ul { list-style: none; padding: 0; margin: 0; }
+		   .navlist li { float: left; display: inline; margin: 0 0.15em; }
+		   .description { clear: both; margin-top: 25px; padding-top: 5px; border-top: 1px solid black; }
+		   #branding{ font: 500% "Trebuchet MS", sans-serif; margin-left: 50px; margin-bottom: 20px; float: left}
+		   #linklist { float: right; margin-right: 50px; }
+		   #linklist ul{ list-style: none; padding: 0; margin: 0; }
+		   #linklist li{ float: left; margin: 0 0.15em}
+		   #linklist a{ font: 120% "Trebuchet MS", sans-serif; }
+		   a { text-decoration: none; }
+		   a:hover { text-decoration: underline; }
+		   .clear { clear: both; }
+		   #content{ }
+		   #rhs{ float: right; width: 20%; position:absolute; top: 100px; right: 300px; font-size: 150%;}
+		   #main{ font: 100% "Trebuchet MS", sans-serif; margin: 50px; width:70%}
+		   .code{font: 110% "Courier", fixed}
+		   .infopanel {font-size: 130%; width: 100%; padding: 5px; margin-bottom: 10px; }
+		   .infopanel label { display:block; }
+		   div .hidden {visibility:hidden;}
+		   div .ms2side__div {width: 300%;}
+		   option .ms2side__select {font-size: 61.8%;}
+		</style>
+</head>
+<body>
+	<div id="notification"></div>
+	<div id="header">
+	   {% if user.is_authenticated %}
+	   <div style="float: right; margin-right: 50px;" class="button"><a id="logout" href="/auth/logout/">Logout</a></div>
+	   <div id="linklist">
+	      <ul>
+	         <li><a href="/user"><span class="ui-icon ui-icon-locked" style="float: left;"></span>{{ profile.display_name }}</a></li>
+	      </ul>
+	   {% endif %}
+	   </div>
+	   <div id="branding"><a style="text-decoration: none" href="/">{% block headline %}{% endblock %}</a></div>
+	</div>
+	<div class="clear"></div>
+	<div id="content">
+		<div id="main">
+		   	{% block main %}{% endblock %}
+		</div>
+		<div id="rhs">
+		    {% block rhs %}{% endblock %}
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+	<div id="footer">
+	   <ul>
+	     <li><a href="#about">About COIP</a></li>
+	     <li><a href="#about">Terms Of Use</a></li>
+	     <li><a href="#about">System Status</a></li>
+	   </ul>
+	</div>
+</body>
+</html>

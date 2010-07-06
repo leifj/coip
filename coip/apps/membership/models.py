@@ -19,5 +19,14 @@ class Membership(models.Model):
     expires = models.DateTimeField(blank=True)
     name = models.ForeignKey(Name)
     
+    def __unicode__(self):
+        return "%s in %s" % (self.user,self.name)
+    
     def valid(self):
         return self.enabled and datetime.date.today() > self.expires
+    
+    def status(self):
+        if self.valid():
+            return "active"
+        else:
+            return "inactive";
