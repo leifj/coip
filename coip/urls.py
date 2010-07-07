@@ -16,7 +16,10 @@ urlpatterns = patterns('',
     (r'^accounts/login-federated/$',                'coip.apps.auth.views.accounts_login_federated'),
     (r'^accounts/logout/$',                         'coip.apps.auth.views.logout'),
     # Profiles and user information
-    (r'^user/merge/?P<pkey>.+$',                    'coip.apps.userprofile.views.merge'),
+    (r'^user/merge/(?P<pkey>.+)$',                  'coip.apps.userprofile.views.merge'),
     (r'^user/merge$',                               'coip.apps.userprofile.views.merge'),
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
+    # Names
+    (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
+    (r'^name/(?P<name>[^\/]+)$',                     'coip.apps.name.views.show_by_name'),
 )

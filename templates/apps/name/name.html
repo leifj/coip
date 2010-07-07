@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block js %}
+<script type="text/javascript">
+$(function() {
+   	$("#members").accordion({
+   		header: 'h3'
+   	});
+});
+</script>
+{% endblock %}
+{% block headline %}{{name.shortname}}{% endblock %}
+{% block title %}COIP - {{name.shortname}}{% endblock %}
+{% block main %}
+<div class="infopanel">
+{{name.shortname}}
+{{name.description}}
+{{name}}
+</div>
+<div id="members">
+	{% for m in memberships.all %}
+	<div id="m{{m.id}}" class="{{m.status}}">
+	   <h3 style="padding-left: 20px;">{{m.user}}</h3>
+	   <div>
+	   	  {{m.user}} has been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
+	   </div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}
