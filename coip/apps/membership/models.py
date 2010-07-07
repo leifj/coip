@@ -13,8 +13,8 @@ class Membership(models.Model):
     '''
     Membership in a namespace/group
     '''
-    user = models.ForeignKey(User,unique=True,blank=True)
-    inviter = models.ForeignKey(User,unique=True,blank=True)
+    user = models.ForeignKey(User,unique=True,blank=True,related_name='user')
+    inviter = models.ForeignKey(User,unique=True,blank=True,related_name='inviter')
     name = models.ForeignKey(Name,related_name='memberships')
     email = models.EmailField(blank=True,null=True)
     nonce = models.CharField(max_length=255,blank=True,null=True)
