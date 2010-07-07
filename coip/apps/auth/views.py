@@ -6,7 +6,7 @@ Created on Jul 5, 2010
 from django.http import HttpResponseRedirect
 from coip.apps.userprofile.models import UserProfile
 from django.contrib.auth.models import User
-from uuid import uuid4
+from coip.apps.auth.utils import anonid
 
 def meta(request,attr):
     v = request.META.get(attr)
@@ -20,7 +20,7 @@ def accounts_login_federated(request):
             request.user = profile.user
         else:
             profile.identifier = request.user.username
-            request.user = User(username=uuid4().urn)
+            request.user = User(username=anonid())
             request.user.save()
             profile.user = request.user
             

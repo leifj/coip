@@ -6,12 +6,12 @@ Created on Jul 6, 2010
 from django.contrib.auth.decorators import login_required
 from coip.apps.userprofile.models import PKey
 from django.http import HttpResponseRedirect
-from uuid import uuid4
 from coip.multiresponse import respond_to
 from coip.apps.membership.models import Membership
 from coip.apps.userprofile.utils import user_profile
 from django.core.exceptions import ObjectDoesNotExist
 from pprint import pprint
+from coip.apps.auth.utils import nonce
 
 @login_required
 def merge(request,pkey=None):
@@ -26,7 +26,7 @@ def merge(request,pkey=None):
         return HttpResponseRedirect("/user/home")
     else:
         profile = profile(request)
-        k = PKey(profile=profile,key=uuid4().hex)
+        k = PKey(profile=profile,key=nonce())
         k.save()
         return HttpResponseRedirect("/accounts/login?next=/user/merge/"+k.key)
     
