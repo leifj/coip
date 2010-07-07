@@ -17,7 +17,7 @@ class Membership(models.Model):
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
     expires = models.DateTimeField(blank=True)
-    name = models.ForeignKey(Name)
+    name = models.ForeignKey(Name,related_name='memberships')
     
     def __unicode__(self):
         return "%s in %s" % (self.user,self.name)
