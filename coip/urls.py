@@ -5,12 +5,17 @@ from django.contrib import admin
 from django.contrib.auth.views import login
 from settings import ADMIN_MEDIA_ROOT
 from settings import MEDIA_ROOT
+from django.http import HttpResponseRedirect
 admin.autodiscover()
+
+def welcome(request):
+    return HttpResponseRedirect('/user/home')
 
 urlpatterns = patterns('',
     (r'^admin-media/(?P<path>.*)$',                 'django.views.static.serve',{'document_root': ADMIN_MEDIA_ROOT}),
     (r'^site-media/(?P<path>.*)$',                  'django.views.static.serve',{'document_root': MEDIA_ROOT}),
     (r'^admin/',                                    include(admin.site.urls)),
+    (r'^$',                                         welcome),
     # Login/Logout
     (r'^accounts/login/$',                          login,{'template_name': "login.html"}),
     (r'^accounts/login-federated/$',                'coip.apps.auth.views.accounts_login_federated'),
