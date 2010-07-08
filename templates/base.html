@@ -64,7 +64,7 @@
 		   .navlist ul { list-style: none; padding: 0; margin: 0; }
 		   .navlist li { float: left; display: inline; margin: 0 0.15em; }
 		   .description { clear: both; margin-top: 25px; padding-top: 5px; border-top: 1px solid black; }
-		   #branding{ font: 500% "Trebuchet MS", sans-serif; margin-left: 50px; margin-bottom: 20px; float: left}
+		   #branding{ font: 300% "Trebuchet MS", sans-serif; margin-left: 50px; margin-bottom: 20px; float: left}
 		   #linklist { float: right; margin-right: 50px; }
 		   #linklist ul{ list-style: none; padding: 0; margin: 0; }
 		   #linklist li{ float: left; margin: 0 0.15em}
@@ -73,8 +73,7 @@
 		   a:hover { text-decoration: underline; }
 		   .clear { clear: both; }
 		   #content{ }
-		   #rhs{ float: right; width: 20%; position:absolute; top: 100px; right: 300px; font-size: 150%;}
-		   #main{ font: 100% "Trebuchet MS", sans-serif; margin: 50px; width:70%}
+		   #main{ font: 100% "Trebuchet MS", sans-serif; width:90%; }
 		   .code{font: 110% "Courier", fixed}
 		   .infopanel {font-size: 130%; width: 100%; padding: 5px; margin-bottom: 10px; }
 		   .infopanel label { display:block; }
@@ -101,10 +100,6 @@
 		<div id="main">
 		   	{% block main %}{% endblock %}
 		</div>
-		<div id="rhs">
-		    {% block rhs %}{% endblock %}
-		</div>
-		<div class="clear"></div>
 	</div>
 	<div class="clear"></div>
 	<div id="footer">

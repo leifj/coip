@@ -5,20 +5,48 @@ Created on Jul 6, 2010
 '''
 from coip.apps.name.models import Name, lookup, traverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseNotFound, HttpResponseForbidden
+from django.http import HttpResponseNotFound, HttpResponseForbidden,\
+    HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from coip.multiresponse import respond_to, json_response
 from pprint import pprint
+from coip.apps.name.forms import NameEditForm
+from twisted.python.reflect import ObjectNotFound
+
+def edit(request,id):
+    name = None
+    try:
+        name = Name.objects.get(id=id)
+    except ObjectNotFound:
+        return HttpResponseNotFound()
+    
+    if not name.has_permission(request.user,'#w'):
+        return HttpResponseForbidden()
+        
+    if request.method == 'POST':
+        form = NameEditForm(request.POST,instance=name)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/name/id/%d" % name.id)
+    else:
+        form = NameEditForm(instance=name)
+        
+    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name})
+            
 
 def show_root(request):
-    return respond_to(request, {'text/html': 'apps/name/name.html'}, {'name': None, 'memberships': None, 'children': Name.objects.filter(parent=None)})
+    return respond_to(request, 
+                      {'text/html': 'apps/name/name.html'}, 
+                      {'name': None, 'memberships': None, 'edit': False})
 
 def show(request,name):
     if not name:
         return HttpResponseNotFound()
     
     if name.has_permission(request.user,'r'):
-        return respond_to(request, {'text/html': 'apps/name/name.html'}, {'name': name, 'memberships': name.memberships})
+        return respond_to(request, 
+                          {'text/html': 'apps/name/name.html'}, 
+                          {'name': name, 'memberships': name.memberships, 'edit': name.has_permission(request.user,'#w')})
     else:
         return HttpResponseForbidden()
 

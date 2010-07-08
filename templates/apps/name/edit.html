@@ -34,23 +34,27 @@ $(function() {
 	<div style="height: 100%;" id="tree"></div>
 </div>
 <div style="float: right; width: 60%; padding-left: 20px;">
-{% if name %}
-	<div class="ui-widget-content ui-corner-all infopanel">
-		<h3 style="float: left;">{{name}}</h3><a style="float: right;" href="/name/edit/id/{{name.id}}"><div class="ui-icon ui-icon-wrench"></div></a><div class="clear"/>
-		<p>{{name.description}}</p>
-	</div>
-	{% endif %}
-	{% if memberships %}
-	<div id="members">
-		{% for m in memberships.all %}
-		<div id="m{{m.id}}" class="{{m.status}}">
-		   <h3 style="padding-left: 20px;">{{m.user}}</h3>
-		   <div>
-		   	  {{m.user}} has been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
-		   </div>
+	<form method="POST">
+		<div class="ui-widget-content ui-corner-all infopanel"
+			<table>
+		      {% for field in form %}
+		        <tr>
+		          {% if field.errors %}
+		            <td colspan="2">{{ field.errors }}</td>
+		          {% endif %}
+		        </tr>
+		        <tr>
+		          <td>{{ field.label_tag }}</td>
+		          <td><div class="ui-widget">{{ field }}</div></td>
+		        </tr>
+		      {% endfor %}
+		    </table>
 		</div>
-		{% endfor %}
-	</div>
-{% endif %}
+		<br/>
+		<div class="button">
+		    <input type="submit" value="Update" />
+		    <input type="button" onClick="document.location='/name/id/{{name.id}}'" value="Cancel"/>
+	    </div>
+	</form>
 </div>
 {% endblock %}
