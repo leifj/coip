@@ -36,7 +36,21 @@ $(function() {
 <div style="float: right; width: 60%; padding-left: 20px;">
 {% if name %}
 	<div class="ui-widget-content ui-corner-all infopanel">
-		<h3 style="float: left;">{{name}}</h3><a style="float: right;" href="/name/edit/id/{{name.id}}"><div class="ui-icon ui-icon-wrench"></div></a><div class="clear"/>
+		<div class="navlist">
+		   <ul>
+		     {% if edit %}
+			 <li style="float: right;"><a class="tip" title="Modify this name" href="/name/edit/id/{{name.id}}"><span class="ui-icon ui-icon-wrench"></span></a>
+			 {% endif %}
+			 {% if delete %}
+			 <li style="float: right;"><a class="tip" title="Permanently remove this name" href="/name/delete/id/{{name.id}}"><span class="ui-icon ui-icon-trash"></span></a>
+			 {% endif %}
+			 {% if insert %}
+			 <li style="float: right;"><a class="tip" title="Create new subordinate name" href="/name/add/id/{{name.id}}"><span class="ui-icon ui-icon-plusthick"></span></a>
+			 {% endif %}
+		   </ul>
+		</div>
+		<div class="clear"/>
+		<h3>{{name}}</h3>
 		<p>{{name.description}}</p>
 	</div>
 	{% endif %}

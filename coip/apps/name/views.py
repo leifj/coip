@@ -46,7 +46,11 @@ def show(request,name):
     if name.has_permission(request.user,'r'):
         return respond_to(request, 
                           {'text/html': 'apps/name/name.html'}, 
-                          {'name': name, 'memberships': name.memberships, 'edit': name.has_permission(request.user,'#w')})
+                          {'name': name, 
+                           'memberships': name.memberships, 
+                           'delete': name.has_permission(request.user,'#d'),
+                           'insert': name.has_permission(request.user,'#i'),
+                           'edit': name.has_permission(request.user,'#w')})
     else:
         return HttpResponseForbidden()
 
