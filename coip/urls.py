@@ -26,5 +26,11 @@ urlpatterns = patterns('',
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
     # Names
     (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
-    (r'^name/(?P<name>[^\/]+)$',                     'coip.apps.name.views.show_by_name'),
+    (r'^name/(?P<name>[^0-9\/]+)$',                     'coip.apps.name.views.show_by_name'),
+    (r'^name$',                                      'coip.apps.name.views.show_by_name'),
+    # JSON Tree
+    (r'^ctree.json$',                                'coip.apps.name.views.ctree'),
+    (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),
+    (r'^rtree.json$',                                'coip.apps.name.views.rtree'),
+    (r'^rtree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.rtree'),
 )

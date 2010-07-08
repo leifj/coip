@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect
 from coip.apps.userprofile.models import UserProfile
 from django.contrib.auth.models import User
 from coip.apps.auth.utils import anonid
+from coip.apps.name.models import lookup
 
 def meta(request,attr):
     v = request.META.get(attr)
@@ -50,6 +51,11 @@ def accounts_login_federated(request):
         if update:
             request.user.save()
             profile.save()
+            
+        #autocreate a few personal namespaces
+        lookup('user:'+profile.identifier,True,'#l '+request.user+'#rw')
+        lookup(request.user,True,'#l '+request.user+'#rw')
+            
         next = request.session.get("after_login_redirect", None)
         if next is not None:
             return HttpResponseRedirect(next)

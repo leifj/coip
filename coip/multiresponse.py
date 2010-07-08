@@ -3,9 +3,8 @@ import re
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from django.core import serializers
 from coip.apps.userprofile.utils import user_profile
-from pprint import pprint
+from django.utils import simplejson
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -33,11 +32,7 @@ def make_response_dict(request,d={}):
     return d
 
 def json_response(data):
-    json_serializer = serializers.get_serializer("json")()
-    json_serializer.serialize()
-    json_serializer.serialize(data)
-    
-    r = HttpResponse(data.getvalue(),content_type='application/json')
+    r = HttpResponse(simplejson.dumps(data),content_type='application/json')
     r['Cache-Control'] = 'no-cache, must-revalidate'
     r['Pragma'] = 'no-cache'
     

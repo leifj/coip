@@ -3,35 +3,64 @@ Created on Jul 6, 2010
 
 @author: leifj
 '''
-from coip.apps.name.models import Name, lookup
+from coip.apps.name.models import Name, lookup, traverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from coip.multiresponse import respond_to
-from coip.apps.auth.authz import has_permission
+from coip.multiresponse import respond_to, json_response
+from pprint import pprint
+
+def show_root(request):
+    return respond_to(request, {'text/html': 'apps/name/name.html'}, {'name': None, 'memberships': None, 'children': Name.objects.filter(parent=None)})
 
 def show(request,name):
     if not name:
         return HttpResponseNotFound()
     
-    if has_permission(request.user,name,'r'):
-        memberships = []
-        if has_permission(request.user,name,'l'):
-            memberships = name.memberships
-        return respond_to(request, {'text/html': 'apps/name/name.html'}, {'name': name, 'memberships': memberships})
+    if name.has_permission(request.user,'r'):
+        return respond_to(request, {'text/html': 'apps/name/name.html'}, {'name': name, 'memberships': name.memberships})
     else:
         return HttpResponseForbidden()
 
 @login_required
-def show_by_name(request,n):
+def show_by_name(request,n=None):
+    if not n:
+        return show_root(request)
     try:
         return show(request,lookup(n))
     except ObjectDoesNotExist:
         return HttpResponseNotFound()    
    
 @login_required
-def show_by_id(request,id):
+def show_by_id(request,id=None):
+    if not id:
+        return show_root(request)
     try:
         return show(request,Name.objects.get(id=id))
     except ObjectDoesNotExist:
-        return HttpResponseNotFound() 
+        return HttpResponseNotFound()
+
+def _tree_node(name,depth):
+    state = 'closed'
+    return {'data': { 'title': name.relative_name(), 'attr': {'href': '/name/id/%d' % name.id} },
+            'state': state,
+            'attr': {'id': name.id}}
+    
+def _tree(request,id=None,includeroot=False):
+    name = None
+    if id:
+        name = Name.objects.get(id=id)
+    depth = 3
+    if request.GET.has_key('depth'):
+        depth = request.GET['depth']
+    t = traverse(name,_tree_node,request.user,depth,includeroot)
+    pprint(t)
+    return json_response(t)
+
+@login_required
+def rtree(request,id=None):
+    return _tree(request,id,True)
+
+@login_required
+def ctree(request,id=None):
+    return _tree(request,id,False)

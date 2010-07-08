@@ -5,25 +5,52 @@ $(function() {
    	$("#members").accordion({
    		header: 'h3'
    	});
+   	$('#tree').jstree({
+   		'json_data': {
+   			'ajax': {
+   				'url': function(n) {
+   					if (n == -1) {
+   						return {% if name %}"/rtree/"+{{name.id}}+".json"{% else %}"/rtree.json"{% endif %};
+   					} else {
+   						return "/ctree/"+n.attr('id')+".json";
+   					}
+   				}
+   			},
+   			"progressive_render"  : true,
+   			'animation': 0,
+   		},
+   		'plugins': ['themeroller','json_data']
+   	});
 });
 </script>
 {% endblock %}
-{% block headline %}{{name.shortname}}{% endblock %}
-{% block title %}COIP - {{name.shortname}}{% endblock %}
+{% block headline %}{% if name %}{{name.shortname}}{% else %}(){% endif %}{% endblock %}
+{% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
 {% block main %}
-<div class="infopanel">
-{{name.shortname}}
-{{name.description}}
-{{name}}
+<div style="float: left; width: 30%;">
+	{% if name and name.parent %}
+	<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
+	{% endif %}
+	<div style="height: 100%;" id="tree"></div>
 </div>
-<div id="members">
-	{% for m in memberships.all %}
-	<div id="m{{m.id}}" class="{{m.status}}">
-	   <h3 style="padding-left: 20px;">{{m.user}}</h3>
-	   <div>
-	   	  {{m.user}} has been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
-	   </div>
+<div style="float: right; width: 70%;">
+{% if name %}
+	<div class="infopanel">
+	<h3>{{name}}</h3>
+	{{name.description}}
 	</div>
-	{% endfor %}
+	{% endif %}
+	{% if memberships %}
+	<div id="members">
+		{% for m in memberships.all %}
+		<div id="m{{m.id}}" class="{{m.status}}">
+		   <h3 style="padding-left: 20px;">{{m.user}}</h3>
+		   <div>
+		   	  {{m.user}} has been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
+		   </div>
+		</div>
+		{% endfor %}
+	</div>
+{% endif %}
 </div>
 {% endblock %}
