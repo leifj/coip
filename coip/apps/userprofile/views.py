@@ -12,6 +12,7 @@ from coip.apps.userprofile.utils import user_profile
 from django.core.exceptions import ObjectDoesNotExist
 from pprint import pprint
 from coip.apps.auth.utils import nonce
+from coip.apps.name.models import Name, NameLink
 
 @login_required
 def merge(request,pkey=None):
@@ -38,7 +39,8 @@ def home(request):
     except ObjectDoesNotExist:
         pass
     
-    pprint(memberships)
-    return respond_to(request, {'text/html': 'apps/userprofile/home.html'},{'memberships': memberships})
+    names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control).all()]
+    
+    return respond_to(request, {'text/html': 'apps/userprofile/home.html'},{'memberships': memberships,'names': names})
 
 

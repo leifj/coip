@@ -6,13 +6,17 @@ $(function() {
    	$("#memberships").accordion({
    		header: 'h3'
    	});
+   	$("#names").accordion({
+   		header: 'h3'
+   	});
 });
 </script>
 {% endblock %}
 {% block headline %}{{profile.display_name}}{% endblock %}
 {% block title %}COIP - {{profile.display_name}} - Home{% endblock %}
 {% block main %}
-<div id="memberships">
+<h3>Memberships</h3>
+<div id="memberships" style="width: 60%;">
 	{% for m in memberships %}
 	<div id="m{{m.id}}" class="{{m.status}}">
 	   <h3 style="padding-left: 20px;">{{m.name.shortname}}</h3>
@@ -20,6 +24,18 @@ $(function() {
 	   	  You have been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
 	   	  <div>{{m.name.description}}</div></br>
 	   	  <a href="/name/id/{{m.name.id}}">More details about {{m.name.shortname}}...</a>
+	   </div>
+	</div>
+	{% endfor %}
+</div>
+<h3>Names</h3>
+<div id="names" style="width: 60%;">
+	{% for n,p in names %}
+	<div id="n{{n.id}}"">
+	   <h3 style="padding-left: 20px;">{{n.shortname}}</h3>
+	   <div>
+	      You are allowed to {{p}} {{n.shortname}}<br/>
+	   	  <a href="/name/id/{{n.id}}">More details about {{n.shortname}}...</a>
 	   </div>
 	</div>
 	{% endfor %}

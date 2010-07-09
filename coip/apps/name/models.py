@@ -5,7 +5,6 @@ Created on Jun 24, 2010
 '''
 from django.db import models
 import re
-from twisted.python.reflect import ObjectNotFound
 from pprint import pprint
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
