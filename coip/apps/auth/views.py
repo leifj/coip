@@ -53,8 +53,8 @@ def accounts_login_federated(request):
             profile.save()
             
         #autocreate a few personal namespaces
-        lookup('user:'+profile.identifier,True,'#l '+request.user+'#rw')
-        lookup(request.user,True,'#l '+request.user+'#rw')
+        lookup('user:'+profile.identifier,True,'system:anyuser#l '+request.user+'#rw')
+        lookup(request.user,True,'system:anyuser#l '+request.user+'#rw')
             
         next = request.session.get("after_login_redirect", None)
         if next is not None:

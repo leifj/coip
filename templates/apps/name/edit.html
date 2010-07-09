@@ -28,14 +28,19 @@ $(function() {
 {% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
 {% block main %}
 <div style="float: left; width: 30%;">
-	{% if name and name.parent %}
+	{% if name %}
+	{% if name.parent %}
 	<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
+	{% else %}
+	<a href="/name">.. (up one level)</a>
+	{% endif %}
 	{% endif %}
 	<div style="height: 100%;" id="tree"></div>
 </div>
 <div style="float: right; width: 60%; padding-left: 20px;">
 	<form method="POST">
-		<div class="ui-widget-content ui-corner-all infopanel"
+		<div class="ui-widget-content ui-corner-all infopanel">
+		    <h3>{{formtitle}}</h3>
 			<table>
 		      {% for field in form %}
 		        <tr>
@@ -52,7 +57,7 @@ $(function() {
 		</div>
 		<br/>
 		<div class="button">
-		    <input type="submit" value="Update" />
+		    <input type="submit" value="{{submitname}}" />
 		    <input type="button" onClick="document.location='/name/id/{{name.id}}'" value="Cancel"/>
 	    </div>
 	</form>

@@ -29,6 +29,8 @@ urlpatterns = patterns('',
     (r'^name/(?P<name>[^0-9\/]+)$',                  'coip.apps.name.views.show_by_name'),
     (r'^name$',                                      'coip.apps.name.views.show_by_name'),
     (r'^name/edit/id/(?P<id>[0-9]+)$',               'coip.apps.name.views.edit'),
+    (r'^name/delete/id/(?P<id>[0-9]+)$',             'coip.apps.name.views.delete'),
+    (r'^name/add/id/(?P<id>[0-9]+)$',                'coip.apps.name.views.add'),
     # JSON Tree
     (r'^ctree.json$',                                'coip.apps.name.views.ctree'),
     (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),

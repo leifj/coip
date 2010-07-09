@@ -28,8 +28,12 @@ $(function() {
 {% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
 {% block main %}
 <div style="float: left; width: 30%;">
-	{% if name and name.parent %}
+	{% if name %}
+	{% if name.parent %}
 	<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
+	{% else %}
+	<a href="/name">.. (up one level)</a>
+	{% endif %}
 	{% endif %}
 	<div style="height: 100%;" id="tree"></div>
 </div>

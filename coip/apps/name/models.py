@@ -7,6 +7,8 @@ from django.db import models
 import re
 from twisted.python.reflect import ObjectNotFound
 from pprint import pprint
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 class Attribute(models.Model):
     name = models.CharField(unique=True,max_length=255)
@@ -24,9 +26,9 @@ class Name(models.Model):
     type = models.ForeignKey(Attribute, blank=True, null=True,related_name='names')
     value = models.CharField(max_length=255)
     parent = models.ForeignKey('self', blank=True, null=True,related_name='children')
-    partof = models.ForeignKey('self', blank=True, null=True,related_name='parts')
     acl = models.TextField(blank=True) # fully-qualified-name '#' rights
     short = models.CharField(max_length=64,blank=True)
+    creator = models.ForeignKey(User,blank=True, null=True)
     description = models.TextField(blank=True)
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
@@ -61,11 +63,75 @@ class Name(models.Model):
         
         return str
     
+    def remove(self,recursive=False):
+        if recursive:
+            for c in self.children.all():
+                c.remove(recursive)
+        self.delete()
+    
+    # TODO: placeholder for more complete acl system
+    def copy_acl(self):
+        return self.acl
+    
+    def link(self,dst,type,data):
+        if not self.has_link(dst,NameLink.part_of,data):
+            link = NameLink(src=self,dst=dst,type=type,data=data)
+            link.save()
+
+    def unlink(self,dst,type,data):
+        try:
+            link = NameLink.objects.get(src=self,dst=dst,type=type,data=data)
+            link.delete()
+        except ObjectDoesNotExist:
+            pass
+
+    def has_link(self,dst,type,data):
+        return NameLink.objects.filter(src=self,dst=dst,type=type,data=data).count() > 0
+
+    def add_ace(self,name,perm):
+        self.link(name,NameLink.access_control,perm)
+        
+    def del_ace(self,name,perm):
+        self.unlink(name,NameLink.access_control,perm)
+        
+    def list_acl(self):
+        return NameLink.objects.filter(src=self,type=NameLink.access_control)
+        
+    def add_partof(self,part):
+        self.link(part,NameLink.part_of,None)
+    
     def has_permission(self,user,perm):
-        return True
+        pprint("has_permission %s %s %s" % (self,user,perm))
+        # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
+        #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
+        # user is superuser or acl is on implicit group or user is member of acl group
+        anyuser = lookup("system:anyuser",True)
+        if NameLink.objects.filter(src=self,dst=anyuser,type=NameLink.access_control,data__contains=perm).count() > 0:
+            return True
+        if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__memberships__user=user).count() > 0:
+            return True
+        
+        if user.is_superuser:
+            return False
+        
+        return False #user.is_superuser
     
     def permitted_children(self,user,perm):
         return filter(lambda s: s.has_permission(user,perm),self.children.all())
+    
+class NameLink(models.Model):
+    src = models.ForeignKey(Name,related_name='sources')
+    dst = models.ForeignKey(Name,related_name='destinations')
+    type = models.IntegerField()
+    data = models.CharField(max_length=255,blank=True,null=True)
+    timecreated = models.DateTimeField(auto_now_add=True)
+    lastupdated = models.DateTimeField(auto_now=True)
+    
+    access_control = 0
+    part_of = 1
+    
+    def __unicode__(self):
+        return "%s -> %s [%s %s]" % (self.src,self.dst,self.type,self.data)
     
 def roots():
     return Name.objects.filter(parent=None)
@@ -76,7 +142,7 @@ def _traverse(name,callable,user,depth):
     else:
         t = callable(name,depth)
         if depth > 0:
-            children = [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'#l')]
+            children = [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'l')]
             if children:
                 t['children'] = children 
         return t
@@ -88,14 +154,15 @@ def traverse(name,callable,user,depth,includeroot=False):
         if includeroot:
             t = callable(name,depth)
             if depth > 0:
-                children = [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'#l')]
+                children = [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'l')]
                 if children:
                     t['children'] = children
             return t
         else:
-            return [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'#l')]
+            return [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'l')]
     
-def walkto(root,nameparts,autocreate=False,autoacl='#l'):
+# TODO - remove system user dependency
+def walkto(root,nameparts,autocreate=False,autoacl='l'):
     name = None
     for n in nameparts:
         (a,eq,v) = n.partition('=')
@@ -103,22 +170,25 @@ def walkto(root,nameparts,autocreate=False,autoacl='#l'):
             attribute = Attribute.objects.get(name=a)
             try:
                 name = Name.objects.get(parent=root,type=attribute.id,value=v)
-            except ObjectNotFound,e:
+            except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name.objects.create(parent=root,type=attribute.id,value=v,acl=autoacl)
+                    name = Name(parent=root,creator=User.objects.get(username='system'),type=attribute.id,value=v,acl=autoacl)
+                    name.save()
                 else:
                     raise e
         else:
             try:
                 name = Name.objects.get(parent=root,type=None,value=a)
-            except ObjectNotFound,e:
+            except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name.objects.create(parent=root,type=None,value=a,acl=autoacl)
+                    name = Name(parent=root,creator=User.objects.get(username='system'),type=None,value=a,acl=autoacl)
+                    name.save()
                 else:
                     raise e
+        root = name
     return name
 
-def lookup(name,autocreate=False,autoacl='#l'):
+def lookup(name,autocreate=False,autoacl='l'):
     return walkto(None,nameparts=re.compile('[;:]').split(name),autocreate=autocreate,autoacl=autoacl)
 
 def attribute(a):
