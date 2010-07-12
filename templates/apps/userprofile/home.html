@@ -4,10 +4,14 @@
 $(function() {
 	$("#gravatar").append($.gravatar($('#email').text()));
    	$("#memberships").accordion({
-   		header: 'h3'
+   		header: 'h3',
+   		collapsible: true,
+        active: false
    	});
    	$("#names").accordion({
-   		header: 'h3'
+   		header: 'h3',
+   		collapsible: true,
+        active: false
    	});
 });
 </script>
