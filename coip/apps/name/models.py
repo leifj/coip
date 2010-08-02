@@ -87,13 +87,32 @@ class Name(models.Model):
     def has_link(self,dst,type,data):
         return NameLink.objects.filter(src=self,dst=dst,type=type,data=data).count() > 0
 
-    def add_ace(self,name,perm):
-        self.link(name,NameLink.access_control,perm)
+    def setacl(self,name,perm):
+        link = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
+        save = False
+        for p in perm:
+            if not link.data.find(p):
+                link.data = link.data+p
+                save = True
+        if save:
+            link.save()
         
-    def del_ace(self,name,perm):
-        self.unlink(name,NameLink.access_control,perm)
+    def rmacl(self,name,perm):
+        try:
+            link = NameLink.objects.get(src=self,dst=name,type=NameLink.access_control)
+            save = False
+            for p in perm:
+                link.data = link.data.replace(p,'')
+                save = True
+            if save:
+                if link.data:
+                    link.save()
+                else:
+                    link.delete()
+        except ObjectDoesNotExist:
+            pass
         
-    def list_acl(self):
+    def lsacl(self):
         return NameLink.objects.filter(src=self,type=NameLink.access_control)
         
     def add_partof(self,part):
@@ -104,7 +123,6 @@ class Name(models.Model):
         # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
         #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
         # user is superuser or acl is on implicit group or user is member of acl group
-        anyuser = lookup("system:anyuser",True)
         if NameLink.objects.filter(src=self,dst=anyuser,type=NameLink.access_control,data__contains=perm).count() > 0:
             return True
         if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__memberships__user=user).count() > 0:
@@ -159,6 +177,7 @@ def traverse(name,callable,user,depth,includeroot=False):
             return t
         else:
             return [_traverse(s,callable,user,depth - 1) for s in name.permitted_children(user,'l')]
+
     
 # TODO - remove system user dependency
 def walkto(root,nameparts,autocreate=False,autoacl='l'):
@@ -171,7 +190,7 @@ def walkto(root,nameparts,autocreate=False,autoacl='l'):
                 name = Name.objects.get(parent=root,type=attribute.id,value=v)
             except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name(parent=root,creator=User.objects.get(username='system'),type=attribute.id,value=v,acl=autoacl)
+                    name = Name(parent=root,creator=None,type=attribute.id,value=v,acl=autoacl)
                     name.save()
                 else:
                     raise e
@@ -180,7 +199,7 @@ def walkto(root,nameparts,autocreate=False,autoacl='l'):
                 name = Name.objects.get(parent=root,type=None,value=a)
             except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name(parent=root,creator=User.objects.get(username='system'),type=None,value=a,acl=autoacl)
+                    name = Name(parent=root,creator=None,type=None,value=a,acl=autoacl)
                     name.save()
                 else:
                     raise e
@@ -192,4 +211,6 @@ def lookup(name,autocreate=False,autoacl='l'):
 
 def attribute(a):
     Attribute.objects.get_or_create(name=a)
-    
+
+#sysuser = User.objects.get_or_create(username='system',first_name='COIP System',last_name='User',password="(not used)")
+anyuser = lookup("system:anyuser",True)    
