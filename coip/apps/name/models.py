@@ -68,7 +68,6 @@ class Name(models.Model):
                 c.remove(recursive)
         self.delete()
     
-    # TODO: placeholder for more complete acl system
     def copy_acl(self):
         return self.acl
     
