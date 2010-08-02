@@ -76,7 +76,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django_extensions',
-    'coip.apps.membership',
     'coip.apps.name',
+    'coip.apps.membership',
     'coip.apps.userprofile',
 )
