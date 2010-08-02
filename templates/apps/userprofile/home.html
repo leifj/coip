@@ -30,6 +30,8 @@ $(function() {
 	   	  <a href="/name/id/{{m.name.id}}">More details about {{m.name.shortname}}...</a>
 	   </div>
 	</div>
+	{% empty %}
+	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You are not a member of any names</p>
 	{% endfor %}
 </div>
 <h3>Names</h3>
@@ -42,6 +44,8 @@ $(function() {
 	   	  <a href="/name/id/{{n.id}}">More details about {{n.shortname}}...</a>
 	   </div>
 	</div>
+	{% empty %}
+	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You do not own any names</p>
 	{% endfor %}
 </div>
 {% endblock %}
