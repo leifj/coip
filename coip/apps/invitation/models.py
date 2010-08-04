@@ -29,7 +29,7 @@ class Invitation(models.Model):
         
     def send_email(self):
         pinviter = last_used_profile(self.inviter)
-        send_mail('[coip] Invitation to join \'%s\'' % (self.name.short),
+        send_mail('Invitation to join \'%s\'' % (self.name.short),
                   '''
 %s (%s) has invited you to join \'%s\':
 
