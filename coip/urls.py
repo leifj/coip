@@ -28,9 +28,15 @@ urlpatterns = patterns('',
     (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
     (r'^name/(?P<name>[^0-9\/]+)$',                  'coip.apps.name.views.show_by_name'),
     (r'^name$',                                      'coip.apps.name.views.show_by_name'),
-    (r'^name/edit/id/(?P<id>[0-9]+)$',               'coip.apps.name.views.edit'),
-    (r'^name/delete/id/(?P<id>[0-9]+)$',             'coip.apps.name.views.delete'),
-    (r'^name/add/id/(?P<id>[0-9]+)$',                'coip.apps.name.views.add'),
+    (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
+    (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
+    (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
+    # Membership
+    (r'^membership/(?P<id>[0-9]+)$',                 'coip.apps.membership.views.show'),
+    # Invitations
+    (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
+    (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),
+    (r'^invitation/(?P<nonce>[^\/]+)/accept$',       'coip.apps.invitation.views.accept'),
     # JSON Tree
     (r'^ctree.json$',                                'coip.apps.name.views.ctree'),
     (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),
