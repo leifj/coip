@@ -13,15 +13,13 @@ class Membership(models.Model):
     '''
     Membership in a namespace/group
     '''
-    user = models.ForeignKey(User,unique=True,blank=True,related_name='user')
-    inviter = models.ForeignKey(User,unique=True,blank=True,related_name='inviter')
+    user = models.ForeignKey(User,blank=True,null=True,related_name='user')
     name = models.ForeignKey(Name,related_name='memberships')
-    email = models.EmailField(blank=True,null=True)
-    nonce = models.CharField(max_length=255,blank=True,null=True)
     enabled = models.BooleanField()
+    hidden = models.BooleanField()
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
-    expires = models.DateTimeField(blank=True)
+    expires = models.DateTimeField(blank=True,null=True)
     
     def __unicode__(self):
         return "%s in %s" % (self.user,self.name)
@@ -34,8 +32,21 @@ class Membership(models.Model):
             return "active"
         else:
             return "inactive";
+    
+def add_member(name,user):
+    (m,created)  = Membership.objects.get_or_create(user=user,name=name)
+    if created or not m.enabled:
+        m.enabled = True
+        m.save()
         
-    def send_email(self):
-        pprint("sent email to "+self.to)
-        return
+def disable_member(name,user):
+    m = Membership.objects.get(name=name,user=user)
+    if m:
+        m.enabled = False
+        m.save()
+        
+def remove_member(name,user):
+    m = Membership.objects.get(name=name,user=user)
+    if m:
+        m.delete()
         

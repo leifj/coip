@@ -8,6 +8,7 @@ import re
 from pprint import pprint
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models.signals import post_init, pre_save
 
 class Attribute(models.Model):
     name = models.CharField(unique=True,max_length=255)
@@ -25,9 +26,9 @@ class Name(models.Model):
     type = models.ForeignKey(Attribute, blank=True, null=True,related_name='names')
     value = models.CharField(max_length=255)
     parent = models.ForeignKey('self', blank=True, null=True,related_name='children')
-    acl = models.TextField(blank=True) # fully-qualified-name '#' rights
     short = models.CharField(max_length=64,blank=True)
     creator = models.ForeignKey(User,blank=True, null=True)
+    display = models.TextField(editable=False)
     description = models.TextField(blank=True)
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
@@ -45,6 +46,9 @@ class Name(models.Model):
             return self.value
     
     def __unicode__(self):
+        return self.display
+    
+    def display_str(self):
         n = self
         str = ""
         while n:
@@ -68,8 +72,10 @@ class Name(models.Model):
                 c.remove(recursive)
         self.delete()
     
-    def copy_acl(self):
-        return self.acl
+    def copyacl(self,name):
+        for ace in name.lsacl():
+            self.setacl(ace.dst,ace.data)
+            
     
     def link(self,dst,type,data):
         if not self.has_link(dst,NameLink.part_of,data):
@@ -87,10 +93,14 @@ class Name(models.Model):
         return NameLink.objects.filter(src=self,dst=dst,type=type,data=data).count() > 0
 
     def setacl(self,name,perm):
-        link = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
+        (link,b) = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
         save = False
+        if not link.data:
+            link.data = ''
+            save = True
         for p in perm:
-            if not link.data.find(p):
+            pprint(p)
+            if link.data.find(p) == -1:
                 link.data = link.data+p
                 save = True
         if save:
@@ -122,6 +132,7 @@ class Name(models.Model):
         # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
         #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
         # user is superuser or acl is on implicit group or user is member of acl group
+        anyuser = lookup("system:anyuser",True)
         if NameLink.objects.filter(src=self,dst=anyuser,type=NameLink.access_control,data__contains=perm).count() > 0:
             return True
         if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__memberships__user=user).count() > 0:
@@ -134,6 +145,11 @@ class Name(models.Model):
     
     def permitted_children(self,user,perm):
         return filter(lambda s: s.has_permission(user,perm),self.children.all())
+    
+def set_display(sender,**kwargs):
+    kwargs['instance'].display = kwargs['instance'].display_str()
+    
+pre_save.connect(set_display,sender=Name)
     
 class NameLink(models.Model):
     src = models.ForeignKey(Name,related_name='sources')
@@ -179,18 +195,22 @@ def traverse(name,callable,user,depth,includeroot=False):
 
     
 # TODO - remove system user dependency
-def walkto(root,nameparts,autocreate=False,autoacl='l'):
+def walkto(root,nameparts,autocreate=False):
     name = None
     for n in nameparts:
         (a,eq,v) = n.partition('=')
+        pprint("walkto %s -> %s" % (root,n))
         if v:
             attribute = Attribute.objects.get(name=a)
             try:
                 name = Name.objects.get(parent=root,type=attribute.id,value=v)
             except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name(parent=root,creator=None,type=attribute.id,value=v,acl=autoacl)
+                    name = Name(parent=root,creator=None,type=attribute.id,value=v)
                     name.save()
+                    if root:
+                        name.copyacl(root)
+                    
                 else:
                     raise e
         else:
@@ -198,18 +218,17 @@ def walkto(root,nameparts,autocreate=False,autoacl='l'):
                 name = Name.objects.get(parent=root,type=None,value=a)
             except ObjectDoesNotExist,e:
                 if autocreate:
-                    name = Name(parent=root,creator=None,type=None,value=a,acl=autoacl)
+                    name = Name(parent=root,creator=None,type=None,value=a)
                     name.save()
+                    if root:
+                        name.copyacl(root)
                 else:
                     raise e
         root = name
     return name
 
-def lookup(name,autocreate=False,autoacl='l'):
-    return walkto(None,nameparts=re.compile('[;:]').split(name),autocreate=autocreate,autoacl=autoacl)
+def lookup(name,autocreate=False):
+    return walkto(None,nameparts=re.compile('[;:]').split(name),autocreate=autocreate)
 
 def attribute(a):
     Attribute.objects.get_or_create(name=a)
-
-#sysuser = User.objects.get_or_create(username='system',first_name='COIP System',last_name='User',password="(not used)")
-anyuser = lookup("system:anyuser",True)    

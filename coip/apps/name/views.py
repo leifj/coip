@@ -6,9 +6,9 @@ Created on Jul 6, 2010
 from coip.apps.name.models import Name, lookup, traverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound, HttpResponseForbidden,\
-    HttpResponseRedirect
+    HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
-from coip.multiresponse import respond_to, json_response
+from coip.multiresponse import respond_to, json_response, render403
 from pprint import pprint
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm
 from twisted.python.reflect import ObjectNotFound
@@ -21,7 +21,7 @@ def delete(request,id):
         return HttpResponseNotFound()
     
     if not name.has_permission(request.user,'d'):
-        return HttpResponseForbidden()
+        return render403()
     
     if request.method == 'POST':
         form = NameDeleteForm(request.POST)
@@ -63,10 +63,11 @@ def add(request,id):
             return HttpResponseForbidden('You are not allowed to create names')
     
     if request.method == 'POST':
-        name = Name(parent=parent,creator=request.user,acl=parent.copy_acl())
+        name = Name(parent=parent,creator=request.user)
         form = NewNameForm(request.POST,instance=name)
         if form.is_valid():
-            form.save()
+            name = form.save()
+            name.copyacl(name.parent)
             return HttpResponseRedirect("/name/id/%d" % name.id)
     else:
         form = NewNameForm()
@@ -101,18 +102,27 @@ def show_root(request):
 
 def show(request,name):
     if not name:
-        return HttpResponseNotFound()
+        raise Http404()
     
     if name.has_permission(request.user,'r'):
+        memberships = None
+        invitations = None
+        if name.has_permission(request.user,'l'):
+            memberships = name.memberships
+            invitations = name.invitations
         return respond_to(request, 
                           {'text/html': 'apps/name/name.html'}, 
-                          {'name': name, 
-                           'memberships': name.memberships, 
-                           'delete': name.has_permission(request.user,'d'),
-                           'insert': name.has_permission(request.user,'i'),
-                           'edit': name.has_permission(request.user,'w')})
+                          {'name': name,
+                           'memberships':memberships,
+                           'invitations':invitations,
+                           'render': {'delete': name.has_permission(request.user,'d'),
+                                      'insert': name.has_permission(request.user,'i'),
+                                      'edit': name.has_permission(request.user,'w'),
+                                      'invite': name.has_permission(request.user,'i'),
+                                      'up': name.parent and name.parent.has_permission(request.user,'r')}
+                           })
     else:
-        return HttpResponseForbidden()
+        return render403()
 
 @login_required
 def show_by_name(request,n=None):
@@ -121,7 +131,7 @@ def show_by_name(request,n=None):
     try:
         return show(request,lookup(n))
     except ObjectDoesNotExist:
-        return HttpResponseNotFound()    
+        return HttpResponseNotFound()   
    
 @login_required
 def show_by_id(request,id=None):

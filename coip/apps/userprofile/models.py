@@ -17,6 +17,10 @@ class UserProfile(models.Model):
     
     def __unicode__(self):
         return "%s [%s] - %s" % (self.identifier,self.user.username,self.display_name)
+
+
+def last_used_profile(user):
+    return UserProfile.objects.filter(user=user).order_by('lastupdated')[0]
     
 class PKey(models.Model):
     user_profile = models.ForeignKey(UserProfile,related_name='keys')
@@ -26,5 +30,3 @@ class PKey(models.Model):
     
     def __unicode__(self):
         return "A merge-key for "+self.user_profile
-
-    

@@ -8,6 +8,7 @@ from coip.apps.userprofile.models import UserProfile
 from django.contrib.auth.models import User
 from coip.apps.auth.utils import anonid
 from coip.apps.name.models import lookup
+import datetime
 
 def meta(request,attr):
     v = request.META.get(attr)
@@ -50,11 +51,10 @@ def accounts_login_federated(request):
             
         if update:
             request.user.save()
-            profile.save()
-            
-        #autocreate a few personal namespaces
-        lookup('user:'+profile.identifier,True,'system:anyuser#l '+request.user+'#rw')
-        lookup(request.user,True,'system:anyuser#l '+request.user+'#rw')
+        
+        # Allow auto_now to kick in for the lastupdated field
+        #profile.lastupdated = datetime.datetime.now()    
+        profile.save()
             
         next = request.session.get("after_login_redirect", None)
         if next is not None:

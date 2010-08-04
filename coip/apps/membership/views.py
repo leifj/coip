@@ -3,37 +3,18 @@ Created on Jun 23, 2010
 
 @author: leifj
 '''
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 from coip.apps.membership.models import Membership
-from coip.apps.membership.forms import InvitationForm
-from django.http import HttpResponseRedirect
-from coip.apps.auth.utils import nonce
-from coip.multiresponse import respond_to
+from coip.multiresponse import render403, respond_to
 
-#@login_required
-#def memberships(request,name):
-#    
-#    Membership.objects.get(name)
+def show(request,id):
+    membership = get_object_or_404(Membership,pk=id)
+    name = membership.name
+    if not name.has_permission(request.user,'r'):
+        return render403("You do not have permission to view membership information for %s" % (name))
     
-    
-@login_required
-def invite(request):
-    user = request.user
-    if request.method == 'POST':
-        form = InvitationForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data["email"]
-            expires = form.cleaned_data["expires"]
-            message = form.cleaned_data["message"]
-            membership = Membership(inviter=user,email=email,message=message,expires=expires,nonce=nonce())
-            membership.save()
-            membership.send_email()
-            return HttpResponseRedirect("/membership/id/"+membership.id)
-    else:
-        form = InvitationForm({});
-    
-    return respond_to(request,{'text/html': 'apps/invitation/create.html'},{'form': form})
-
-def accept(request,nonce):
-    user = request.user
-    membership = Membership.objects.get(nonce=nonce)
+    return respond_to({'text/html': 'apps/membership/membership.html'}, 
+                      {'membership': membership,
+                       'render': {'edit': name.has_permission(request.user,'w'),
+                                  'delete': name.has_permission(request.user,'d'),
+                                  'disable': name.has_permission(request.user,'d')}})

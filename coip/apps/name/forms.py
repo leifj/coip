@@ -16,11 +16,14 @@ class AttributeForm(forms.ModelForm):
         model = Attribute
 
 class NameEditForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 85, 'rows': 10}))
+    
     class Meta:
         model = Name
         fields = ['short','description']
         
 class NewNameForm(forms.ModelForm):
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 85, 'rows': 10}))
     class Meta:
         model = Name
         fields = ['type','value','short','description']

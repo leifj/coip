@@ -7,12 +7,12 @@ from django.contrib.auth.decorators import login_required
 from coip.apps.userprofile.models import PKey
 from django.http import HttpResponseRedirect
 from coip.multiresponse import respond_to
-from coip.apps.membership.models import Membership
+from coip.apps.membership.models import Membership, add_member
 from coip.apps.userprofile.utils import user_profile
 from django.core.exceptions import ObjectDoesNotExist
 from pprint import pprint
 from coip.apps.auth.utils import nonce
-from coip.apps.name.models import Name, NameLink
+from coip.apps.name.models import Name, NameLink, lookup
 
 @login_required
 def merge(request,pkey=None):
@@ -38,6 +38,14 @@ def home(request):
         memberships = Membership.objects.filter(user=request.user)
     except ObjectDoesNotExist:
         pass
+    
+    anyuser = lookup("system:anyuser",True)
+    profile = user_profile(request)
+    home = lookup('user:'+request.user.username,autocreate=True)
+    home.short = "Home of %s (%s)" % (profile.display_name,profile.identifier)
+    home.save()
+    add_member(home,profile.user)
+    home.setacl(home,"rliw")
     
     names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control).all()]
     
