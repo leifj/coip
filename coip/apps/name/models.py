@@ -99,7 +99,7 @@ class Name(models.Model):
             link.data = ''
             save = True
         for p in perm:
-            pprint(p)
+            #pprint(p)
             if link.data.find(p) == -1:
                 link.data = link.data+p
                 save = True
@@ -128,7 +128,7 @@ class Name(models.Model):
         self.link(part,NameLink.part_of,None)
     
     def has_permission(self,user,perm):
-        pprint("has_permission %s %s %s" % (self,user,perm))
+        #pprint("has_permission %s %s %s" % (self,user,perm))
         # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
         #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
         # user is superuser or acl is on implicit group or user is member of acl group
@@ -199,7 +199,7 @@ def walkto(root,nameparts,autocreate=False):
     name = None
     for n in nameparts:
         (a,eq,v) = n.partition('=')
-        pprint("walkto %s -> %s" % (root,n))
+        #pprint("walkto %s -> %s" % (root,n))
         if v:
             attribute = Attribute.objects.get(name=a)
             try:
