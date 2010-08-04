@@ -2,9 +2,10 @@ import coip.mimeparse as mimeparse
 import re
 from django.conf import settings
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from coip.apps.userprofile.utils import user_profile
 from django.utils import simplejson
+from django.template import loader
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -37,6 +38,10 @@ def json_response(data):
     r['Pragma'] = 'no-cache'
     
     return r
+
+def render403(message="You don't seem to have enough rights for what you are trying to do....",dict={}):
+    dict['message'] = message
+    return HttpResponseForbidden(loader.render_to_string("403.html",dict))
     
 def respond_to(request, template_mapping, dict={}, suffix_mapping=default_suffix_mapping):
     accept = _accept_types(request, suffix_mapping)
