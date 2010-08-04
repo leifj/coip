@@ -45,7 +45,7 @@ def home(request):
     home.short = "Home of %s (%s)" % (profile.display_name,profile.identifier)
     home.save()
     add_member(home,profile.user)
-    home.setacl(home,"rliw")
+    home.setacl(home,"rliwd")
     
     names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control).all()]
     
