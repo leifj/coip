@@ -36,6 +36,7 @@ urlpatterns = patterns('',
     # Invitations
     (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
     (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),
+    (r'^invitation/(?P<id>[0-9]+)/resend$',          'coip.apps.invitation.views.resend'),
     (r'^invitation/(?P<nonce>[^\/]+)/accept$',       'coip.apps.invitation.views.accept'),
     # JSON Tree
     (r'^ctree.json$',                                'coip.apps.name.views.ctree'),

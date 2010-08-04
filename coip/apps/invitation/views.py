@@ -69,5 +69,12 @@ def cancel(request,id):
     
     invitation.delete()
     return HttpResponseRedirect("/name/id/%d" % (name.id))
+
+def resend(request,id):
+    invitation = get_object_or_404(Invitation,pk=id)
+    name = invitation.name
+    
+    invitation.send_email()
+    return HttpResponseRedirect("/name/id/%d" % (name.id))
     
     
