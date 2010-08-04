@@ -8,7 +8,7 @@ import re
 from pprint import pprint
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models.signals import post_init, pre_save
+from django.db.models.signals import pre_save
 
 class Attribute(models.Model):
     name = models.CharField(unique=True,max_length=255)
