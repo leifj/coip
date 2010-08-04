@@ -1,0 +1,31 @@
+{% extends "tree.html" %}
+{% block widgets %}
+    $('#id_expires').datepicker({'dateFormat': 'yy-mm-dd','timeFormat': 'hh:ii:ss'});
+    $('#id_description').wysiwyg();
+{% endblock %}
+{% block content %}
+	<form method="POST">
+		<div class="ui-widget-content ui-corner-all infopanel">
+		    <h3>{{formtitle}}</h3>
+			<table>
+		      {% for field in form %}
+		        <tr>
+		          {% if field.errors %}
+		            <td colspan="2">{{ field.errors }}</td>
+		          {% endif %}
+		        </tr>
+		        <tr>
+		          <td>{{ field.label_tag }}</td>
+		          <td><div class="ui-widget">{{ field }}</div></td>
+		        </tr>
+		      {% endfor %}
+		    </table>
+		</div>
+		<br/>
+		<div class="button">
+		    <input type="submit" value="{{submitname}}" />
+		    <input type="button" onClick="document.location='/name/id/{{name.id}}'" value="Cancel"/>
+	    </div>
+	</form>
+</div>
+{% endblock %}

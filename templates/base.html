@@ -6,6 +6,7 @@
         <link type="text/css" href="/site-media/css/jquery.tooltip.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.tagInput.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.multiselect2side.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.wysiwyg.css" rel="stylesheet" />
         <script type="text/javascript" src="/site-media/js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery-ui-1.8.2.custom.min.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.tooltip.pack.js"></script>
@@ -17,6 +18,7 @@
         <script type="text/javascript" src="/site-media/js/jquery.tagInput.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.multiselect2side.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.jstree.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.wysiwyg.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}{% endblock %}</title>
 		<script type="text/javascript">
@@ -63,8 +65,8 @@
 		   #footer li { float: left; margin: 0 0.15em}
 		   .navlist ul { list-style: none; padding: 0; margin: 0; }
 		   .navlist li { float: left; display: inline; margin: 0 0.15em; }
-		   .description { clear: both; margin-top: 25px; padding-top: 5px; border-top: 1px solid black; }
-		   #branding{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px; float: left}
+		   .description { inherit: none; margin-bottom: 10px;}
+		   #headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px; float: left}
 		   #linklist { float: right; margin-right: 50px; }
 		   #linklist ul{ list-style: none; padding: 0; margin: 0; }
 		   #linklist li{ float: left; margin: 0 0.15em}
@@ -73,27 +75,29 @@
 		   a:hover { text-decoration: underline; }
 		   .clear { clear: both; }
 		   #content{ }
-		   #main{ font: 100% "Trebuchet MS", sans-serif; width:90%; }
+		   #main{ font: 100% "Trebuchet MS", sans-serif; width:95%; }
 		   .code{font: 110% "Courier", fixed}
-		   .infopanel {font-size: 130%; width: 100%; padding: 5px; margin-bottom: 10px; }
+		   .infopanel { padding-left: 10px; }
 		   .infopanel label { display:block; }
 		   div .hidden {visibility:hidden;}
 		   div .ms2side__div {width: 300%;}
 		   option .ms2side__select {font-size: 61.8%;}
+		   .listheader { padding-left: 20px; }
 		</style>
 </head>
 <body>
 	<div id="notification"></div>
 	<div id="header">
+	   <div id="headline">{% block headline %}{% endblock %}</div>
 	   {% if user.is_authenticated %}
 	   <div style="float: right; margin-right: 50px;" class="button"><a id="logout" href="/auth/logout/">Logout</a></div>
 	   <div id="linklist">
 	      <ul>
-	         <li><a href="/user/home"><span class="ui-icon ui-icon-locked" style="float: left;"></span>{{ profile.display_name }}</a></li>
+	         <li style="margin-top: 5px;"><a href="/user/home"><span class="ui-icon ui-icon-locked" style="float: left;"></span>{{ profile.display_name }}</a></li>
 	      </ul>
 	   </div>
+	   {% block tools %}{% endblock %}
 	   {% endif %}
-	   <div id="branding"><a style="text-decoration: none" href="/">{% block headline %}{% endblock %}</a></div>
 	</div>
 	<div class="clear"></div>
 	<div id="content">
