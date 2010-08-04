@@ -29,24 +29,23 @@ class Invitation(models.Model):
         
     def send_email(self):
         pinviter = last_used_profile(self.inviter)
-        send_mail('[coip] Invitation to join \'%s\'' % (self.name.short), 
+        send_mail('[coip] Invitation to join \'%s\'' % (self.name.short),
                   '''
-                  
-                  %s (%s) has invited you to join \'%s\':
-                  
-                  %s
-                  
-                  If you want to accept the invitation open this link in your browser:
-                  
-                  http://localhost/invitation/%s/accept
-                  
-                  To view information about \'%s\' open this link in your browser:
-                  
-                  http://localhost/name/%s
-                  
-                  ''' % (pinviter.display_name,pinviter.identifier,self.name.short,self.message,self.nonce,self.name.id),
-                  'noreply@coip.example.com',[self.email], fail_silently=False)
+%s (%s) has invited you to join \'%s\':
 
-        pprint("sent email to %s" % (self.email))
+---
+%s
+---
+
+If you want to accept the invitation open this link in your browser:
+http://localhost/invitation/%s/accept
+
+To view information about \'%s\' open this link in your browser:
+http://localhost/name/%s
+
+''' % (pinviter.display_name,pinviter.identifier,self.name.short,self.message,self.nonce,self.name.short,self.name.id),
+                  'noreply@coip.example.com',
+                  [self.email], 
+                  fail_silently=False)
         return
         
