@@ -43,19 +43,17 @@
 		</div>
 	</div>
 	{% endif %}
+	{% if memberships %}
 	<h3>Members</h3>
 	<div id="memberships">
 		{% for m in memberships.all %}
-		{% if not m.name.hidden %}
 		<div id="m{{m.id}}" class="{{m.status}}">
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
 		   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
 		</div>
-		{% endif %}
-		{% empty %}
-		<p>There are no members.</p>
 		{% endfor %}
 	</div>
+	{% endif %}
 	{% if invitations %}
 	<h3>Pending invitations</h3>
 	<div id="invitations">
