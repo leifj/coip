@@ -75,8 +75,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.humanize',
     'django_extensions',
+    'coip.extensions',
     'coip.apps.name',
     'coip.apps.membership',
+    'coip.apps.invitation',
     'coip.apps.userprofile',
 )
