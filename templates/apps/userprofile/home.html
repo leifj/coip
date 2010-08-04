@@ -1,33 +1,25 @@
-{% extends "base.html" %}
-{% block js %}
-<script type="text/javascript">
-$(function() {
+{% extends "tree.html" %}
+{% block widgets %}
 	$("#gravatar").append($.gravatar($('#email').text()));
+	$("#names").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false
+   	});
    	$("#memberships").accordion({
    		header: 'h3',
    		collapsible: true,
         active: false
    	});
-   	$("#names").accordion({
-   		header: 'h3',
-   		collapsible: true,
-        active: false
-   	});
-});
-</script>
 {% endblock %}
-{% block headline %}{{profile.display_name}}{% endblock %}
-{% block title %}COIP - {{profile.display_name}} - Home{% endblock %}
-{% block main %}
+{% block content %}
 <h3>Memberships</h3>
-<div id="memberships" style="width: 60%;">
-	{% for m in memberships %}
+<div id="memberships">
+	{% for m in memberships.all %}
 	<div id="m{{m.id}}" class="{{m.status}}">
-	   <h3 style="padding-left: 20px;">{{m.name.shortname}}</h3>
+	   <h3 class="listheader">{{m.name.shortname}}</h3>
 	   <div>
-	   	  You have been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
-	   	  <div>{{m.name.description}}</div></br>
-	   	  <a href="/name/id/{{m.name.id}}">More details about {{m.name.shortname}}...</a>
+	   	  You have been a member of <a href="/name/id/{{m.name.id}}">{{m.name.shortname}}</a> since {{m.timecreated}}
 	   </div>
 	</div>
 	{% empty %}
@@ -35,17 +27,16 @@ $(function() {
 	{% endfor %}
 </div>
 <h3>Names</h3>
-<div id="names" style="width: 60%;">
+<div id="names">
 	{% for n,p in names %}
-	<div id="n{{n.id}}"">
-	   <h3 style="padding-left: 20px;">{{n.shortname}}</h3>
+	<div id="n{{n.id}}">
+	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-	      You are allowed to {{p}} {{n.shortname}}<br/>
-	   	  <a href="/name/id/{{n.id}}">More details about {{n.shortname}}...</a>
+	      You are allowed to {{p}} <a href="/name/id/{{n.id}}">{{n.shortname}}</a>
 	   </div>
 	</div>
 	{% empty %}
-	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You do not own any names</p>
+	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You do not control any names</p>
 	{% endfor %}
 </div>
 {% endblock %}

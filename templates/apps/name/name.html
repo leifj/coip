@@ -1,74 +1,80 @@
-{% extends "base.html" %}
-{% block js %}
-<script type="text/javascript">
-$(function() {
-   	$("#members").accordion({
-   		header: 'h3'
+{% extends "tree.html" %}
+{% load datehumanize %}
+{% load userdisplay %}
+{% block widgets %}
+    $("#memberships").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false
    	});
-   	$('#tree').jstree({
-   		'json_data': {
-   			'ajax': {
-   				'url': function(n) {
-   					if (n == -1) {
-   						return {% if name %}"/rtree/"+{{name.id}}+".json"{% else %}"/rtree.json"{% endif %};
-   					} else {
-   						return "/ctree/"+n.attr('id')+".json";
-   					}
-   				}
-   			},
-   			"progressive_render"  : true,
-   			'animation': 0,
-   		},
-   		'plugins': ['themeroller','json_data']
+   	$("#invitations").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false
    	});
-});
-</script>
 {% endblock %}
-{% block headline %}{% if name %}{{name.shortname}}{% else %}(){% endif %}{% endblock %}
-{% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
-{% block main %}
-<div style="float: left; width: 30%;">
-	{% if name %}
-	{% if name.parent %}
-	<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
-	{% else %}
-	<a href="/name">.. (up one level)</a>
-	{% endif %}
-	{% endif %}
-	<div style="height: 100%;" id="tree"></div>
+{% block tools %}
+<div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: left; margin-left: 10px; margin-top: 6px; margin-bottom: 20px;">
+<div class="navlist">
+  <ul>
+     {% if render.edit %}
+	 <li style="float: right;"><a class="tip" title="Modify this name" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
+	 {% endif %}
+	 {% if render.delete %}
+	 <li style="float: right;"><a class="tip" title="Permanently remove this name" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+	 {% endif %}
+	 {% if render.insert %}
+	 <li style="float: right;"><a class="tip" title="Create a new name below this one" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+	 {% endif %}
+	 {% if render.invite %}
+	 <li style="float: right;"><a class="tip" title="Invite user" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+	 {% endif %}
+   </ul>
 </div>
-<div style="float: right; width: 60%; padding-left: 20px;">
-{% if name %}
-	<div class="ui-widget-content ui-corner-all infopanel">
-		<div class="navlist">
-		   <ul>
-		     {% if edit %}
-			 <li style="float: right;"><a class="tip" title="Modify this name" href="/name/edit/id/{{name.id}}"><span class="ui-icon ui-icon-wrench"></span></a>
-			 {% endif %}
-			 {% if delete %}
-			 <li style="float: right;"><a class="tip" title="Permanently remove this name" href="/name/delete/id/{{name.id}}"><span class="ui-icon ui-icon-trash"></span></a>
-			 {% endif %}
-			 {% if insert %}
-			 <li style="float: right;"><a class="tip" title="Create new subordinate name" href="/name/add/id/{{name.id}}"><span class="ui-icon ui-icon-plusthick"></span></a>
-			 {% endif %}
-		   </ul>
+</div>
+{% endblock %}
+{% block content %}
+    {% if name.description %}
+    <div class="ui-widget">
+	    <div class="ui-state-highlight ui-corner-all infopanel">
+	       {% autoescape off %}
+		   <p class="description">{{name.description|safe}}</p>
+		   {% endautoescape %}
 		</div>
-		<div class="clear"/>
-		<h3>{{name}}</h3>
-		<p>{{name.description}}</p>
 	</div>
 	{% endif %}
-	{% if memberships %}
-	<div id="members">
+	<h3>Members</h3>
+	<div id="memberships">
 		{% for m in memberships.all %}
+		{% if not m.name.hidden %}
 		<div id="m{{m.id}}" class="{{m.status}}">
-		   <h3 style="padding-left: 20px;">{{m.user}}</h3>
-		   <div>
-		   	  {{m.user}} has been a member of {{m.name.shortname}} since {{m.timecreated}}<br/>
-		   </div>
+		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
+		   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
 		</div>
+		{% endif %}
+		{% empty %}
+		<p>There are no members.</p>
 		{% endfor %}
 	</div>
-{% endif %}
-</div>
+	{% if invitations %}
+	<h3>Pending invitations</h3>
+	<div id="invitations">
+		{% for i in invitations.all %}
+		<div id="m{{m.id}}">
+		   <h3 class="listheader">{{i.email}}</h3>
+		   <div>
+		      <div class="navlist" style="margin-top: -10px;">
+		         <ul>
+		            <li style="float: right;"><a class="tip" title="Cancel invitation" href="/invitation/{{i.id}}/cancel"><span class="ui-icon ui-icon-trash"></span></a></li>
+		         </ul>
+		      </div>
+		      <div class="clear"></div>
+		   	  <div>{{i.email}} was invited to {{i.name.shortname}} {{i.timecreated|datehumanize}} by {{i.inviter}}.</div>
+		   </div>
+		</div>
+		{% empty %}
+		<p>There are no pending invitations.{% if render.invite %}<a class="tip" title="Invite user" href="/name/{{name.id}}/invite">Invite someone!</a>{% endif %}</p>
+		{% endfor %}
+	</div>
+	{% endif %}
 {% endblock %}
