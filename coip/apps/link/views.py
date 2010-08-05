@@ -10,6 +10,7 @@ from coip.multiresponse import render403, respond_to
 from coip.apps.link.models import Link
 from coip.apps.link.forms import AddRelatedLinkForm
 from django.http import HttpResponseRedirect
+import re
 
 @login_required
 def add(request,id):
@@ -21,6 +22,9 @@ def add(request,id):
         link = Link(tag='related',name=name)
         form = AddRelatedLinkForm(request.POST,instance=link)
         if form.is_valid():
+            url = form.cleaned_data['url']
+            if not re.match('^([^:]+)://',url):
+                form.cleaned_data['url'] = "http://%s" % (url)
             link = form.save()
             return HttpResponseRedirect("/name/id/%d" % name.id)
     else:
