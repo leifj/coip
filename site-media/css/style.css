@@ -1,0 +1,35 @@
+html { height: 100%; margin: 0; padding: 0;}
+body { font: 61.8% "Trebuchet MS", sans-serif; width: 70%; height: 100%; margin:0;padding:0;}
+div#container { position: relative; height:auto !important; height:100%; min-height:100%; margin: 0 auto; margin-left: 50px;}
+label { display:block; }
+#modal-dialog { font-size: 110%; }
+#modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
+#modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
+div#footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px;}
+div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
+div#footer li { float: left; margin: 0 0.15em}
+.navlist ul { list-style: none; padding: 0; margin: 0; }
+.navlist li { float: right; display: inline; margin: 0 0.15em; }
+.description { inherit: none; margin-bottom: 10px;}
+div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
+div.toolbar{ padding: 4px; float: right; margin-right: 10px; margin-top: 6px; margin-bottom: 20px;}
+div#left { float: left; width: 30%; padding-left: 5px; }
+div#right { float: right; width: 65%; padding-left: 20px; border-left: 1px solid #CECECE; }
+div#related { position: absolute; bottom: 30%; }
+ul.links { list-style: none inside; padding: 0; margin: 0; }
+li.links { padding: 0; margin: 0; }
+div#tree { padding-bottom: 50px;}
+#linklist { float: right; margin-right: 50px; }
+#linklist ul{ list-style: none; padding: 0; margin: 0; }
+#linklist li{ float: left; margin: 0 0.15em}
+#linklist a{ font: 120% "Trebuchet MS", sans-serif; }
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+.clear { clear: both; }
+div#content { }
+div#main{ font: 100% "Trebuchet MS", sans-serif; width:95%; height:auto !important; height:100%; min-height: 100%;}
+.code{font: 110% "Courier", fixed}
+.infopanel { padding-left: 10px; padding-bottom: 10px;}
+.infopanel label { display:block; }
+div .hidden {visibility:hidden;}
+.listheader { padding-left: 20px; }

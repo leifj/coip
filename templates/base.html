@@ -7,6 +7,7 @@
         <link type="text/css" href="/site-media/css/jquery.tagInput.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.multiselect2side.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.wysiwyg.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/style.css" rel="stylesheet"/>
         <script type="text/javascript" src="/site-media/js/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery-ui-1.8.2.custom.min.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.tooltip.pack.js"></script>
@@ -54,80 +55,50 @@
 		});
 		</script>
         {% block js %}{% endblock %}
-        <style type="text/css">
-		   body{ font: 61.8% "Trebuchet MS", sans-serif; margin: 50px; width: 70% }
-		   label { display:block; }
-		   #modal-dialog { font-size: 110%; }
-		   #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
-		   #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
-		   #footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid black; margin-top: 50px; padding-top: 10px;}
-		   #footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
-		   #footer li { float: left; margin: 0 0.15em}
-		   .navlist ul { list-style: none; padding: 0; margin: 0; }
-		   .navlist li { float: left; display: inline; margin: 0 0.15em; }
-		   .description { inherit: none; margin-bottom: 10px;}
-		   #headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px; float: left}
-		   #linklist { float: right; margin-right: 50px; }
-		   #linklist ul{ list-style: none; padding: 0; margin: 0; }
-		   #linklist li{ float: left; margin: 0 0.15em}
-		   #linklist a{ font: 120% "Trebuchet MS", sans-serif; }
-		   a { text-decoration: none; }
-		   a:hover { text-decoration: underline; }
-		   .clear { clear: both; }
-		   #content{ }
-		   #main{ font: 100% "Trebuchet MS", sans-serif; width:95%; }
-		   .code{font: 110% "Courier", fixed}
-		   .infopanel { padding-left: 10px; padding-bottom: 10px;}
-		   .infopanel label { display:block; }
-		   div .hidden {visibility:hidden;}
-		   div .ms2side__div {width: 300%;}
-		   option .ms2side__select {font-size: 61.8%;}
-		   .listheader { padding-left: 20px; }
-		</style>
 </head>
 <body>
-	<div id="notification"></div>
+<div id="notification"></div>
+<div id="container">
 	<div id="header">
-	   <div id="headline">{% block headline %}{% endblock %}</div>
 	   {% if user.is_authenticated %}
-	   <div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: right; margin-right: 10px; margin-top: 6px; margin-bottom: 20px;">
-	      <a title="Logout" class="tip" id="logout" href="/auth/logout/"><span class="ui-icon ui-icon-power"></span></a>
+	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
+	      <ul>
+	         <li><a title="Logout" class="tip" id="logout" href="/auth/logout/"><span class="ui-icon ui-icon-power"></span></a></li>
+	         <li><a title="{{ profile.display_name }} ({{ profile.identifier }})" class="tip" href="/user/home"><span class="ui-icon ui-icon-home"></span></a></li>
+	      </ul>
 	   </div>
-	   {% block tools %}
-{% if name %}
-<div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: left; margin-left: 10px; margin-top: 6px; margin-bottom: 20px;">
-<div class="navlist">
-  <ul>
-  	 {% if render.edit %}
-	 <li style="float: right;"><a class="tip" title="Modify access rights" href="/name/{{name.id}}/editacl"><span class="ui-icon ui-icon-unlocked"></span></a></li>
-	 {% endif %}
-     {% if render.edit %}
-	 <li style="float: right;"><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
-	 {% endif %}
-	 {% if render.delete %}
-	 <li style="float: right;"><a class="tip" title="Permanently remove this" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
-	 {% endif %}
-	 {% if render.insert %}
-	 <li style="float: right;"><a class="tip" title="Create child" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
-	 {% endif %}
-	 {% if render.invite %}
-	 <li style="float: right;"><a class="tip" title="Invite someone to join" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
-	 {% endif %}
-	 <li style="float: right;"><a class="tip" title="Refresh" href="/name/id/{{name.id}}"><span class="ui-icon ui-icon-refresh"></span></a></li>
-   </ul>
-</div>
-</div>
-{% endif %}
-{% endblock %}
 	   {% endif %}
+	   {% if name %}
+	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
+		  <ul>
+		  	 {% if render.edit %}
+			 <li><a class="tip" title="Modify access rights" href="/name/{{name.id}}/editacl"><span class="ui-icon ui-icon-unlocked"></span></a></li>
+			 {% endif %}
+		     {% if render.edit %}
+			 <li><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
+			 {% endif %}
+			 {% if render.delete %}
+			 <li><a class="tip" title="Permanently remove this" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+			 {% endif %}
+			 {% if render.insert %}
+			 <li><a class="tip" title="Create child" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+			 {% endif %}
+			 {% if render.invite %}
+			 <li><a class="tip" title="Invite someone to join" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+			 {% endif %}
+			 <li><a class="tip" title="Refresh" href="/name/id/{{name.id}}"><span class="ui-icon ui-icon-refresh"></span></a></li>
+		   </ul>
+	   </div>
+	   {% endif %}
+	   <div class="clear"></div>
 	</div>
-	<div class="clear"></div>
 	<div id="content">
+		<div id="headline">{% block headline %}{% endblock %}</div>
 		<div id="main">
 		   	{% block main %}{% endblock %}
 		</div>
+		<div class="clear"></div>
 	</div>
-	<div class="clear"></div>
 	<div id="footer">
 	   <ul>
 	     <li><a href="#about">About COIP</a></li>
@@ -137,5 +108,6 @@
 	     <li><a href="/user/home">Logged in as {{ profile.display_name }} ({{ profile.identifier }})</a></li>
 	   </ul>
 	</div>
+</div>
 </body>
 </html>

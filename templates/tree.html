@@ -4,7 +4,7 @@
 $(function() {
     {% block widgets %}{% endblock %}
 {% if name %}
-   	$('#tree').jstree({
+   	$('#jstree').jstree({
    		'json_data': {
    			'ajax': {
    				'url': function(n) {
@@ -16,9 +16,12 @@ $(function() {
    				}
    			},
    			"progressive_render"  : true,
-   			'animation': 0,
    		},
-   		'plugins': ['themeroller','json_data']
+   		'themes': {
+   			'theme': 'classic'
+   		},
+   		'animation': 0,
+   		'plugins': ['themes','json_data']
    	});
 {% endif %}
 });
@@ -28,8 +31,8 @@ $(function() {
 {% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
 {% block main %}
 {% if name %}
-<div style="float: left; width: 30%;">
-    <span>
+<div id="left">
+    <div id="tree">
 		{% if name and render.up %}
 		{% if name.parent %}
 		<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
@@ -37,28 +40,29 @@ $(function() {
 		<a href="/name">.. (up one level)</a>
 		{% endif %}
 		{% endif %}
-		<div id="tree"></div>
-   </span>
-   <span>
+		<div id="jstree"></div>
+   </div>
+   <div id="related">
    		{% if name and name.links %}
    		<h3 style="float: left;">Related resources</h3>
    		{% if render.edit %}
    		<a style="float: left; margin-top: 11px;" class="tip" title="Add Link" href="/name/{{name.id}}/addlink"><span class="ui-icon ui-icon-plus"></span></a>
    		{% endif %}
    		<div class="clear"></div>
-   		<ul style="list-style: none;">
+   		<ul class="links"">
    		{% for link in name.links.all %}
-   		   <li><a class="tip" style="float:left; margin-right: 5px;" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>&nbsp;
-   		       <a class="tip" style="float:left;" title="Remove link" href="/link/{{link.id}}/remove">
-   		          <span style="margin-left: 1px;" class="ui-icon ui-icon-close"></span></a><div class="clear"></div></li>
+   		   <li>
+   		      <a class="tip" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>
+   		      <a class="tip" title="Remove link" href="/link/{{link.id}}/remove"><span class="ui-icon ui-icon-close" style="float: right; clear: both;"></span></a>
+   		   </li>
    		{% endfor %}
    		</ul>
    		<div class="clear"></div>
    		{% endif %}
-   </span>
+   </div>
 </div>
 {% endif %}
-<div style="float: right; width: 65%; padding-left: 10px;">
+<div id="right">
 {% block content %}{% endblock %}
 </div>
 {% endblock %}
