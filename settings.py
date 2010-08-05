@@ -82,4 +82,5 @@ INSTALLED_APPS = (
     'coip.apps.membership',
     'coip.apps.invitation',
     'coip.apps.userprofile',
+    'coip.apps.link',
 )

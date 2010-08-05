@@ -29,14 +29,33 @@ $(function() {
 {% block main %}
 {% if name %}
 <div style="float: left; width: 30%;">
-	{% if name and render.up %}
-	{% if name.parent %}
-	<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
-	{% else %}
-	<a href="/name">.. (up one level)</a>
-	{% endif %}
-	{% endif %}
-	<div style="height: 100%;" id="tree"></div>
+    <span>
+		{% if name and render.up %}
+		{% if name.parent %}
+		<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
+		{% else %}
+		<a href="/name">.. (up one level)</a>
+		{% endif %}
+		{% endif %}
+		<div id="tree"></div>
+   </span>
+   <span>
+   		{% if name and name.links %}
+   		<h3 style="float: left;">Related resources</h3>
+   		{% if render.edit %}
+   		<a style="float: left; margin-top: 11px;" class="tip" title="Add Link" href="/name/{{name.id}}/addlink"><span class="ui-icon ui-icon-circle-plus"></span></a>
+   		{% endif %}
+   		<div class="clear"></div>
+   		<ul style="list-style: none;">
+   		{% for link in name.links.all %}
+   		   <li><a class="tip" style="float:left; margin-right: 5px;" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>&nbsp;
+   		       <a class="tip" style="float:left;" title="Remove link" href="/link/{{link.id}}/remove">
+   		          <span style="margin-left: 1px;" class="ui-icon ui-icon-circle-minus"></span></a><div class="clear"></div></li>
+   		{% endfor %}
+   		</ul>
+   		<div class="clear"></div>
+   		{% endif %}
+   </span>
 </div>
 {% endif %}
 <div style="float: right; width: 65%; padding-left: 10px;">

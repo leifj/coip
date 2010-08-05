@@ -17,17 +17,20 @@
 <div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: left; margin-left: 10px; margin-top: 6px; margin-bottom: 20px;">
 <div class="navlist">
   <ul>
+  	 {% if render.edit %}
+	 <li style="float: right;"><a class="tip" title="Modify access rights" href="/name/{{name.id}}/editacl"><span class="ui-icon ui-icon-unlocked"></span></a></li>
+	 {% endif %}
      {% if render.edit %}
-	 <li style="float: right;"><a class="tip" title="Modify this name" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
+	 <li style="float: right;"><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
 	 {% endif %}
 	 {% if render.delete %}
-	 <li style="float: right;"><a class="tip" title="Permanently remove this name" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+	 <li style="float: right;"><a class="tip" title="Permanently remove this" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
 	 {% endif %}
 	 {% if render.insert %}
-	 <li style="float: right;"><a class="tip" title="Create a new name below this one" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+	 <li style="float: right;"><a class="tip" title="Create child" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
 	 {% endif %}
 	 {% if render.invite %}
-	 <li style="float: right;"><a class="tip" title="Invite user" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+	 <li style="float: right;"><a class="tip" title="Invite someone to join" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
 	 {% endif %}
    </ul>
 </div>

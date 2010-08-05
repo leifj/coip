@@ -31,6 +31,9 @@ urlpatterns = patterns('',
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
+    # Links
+    (r'^name/(?P<id>[0-9]+)/addlink$',               'coip.apps.link.views.add'),
+    (r'^link/(?P<id>[0-9]+)/remove$',                'coip.apps.link.views.remove'),
     # Membership
     (r'^membership/(?P<id>[0-9]+)$',                 'coip.apps.membership.views.show'),
     # Invitations

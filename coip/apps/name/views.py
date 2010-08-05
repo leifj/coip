@@ -13,6 +13,7 @@ from pprint import pprint
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm
 from twisted.python.reflect import ObjectNotFound
 
+@login_required
 def delete(request,id):
     name = None
     try:
@@ -47,6 +48,7 @@ def delete(request,id):
             
     return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Remove name confirmation' ,'submitname': 'Delete'})
 
+@login_required
 def add(request,id):
     parent = None
     if id:
@@ -74,6 +76,7 @@ def add(request,id):
         
     return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': parent,'formtitle': 'Create new name','submitname': 'Create'})
 
+@login_required
 def edit(request,id):
     name = None
     try:
@@ -95,6 +98,7 @@ def edit(request,id):
     return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Change name','submitname': 'Update'})
             
 
+@login_required
 def show_root(request):
     return respond_to(request, 
                       {'text/html': 'apps/name/name.html'}, 

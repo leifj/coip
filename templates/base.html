@@ -90,11 +90,8 @@
 	<div id="header">
 	   <div id="headline">{% block headline %}{% endblock %}</div>
 	   {% if user.is_authenticated %}
-	   <div style="float: right; margin-right: 50px;" class="button"><a id="logout" href="/auth/logout/">Logout</a></div>
-	   <div id="linklist">
-	      <ul>
-	         <li style="margin-top: 5px;"><a href="/user/home"><span class="ui-icon ui-icon-locked" style="float: left;"></span>{{ profile.display_name }}</a></li>
-	      </ul>
+	   <div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: right; margin-right: 10px; margin-top: 6px; margin-bottom: 20px;">
+	      <a title="Logout" class="tip" id="logout" href="/auth/logout/"><span class="ui-icon ui-icon-power"></span></a>
 	   </div>
 	   {% block tools %}{% endblock %}
 	   {% endif %}
@@ -110,7 +107,9 @@
 	   <ul>
 	     <li><a href="#about">About COIP</a></li>
 	     <li><a href="#about">Terms Of Use</a></li>
-	     <li><a href="#about">System Status</a></li>
+	   </ul>
+	   <ul style="float: right;">
+	     <li><a href="/user/home">Logged in as {{ profile.display_name }} ({{ profile.identifier }})</a></li>
 	   </ul>
 	</div>
 </body>
