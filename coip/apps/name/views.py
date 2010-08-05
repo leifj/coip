@@ -118,13 +118,7 @@ def show(request,name):
                           {'text/html': 'apps/name/name.html'}, 
                           {'name': name,
                            'memberships':memberships,
-                           'invitations':invitations,
-                           'render': {'delete': name.has_permission(request.user,'d'),
-                                      'insert': name.has_permission(request.user,'i'),
-                                      'edit': name.has_permission(request.user,'w'),
-                                      'invite': name.has_permission(request.user,'i'),
-                                      'up': name.parent and name.parent.has_permission(request.user,'r')}
-                           })
+                           'invitations':invitations})
     else:
         return render403()
 

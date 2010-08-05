@@ -30,6 +30,14 @@ def make_response_dict(request,d={}):
         d['user'] = request.user
         d['profile'] = user_profile(request)
 
+    if d.has_key('name'):
+        name = d['name']
+        d['render'] = {'delete': name.has_permission(request.user,'d'),
+                       'insert': name.has_permission(request.user,'i'),
+                       'edit': name.has_permission(request.user,'w'),
+                       'invite': name.has_permission(request.user,'i'),
+                       'up': name.parent and name.parent.has_permission(request.user,'r')}
+
     return d
 
 def json_response(data):

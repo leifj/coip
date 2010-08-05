@@ -93,7 +93,32 @@
 	   <div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: right; margin-right: 10px; margin-top: 6px; margin-bottom: 20px;">
 	      <a title="Logout" class="tip" id="logout" href="/auth/logout/"><span class="ui-icon ui-icon-power"></span></a>
 	   </div>
-	   {% block tools %}{% endblock %}
+	   {% block tools %}
+{% if name %}
+<div class="ui-widget ui-state-default ui-corner-all" style="padding: 4px; float: left; margin-left: 10px; margin-top: 6px; margin-bottom: 20px;">
+<div class="navlist">
+  <ul>
+  	 {% if render.edit %}
+	 <li style="float: right;"><a class="tip" title="Modify access rights" href="/name/{{name.id}}/editacl"><span class="ui-icon ui-icon-unlocked"></span></a></li>
+	 {% endif %}
+     {% if render.edit %}
+	 <li style="float: right;"><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
+	 {% endif %}
+	 {% if render.delete %}
+	 <li style="float: right;"><a class="tip" title="Permanently remove this" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+	 {% endif %}
+	 {% if render.insert %}
+	 <li style="float: right;"><a class="tip" title="Create child" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+	 {% endif %}
+	 {% if render.invite %}
+	 <li style="float: right;"><a class="tip" title="Invite someone to join" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+	 {% endif %}
+	 <li style="float: right;"><a class="tip" title="Refresh" href="/name/id/{{name.id}}"><span class="ui-icon ui-icon-refresh"></span></a></li>
+   </ul>
+</div>
+</div>
+{% endif %}
+{% endblock %}
 	   {% endif %}
 	</div>
 	<div class="clear"></div>
