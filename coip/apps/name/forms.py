@@ -29,8 +29,7 @@ class NewNameForm(forms.ModelForm):
         fields = ['type','value','short','description']
         
 class NameDeleteForm(forms.Form):
-    recursive = BooleanField(label="Also delete all nodes below this node?",required=False)
-    confirm = BooleanField(label="Confirm")
+    recursive = BooleanField(label="Also delete everything below this name?",required=False)
     
 class NameLinkForm(forms.ModelForm):
     class Meta:

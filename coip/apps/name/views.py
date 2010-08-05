@@ -27,18 +27,18 @@ def delete(request,id):
     if request.method == 'POST':
         form = NameDeleteForm(request.POST)
         if form.is_valid():
-            if not form.cleaned_data['confirm']:
-                return HttpResponseRedirect("/name/id/%d" % name.id)
-                
             parent = name.parent
             if not form.cleaned_data['recursive'] and name.children.count() > 0:
                 return HttpResponseForbidden("Will not delete non-empty node")
+            
+            for link in name.links:
+                link.delete()
             
             if form.cleaned_data['recursive']:
                 name.remove(True)
             else:
                 name.remove(False)
-                
+            
             if parent:
                 return HttpResponseRedirect("/name/id/%d" % parent.id)
             else:
@@ -46,7 +46,7 @@ def delete(request,id):
     else:
         form = NameDeleteForm()
             
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Remove name confirmation' ,'submitname': 'Delete'})
+    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Remove %s' % (name.short) ,'submitname': 'Delete'})
 
 @login_required
 def add(request,id):
