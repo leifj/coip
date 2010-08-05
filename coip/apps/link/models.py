@@ -8,7 +8,7 @@ from coip.apps.name.models import Name
 
 class Link(models.Model):
     name = models.ForeignKey(Name,related_name='links')
-    url = models.URLField()
+    url = models.CharField(max_length=255)
     tag = models.CharField(max_length=255)
     text = models.CharField(max_length=255)
     timecreated = models.DateTimeField(auto_now_add=True)
