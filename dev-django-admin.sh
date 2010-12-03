@@ -1,1 +1,1 @@
-env PYTHONPATH=`pwd`:$PHTHONPATH DJANGO_SETTINGS_MODULE=settings django-admin $*
+env PYTHONPATH=`pwd`:$PHTHONPATH DJANGO_SETTINGS_MODULE=coip.settings django-admin $*
