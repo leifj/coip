@@ -4,19 +4,23 @@
     $('#id_description').wysiwyg();
 {% endblock %}
 {% block content %}
+    {% block beforeform %}
+    {% endblock %}
 	<form method="POST">
 		<div class="ui-widget-content ui-corner-all infopanel">
 		    <h1>{{formtitle}}</h1>
-			<table>
+			<table class="formtable">
 		      {% for field in form %}
 		        <tr>
-		          {% if field.errors %}
-		            <td colspan="2">{{ field.errors }}</td>
-		          {% endif %}
-		        </tr>
-		        <tr>
-		          <td>{{ field.label_tag }}</td>
-		          <td><div class="ui-widget">{{ field }}</div></td>
+		          <td>
+			          {% if not field.is_hidden %}
+			          <div class="ui-widget fieldlabel">{{ field.label_tag }}</div>
+			          {% endif %}
+			          {% if field.errors %}
+			          <div class="ui-widget ui-state-error">{{ field.errors }}</div>
+			          {% endif %}
+			          <div class="ui-widget">{{ field }}</div>
+		          </td>
 		        </tr>
 		      {% endfor %}
 		    </table>

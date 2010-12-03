@@ -3,15 +3,17 @@ Created on Jul 6, 2010
 
 @author: leifj
 '''
-from coip.apps.name.models import Name, lookup, traverse
+from coip.apps.name.models import Name, lookup, traverse, NameLink
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseNotFound, HttpResponseForbidden,\
     HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from coip.multiresponse import respond_to, json_response, render403
 from pprint import pprint
-from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm
+from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
+    PermissionForm
 from twisted.python.reflect import ObjectNotFound
+from django.shortcuts import get_object_or_404
 
 @login_required
 def delete(request,id):
@@ -98,6 +100,52 @@ def edit(request,id):
     return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Change name','submitname': 'Update'})
             
 
+@login_required
+def editacl(request,id,type):
+    name = get_object_or_404(Name,pk=id)
+    
+    if not name.has_permission(request.user,'w'):
+        return render403("You do not have permission to change permissions on %s" % (name))
+    
+    if request.method == 'POST':
+        form = PermissionForm(request.POST)
+        if form.is_valid():
+            dstid = form.cleaned_data['dst']
+            dst = get_object_or_404(Name,pk=dstid)
+            p = form.cleaned_data['permissions']
+            if not p:
+                p = []
+            perms = p.join('')
+            link = NameLink.objects.get_or_create(src=name,dst=dst,type=NameLink.access_control)
+            link.data = perms
+            link.save()
+
+    form = PermissionForm()
+    return respond_to(request,{'text/html': 'apps/name/acls.html'},{'form': form, 'name': name, 'acl': name.lsacl(),'formtitle': 'Add Permission','submitname':'Add'})
+
+@login_required
+def links(request,id,type=NameLink.access_control):
+    name = get_object_or_404(Name,pk=id)
+    if not name.has_permission(request.user,'r'):
+        return render403("You do not have permission to list name links from %s" % (name))
+    
+    links = name.links.filter(type=type).all
+    return respond_to(request,{'text/html': 'apps/name/links.html',
+                               'application/json': json_response(links)},
+                               {'name': name, 'links': links})
+    
+
+@login_required
+def removelink(request,id):
+    link = get_object_or_404(NameLink,pk=id)
+    name = link.src
+    type = link.type
+    if not name.has_permission(request.user,'w'):
+        return render403("You do not have permission to remove name links from %s" % (name))
+    
+    link.delete()
+    return HttpResponseRedirect("/name/{{name.id}}/link/{{type}}")
+    
 @login_required
 def show_root(request):
     return respond_to(request, 

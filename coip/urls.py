@@ -31,6 +31,10 @@ urlpatterns = patterns('',
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
+    # Name Links
+    (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+).json$',               'coip.apps.name.views.links'),
+    (r'^namelink/(?P<id>[0-9]+)/remove$',               'coip.apps.name.views.removelink'),
+    (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+)$',    'coip.apps.name.views.editacl'),
     # Links
     (r'^name/(?P<id>[0-9]+)/addlink$',               'coip.apps.link.views.add'),
     (r'^link/(?P<id>[0-9]+)/remove$',                'coip.apps.link.views.remove'),
