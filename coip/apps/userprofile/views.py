@@ -10,7 +10,7 @@ from coip.multiresponse import respond_to
 from coip.apps.membership.models import Membership, add_member
 from coip.apps.userprofile.utils import user_profile
 from django.core.exceptions import ObjectDoesNotExist
-from pprint import pprint
+from pprint import pformat
 from coip.apps.auth.utils import nonce
 from coip.apps.name.models import Name, NameLink, lookup
 

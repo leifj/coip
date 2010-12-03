@@ -7,9 +7,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from coip.apps.name.models import Name
 import datetime
-from pprint import pprint
+from pprint import pformat
 from django.core.mail import send_mail
 from coip.apps.userprofile.models import last_used_profile
+import logging
 
 class Invitation(models.Model):
     '''

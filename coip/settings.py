@@ -1,5 +1,7 @@
 # Django settings for coip project.
 
+import coip.site_logging
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

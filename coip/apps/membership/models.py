@@ -7,7 +7,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from coip.apps.name.models import Name
 import datetime
-from pprint import pprint
+from pprint import pformat
+import logging
 
 class Membership(models.Model):
     '''

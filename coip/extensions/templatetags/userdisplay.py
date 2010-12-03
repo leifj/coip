@@ -1,7 +1,8 @@
 from django import template
 from django.template import defaultfilters
 from coip.apps.userprofile.models import last_used_profile
-from pprint import pprint
+from pprint import pformat
+import logging
  
 register = template.Library()
  
@@ -13,7 +14,7 @@ def userdisplay(user):
         p = last_used_profile(user)
         return p.display_name
     except Exception,e:
-        pprint(e)
+        logging.warning(e)
         return user.username
 
 userdisplay.is_safe = True

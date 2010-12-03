@@ -5,7 +5,7 @@ Created on Jun 24, 2010
 '''
 from django.db import models
 import re
-from pprint import pprint
+from pprint import pformat
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import pre_save

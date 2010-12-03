@@ -9,7 +9,8 @@ from django.http import HttpResponseNotFound, HttpResponseForbidden,\
     HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from coip.multiresponse import respond_to, json_response, render403
-from pprint import pprint
+from pprint import pformat
+import logging
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
     PermissionForm
 from twisted.python.reflect import ObjectNotFound
@@ -202,7 +203,7 @@ def _tree(request,id=None,includeroot=False):
     if request.GET.has_key('depth'):
         depth = request.GET['depth']
     t = traverse(name,_tree_node,request.user,depth,includeroot)
-    pprint(t)
+    logging.debug(t)
     return json_response(t)
 
 @login_required
