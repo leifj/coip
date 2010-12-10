@@ -10,7 +10,7 @@ from pprint import pformat
 
 def request_profile(request):
     if request.user.is_authenticated():
-        logging.warning(pformat(request.META))
+        logging.warn(pformat(request.META))
         if request.META.has_key('REMOTE_USER'):
             return UserProfile.objects.get(identifier=request.META['REMOTE_USER'])
         else:
