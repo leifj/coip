@@ -13,6 +13,8 @@ from django.views.decorators.cache import never_cache
 
 def meta(request,attr):
     v = request.META.get(attr)
+    if not v:
+        return None
     values = v.split(";")
     return values[0]
 
