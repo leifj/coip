@@ -17,7 +17,7 @@ def meta(request,attr):
 
 def accounts_login_federated(request):
     if request.user.is_authenticated():
-        profile = UserProfile.objects.get_or_create(identifier=request.user.username)
+        profile,created = UserProfile.objects.get_or_create(identifier=request.user.username)
         if profile.user:
             request.user = profile.user
         else:
