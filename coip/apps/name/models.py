@@ -9,6 +9,7 @@ from pprint import pformat
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import pre_save
+import logging
 
 class Attribute(models.Model):
     name = models.CharField(unique=True,max_length=255)
@@ -128,6 +129,7 @@ class Name(models.Model):
         self.link(part,NameLink.part_of,None)
     
     def has_permission(self,user,perm):
+        logging.warning(pformat(self,user,perm))
         #pprint("has_permission %s %s %s" % (self,user,perm))
         # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
         #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
