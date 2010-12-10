@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from coip.apps.auth.utils import anonid
 from coip.apps.name.models import lookup
 import datetime
+from django.views.decorators.cache import never_cache
 
 def meta(request,attr):
     v = request.META.get(attr)
@@ -63,6 +64,7 @@ def accounts_login_federated(request):
         pass
     return HttpResponseRedirect("/")
 
+@never_cache
 def logout(request):
     from django.contrib.auth import logout
     logout(request) 

@@ -6,6 +6,7 @@ from django.contrib.auth.views import login
 from settings import ADMIN_MEDIA_ROOT
 from settings import MEDIA_ROOT
 from django.http import HttpResponseRedirect
+from coip.apps.auth.views import logout
 admin.autodiscover()
 
 def welcome(request):
@@ -18,6 +19,7 @@ urlpatterns = patterns('',
     (r'^$',                                         welcome),
     # Login/Logout
     (r'^accounts/login/$',                          login,{'template_name': "login.html"}),
+    (r'^accounts/logout$',                          logout)
     (r'^accounts/login-federated/$',                'coip.apps.auth.views.accounts_login_federated'),
     (r'^accounts/logout/$',                         'coip.apps.auth.views.logout'),
     # Profiles and user information
