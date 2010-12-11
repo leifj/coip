@@ -16,7 +16,10 @@ def meta(request,attr):
     if not v:
         return None
     values = v.split(";")
-    return values[0]
+    if values[0] and values[0] != "(null)":
+        return values[0]
+    else:
+        return None
 
 def accounts_login_federated(request):
     if request.user.is_authenticated():
