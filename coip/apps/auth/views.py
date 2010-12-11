@@ -10,16 +10,14 @@ from coip.apps.auth.utils import anonid
 from coip.apps.name.models import lookup
 import datetime
 from django.views.decorators.cache import never_cache
+import logging
 
 def meta(request,attr):
     v = request.META.get(attr)
     if not v:
         return None
-    values = v.split(";")
-    if values[0] and values[0] != "(null)":
-        return values[0]
-    else:
-        return None
+    values = filter(lambda x: x != "(null)",v.split(";"))
+    return values;
 
 def accounts_login_federated(request):
     if request.user.is_authenticated():
@@ -33,11 +31,12 @@ def accounts_login_federated(request):
         else:
             request.user = profile.user
             
-            
+        
         update = False
         cn = meta(request,'cn')
         if not cn:
             cn = meta(request,'displayName')
+        logging.warn(cn)
         if not cn:
             fn = meta(request,'givenName')
             ln = meta(request,'sn')
