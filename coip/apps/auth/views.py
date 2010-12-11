@@ -35,18 +35,18 @@ def accounts_login_federated(request):
             
             
         update = False
-        cn = meta(request,'HTTP_CN')
+        cn = meta(request,'cn')
         if not cn:
-            cn = meta(request,'HTTP_DISPLAYNAME')
+            cn = meta(request,'displayName')
         if not cn:
-            fn = meta(request,'HTTP_GIVENNAME')
-            ln = meta(request,'HTTP_SN')
+            fn = meta(request,'givenName')
+            ln = meta(request,'sn')
             if fn and ln:
                 cn = "%s %s" % (fn,ln)
         if not cn:
             cn = profile.identifier
             
-        mail = meta(request,'HTTP_MAIL')
+        mail = meta(request,'mail')
         
         idp = meta(request,'Shib-Identity-Provider')
         
