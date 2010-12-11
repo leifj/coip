@@ -132,7 +132,7 @@ class Name(models.Model):
         logging.warn(pformat([self,user,perm]))
         #pprint("has_permission %s %s %s" % (self,user,perm))
         # TODO: reverse order of test for production system - will spead-up superuser-test and it is cheap
-        #pprint(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
+        logging.warn(NameLink.objects.filter(src=self,type=NameLink.access_control,data=perm,dst__memberships__user=user))
         # user is superuser or acl is on implicit group or user is member of acl group
         anyuser = lookup("system:anyuser",True)
         if NameLink.objects.filter(src=self,dst=anyuser,type=NameLink.access_control,data__contains=perm).count() > 0:
@@ -141,7 +141,7 @@ class Name(models.Model):
             return True
         
         if user.is_superuser:
-            return False
+            return True
         
         return False #user.is_superuser
     
