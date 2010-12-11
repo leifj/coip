@@ -38,13 +38,16 @@ def accounts_login_federated(request):
         if not cn:
             fn = meta(request,'HTTP_GIVENNAME')
             ln = meta(request,'HTTP_SN')
-            cn = "%s %s" % (fn,ln)
+            if fn and ln:
+                cn = "%s %s" % (fn,ln)
         if not cn:
             cn = profile.identifier
             
         mail = meta(request,'HTTP_MAIL')
         
-        for attrib_name, meta_value in (('display_name',cn),('email',mail)):
+        idp = meta(request,'Shib-Identity-Provider')
+        
+        for attrib_name, meta_value in (('display_name',cn),('email',mail),('idp',idp)):
             attrib_value = getattr(profile, attrib_name)
             if meta_value and not attrib_value:
                 setattr(profile,attrib_name,meta_value)
