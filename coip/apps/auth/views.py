@@ -19,6 +19,13 @@ def meta(request,attr):
     values = filter(lambda x: x != "(null)",v.split(";"))
     return values;
 
+def meta1(request,attr):
+    v = meta(request,attr)
+    if v:
+        return v[0]
+    else:
+        return None
+
 def accounts_login_federated(request):
     if request.user.is_authenticated():
         profile,created = UserProfile.objects.get_or_create(identifier=request.META.get("REMOTE_USER"))
@@ -33,21 +40,21 @@ def accounts_login_federated(request):
             
         
         update = False
-        cn = meta(request,'cn')
+        cn = meta1(request,'cn')
         if not cn:
-            cn = meta(request,'displayName')
+            cn = meta1(request,'displayName')
         logging.warn(cn)
         if not cn:
-            fn = meta(request,'givenName')
-            ln = meta(request,'sn')
+            fn = meta1(request,'givenName')
+            ln = meta1(request,'sn')
             if fn and ln:
                 cn = "%s %s" % (fn,ln)
         if not cn:
             cn = profile.identifier
             
-        mail = meta(request,'mail')
+        mail = meta1(request,'mail')
         
-        idp = meta(request,'Shib-Identity-Provider')
+        idp = meta1(request,'Shib-Identity-Provider')
         
         for attrib_name, meta_value in (('display_name',cn),('email',mail),('idp',idp)):
             attrib_value = getattr(profile, attrib_name)
