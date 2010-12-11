@@ -137,7 +137,7 @@ class Name(models.Model):
         anyuser = lookup("system:anyuser",True)
         if NameLink.objects.filter(src=self,dst=anyuser,type=NameLink.access_control,data__contains=perm).count() > 0:
             return True
-        if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__memberships__user=user).count() > 0:
+        if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__membership__user=user).count() > 0:
             return True
         
         if user.is_superuser:

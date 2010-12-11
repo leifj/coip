@@ -21,13 +21,15 @@ def meta(request,attr):
 def accounts_login_federated(request):
     if request.user.is_authenticated():
         profile,created = UserProfile.objects.get_or_create(identifier=request.user.username)
-        if profile.user:
-            request.user = profile.user
-        else:
+        if created:
             profile.identifier = request.user.username
+            request.user.delete()
             request.user = User(username=anonid())
             request.user.save()
             profile.user = request.user
+        else:
+            request.user = profile.user
+            
             
         update = False
         cn = meta(request,'HTTP_CN')
