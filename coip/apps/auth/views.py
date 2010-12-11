@@ -36,7 +36,9 @@ def accounts_login_federated(request):
             request.user.save()
             profile.user = request.user
         else:
+            request.user.delete()
             request.user = profile.user
+            update = True
             
         
         update = False
