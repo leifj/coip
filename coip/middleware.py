@@ -12,7 +12,7 @@ class UserMappingMiddleware(object):
     '''
 
     def process_request(self,request):
-        if not hasattr(request,'user'):
+        if hasattr(request,'user'):
             raise ImproperlyConfigured("Place before RemoteUserMiddleware")
         
         username = request.META['REMOTE_USER']
