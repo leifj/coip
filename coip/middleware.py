@@ -5,6 +5,8 @@ Created on Dec 13, 2010
 '''
 from django.core.exceptions import ImproperlyConfigured
 from coip.apps.userprofile.models import UserProfile
+import logging
+from pprint import pformat
 
 class UserMappingMiddleware(object):
     '''
@@ -16,6 +18,7 @@ class UserMappingMiddleware(object):
             raise ImproperlyConfigured("Place before RemoteUserMiddleware")
         
         username = request.META['REMOTE_USER']
+        logging.warn(pformat(request.META))
         qs = UserProfile.objects.filter(user__username=username,primary=True)
         if qs:
             profile = qs[0]
