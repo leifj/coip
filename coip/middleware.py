@@ -12,9 +12,6 @@ class UserMappingMiddleware(object):
     '''
 
     def process_request(self,request):
-        if hasattr(request,'user'):
-            raise ImproperlyConfigured("Place before RemoteUserMiddleware")
-        
         try:
             username = request.META['REMOTE_USER']
         except KeyError:
