@@ -28,17 +28,11 @@ def meta1(request,attr):
 
 def accounts_login_federated(request):
     if request.user.is_authenticated():
-        profile,created = UserProfile.objects.get_or_create(identifier=request.META.get("REMOTE_USER"))
+        profile,created = UserProfile.objects.get_or_create(identifier=request.user.username)
         if created:
             profile.identifier = request.user.username
-            request.user.delete()
-            request.user = User(username=anonid())
-            request.user.save()
             profile.user = request.user
-        else:
-            request.user.delete()
-            request.user = profile.user
-            update = True
+            profile.save()
             
         
         update = False
