@@ -18,7 +18,7 @@ class UserMappingMiddleware(object):
             raise ImproperlyConfigured("Place before RemoteUserMiddleware")
         
         username = request.META['REMOTE_USER']
-        logging.warn(pformat(request.META))
+        logging.warning(pformat(request.META))
         qs = UserProfile.objects.filter(user__username=username,primary=True)
         if qs:
             profile = qs[0]
