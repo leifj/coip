@@ -90,6 +90,13 @@
 		   </ul>
 	   </div>
 	   {% endif %}
+	   {% if name %}
+	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
+		   <ul>
+		      <li class="tip" title="This is the full name of the group. This is the name that will be exposed to applications.">{{ name }}</li>
+		   </ul>
+	   </div>
+	   {% endif %}
 	   <div class="clear"></div>
 	</div>
 	<div id="content">

@@ -29,7 +29,6 @@ $(function() {
 {% endblock %}
 {% block headline %}
 <a style="text-decoration: none" href="{% if name %}/name/id/{{name.id}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}{{profile.display_name}}{% endif %}</a>
-{% if name %}<div class="name">{{ name }}</div>{% endif %}
 {% endblock %}
 {% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
 {% block main %}
