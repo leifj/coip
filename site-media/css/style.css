@@ -12,7 +12,7 @@ div#footer li { float: left; margin: 0 0.15em}
 .navlist li { float: right; display: inline; margin: 0 0.15em; }
 .description { inherit: none; margin-bottom: 10px;}
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
-div.name { font: 50% "Trebuchet MS", sans-serif; margin-top: 5px;;}
+div.name { font: 30% "Trebuchet MS", sans-serif; margin-top: 5px;;}
 div.toolbar{ padding: 4px; float: right; margin-right: 10px; margin-top: 6px; margin-bottom: 20px;}
 div#left { float: left; width: 30%; padding-left: 5px; }
 div#right { float: right; width: 65%; padding-left: 20px; border-left: 1px solid #CECECE; }
