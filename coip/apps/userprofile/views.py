@@ -39,10 +39,13 @@ def home(request):
     except ObjectDoesNotExist:
         pass
     
+    urn = lookup("urn",True)
     anyuser = lookup("system:anyuser",True)
+    urn.setacl(anyuser,'rl')
+    
     profile = user_profile(request)
     home = lookup('user:'+request.user.username,autocreate=True)
-    home.short = "Home of %s (%s)" % (profile.display_name,profile.identifier)
+    home.short = "%s (%s)" % (profile.display_name,profile.identifier)
     home.save()
     add_member(home,profile.user)
     home.setacl(home,"rliwd")

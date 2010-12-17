@@ -14,6 +14,9 @@
    	});
 {% endblock %}
 {% block content %}
+    {% if not name %}
+	<h1>This is the top of the namespace</h1>
+	{% endif %}
     {% if name.description %}
     <div class="ui-widget">
 	    <div class="ui-state-highlight ui-corner-all infopanel">

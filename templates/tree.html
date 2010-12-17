@@ -3,7 +3,6 @@
 <script type="text/javascript">
 $(function() {
     {% block widgets %}{% endblock %}
-{% if name %}
    	$('#jstree').jstree({
    		'json_data': {
    			'ajax': {
@@ -23,16 +22,14 @@ $(function() {
    		'animation': 0,
    		'plugins': ['themes','json_data']
    	});
-{% endif %}
 });
 </script>
 {% endblock %}
 {% block headline %}
-<a style="text-decoration: none" href="{% if name %}/name/id/{{name.id}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}{{profile.display_name}}{% endif %}</a>
+<a style="text-decoration: none" href="{% if name %}/name/id/{{name.id}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}Top{% endif %}</a>
 {% endblock %}
-{% block title %}COIP{% if name %} - {{name.shortname}}{% endif %}{% endblock %}
+{% block title %}COIP{% if name %} - {{name.shortname}}{% else %} - top{% endif %}{% endblock %}
 {% block main %}
-{% if name %}
 <div id="left">
     <div id="tree">
 		{% if name and render.up %}
@@ -63,7 +60,6 @@ $(function() {
    		{% endif %}
    </div>
 </div>
-{% endif %}
 <div id="right">
 {% block content %}{% endblock %}
 </div>

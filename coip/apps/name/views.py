@@ -34,7 +34,7 @@ def delete(request,id):
             if not form.cleaned_data['recursive'] and name.children.count() > 0:
                 return HttpResponseForbidden("Will not delete non-empty node")
             
-            for link in name.links:
+            for link in name.links.all():
                 link.delete()
             
             if form.cleaned_data['recursive']:
@@ -172,11 +172,11 @@ def show(request,name):
         return render403()
 
 @login_required
-def show_by_name(request,n=None):
-    if not n:
+def show_by_name(request,name=None):
+    if not name:
         return show_root(request)
     try:
-        return show(request,lookup(n))
+        return show(request,lookup(name))
     except ObjectDoesNotExist:
         return HttpResponseNotFound()   
    

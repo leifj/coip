@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     # Names
     (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
     (r'^name/(?P<name>[^0-9\/]+)$',                  'coip.apps.name.views.show_by_name'),
-    (r'^name$',                                      'coip.apps.name.views.show_by_name'),
+    (r'^name$',                                      'coip.apps.name.views.show_root'),
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),

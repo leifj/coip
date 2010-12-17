@@ -32,11 +32,12 @@ def make_response_dict(request,d={}):
 
     if d.has_key('name'):
         name = d['name']
-        d['render'] = {'delete': name.has_permission(request.user,'d'),
-                       'insert': name.has_permission(request.user,'i'),
-                       'edit': name.has_permission(request.user,'w'),
-                       'invite': name.has_permission(request.user,'i'),
-                       'up': name.parent and name.parent.has_permission(request.user,'r')}
+        if name:
+            d['render'] = {'delete': name.has_permission(request.user,'d'),
+                           'insert': name.has_permission(request.user,'i'),
+                           'edit': name.has_permission(request.user,'w'),
+                           'invite': name.has_permission(request.user,'i'),
+                           'up': (name.parent and name.parent.has_permission(request.user,'r')) or not name.parent}
 
     return d
 
