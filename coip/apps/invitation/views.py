@@ -6,10 +6,9 @@ Created on Jun 23, 2010
 from django.contrib.auth.decorators import login_required
 from coip.apps.invitation.models import Invitation
 from coip.apps.invitation.forms import InvitationForm
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from coip.apps.auth.utils import nonce
 from coip.multiresponse import respond_to, render403
-from twisted.python.reflect import ObjectNotFound
 from coip.apps.name.models import Name 
 import datetime
 from coip.apps.membership.models import Membership
@@ -17,11 +16,7 @@ from django.shortcuts import get_object_or_404
     
 @login_required
 def invite(request,id):
-    name = None
-    try:
-        name = Name.objects.get(id=id)
-    except ObjectNotFound:
-        raise Http404()
+    name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'i'):
         return render403('You are not allowed to invite users to '+name)
@@ -43,11 +38,7 @@ def invite(request,id):
 
 @login_required
 def accept(request,nonce):
-    invitation = None
-    try:
-        invitation = Invitation.objects.get(nonce=nonce)
-    except ObjectNotFound:
-        raise Http404()
+    invitation = get_object_or_404(Invitation,nonce=nonce)
     
     (membership,created) = Membership.objects.get_or_create(user=request.user,name=invitation.name)
     if created or not membership.enabled:

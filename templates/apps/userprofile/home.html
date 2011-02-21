@@ -1,4 +1,5 @@
 {% extends "tree.html" %}
+{% load datehumanize %}
 {% block widgets %}
 	$("#gravatar").append($.gravatar($('#email').text()));
 	$("#names").accordion({
@@ -19,7 +20,7 @@
 	<div id="m{{m.id}}" class="{{m.status}}">
 	   <h3 class="listheader">{{m.name.shortname}}</h3>
 	   <div>
-	   	  You have been a member of <a href="/name/id/{{m.name.id}}">{{m.name.shortname}}</a> since {{m.timecreated}}
+	   	  You became a member of <a href="/name/id/{{m.name.id}}">{{m.name.shortname}}</a> {{m.timecreated|datehumanize}}
 	   </div>
 	</div>
 	{% empty %}
@@ -32,7 +33,7 @@
 	<div id="n{{n.id}}">
 	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-	      You are allowed to {{p}} <a href="/name/id/{{n.id}}">{{n.shortname}}</a>
+		  <a href="/name/id/{{n.id}}">{{n.shortname}}</a>
 	   </div>
 	</div>
 	{% empty %}
