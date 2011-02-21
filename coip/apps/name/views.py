@@ -13,16 +13,11 @@ from pprint import pformat
 import logging
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
     PermissionForm
-from twisted.python.reflect import ObjectNotFound
 from django.shortcuts import get_object_or_404
 
 @login_required
 def delete(request,id):
-    name = None
-    try:
-        name = Name.objects.get(id=id)
-    except ObjectNotFound:
-        return HttpResponseNotFound()
+    name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'d'):
         return render403()
@@ -53,13 +48,8 @@ def delete(request,id):
 
 @login_required
 def add(request,id):
-    parent = None
-    if id:
-        try:
-            parent = Name.objects.get(id=id)
-        except ObjectNotFound:
-            return HttpResponseNotFound()
-    
+    parent = get_object_or_404(Name,pk=id)
+        
     if id:
         if not parent.has_permission(request.user,'i'):
             return HttpResponseForbidden('You are not allowed to create names under '+parent)
@@ -81,11 +71,7 @@ def add(request,id):
 
 @login_required
 def edit(request,id):
-    name = None
-    try:
-        name = Name.objects.get(id=id)
-    except ObjectNotFound:
-        return HttpResponseNotFound()
+    name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'w'):
         return HttpResponseForbidden()
