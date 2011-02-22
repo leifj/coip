@@ -18,12 +18,10 @@
 	<h1>This is the top of the namespace</h1>
 	{% endif %}
     {% if name.description %}
-    <div class="ui-widget">
-	    <div class="ui-state-highlight ui-corner-all infopanel">
-	       {% autoescape off %}
-		   <p class="description">{{name.description|safe}}</p>
-		   {% endautoescape %}
-		</div>
+    <div id="description" class="ui-widget infopanel">
+       {% autoescape off %}
+	   <p class="description">{{name.description|safe}}</p>
+	   {% endautoescape %}
 	</div>
 	{% endif %}
 	{% if memberships and render.invite %}
@@ -34,6 +32,8 @@
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
 		   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
 		</div>
+		{% empty %}
+		<p>No members yet...</p>
 		{% endfor %}
 	</div>
 	{% endif %}
@@ -44,14 +44,14 @@
 		<div id="m{{m.id}}">
 		   <h3 class="listheader">{{i.email}}</h3>
 		   <div>
-		      <div class="navlist" style="margin-top: -10px;">
+		   	  <div>{{i.email}} was invited to {{i.name.shortname}} {{i.timecreated|datehumanize}} by {{i.inviter}}.</div>
+		      <div class="navlist" style="margin-top: 10px;">
 		         <ul>
-		            <li style="float: right;"><a class="tip" title="Cancel invitation" href="/invitation/{{i.id}}/cancel"><span class="ui-icon ui-icon-trash"></span></a></li>
-		            <li style="float: right;"><a class="tip" title="Resend invitation" href="/invitation/{{i.id}}/resend"><span class="ui-icon ui-icon-mail-closed"></span></a></li>
+		            <li class="button"><a href="/invitation/{{i.id}}/cancel">Cancel</a></li>
+		            <li class="button"><a href="/invitation/{{i.id}}/resend">Resend</a></li>
 		         </ul>
 		      </div>
 		      <div class="clear"></div>
-		   	  <div>{{i.email}} was invited to {{i.name.shortname}} {{i.timecreated|datehumanize}} by {{i.inviter}}.</div>
 		   </div>
 		</div>
 		{% empty %}

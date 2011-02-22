@@ -61,8 +61,10 @@
 <div id="container">
 	<div id="header">
 	   {% if name %}
-	   <div style="float: left;" class="button toolbar">
-		   <a class="tip" title="This is the full name of the group. This is the name that will be exposed to applications." href="/name/id/{{name.id}}">{{ name }}</a>
+	   <div style="float: left;" class="navlist toolbar">
+	       <ul>
+		      <li class="button"><a class="tip" title="This is the full name of the group. This is the name that will be exposed to applications." href="/name/id/{{name.id}}">{{ name }}</a></li>
+	       </ul>
 	   </div>
 	   {% endif %}
 	   {% if user.is_authenticated %}
@@ -75,6 +77,9 @@
 	   {% if name %}
 	   <div class="navlist toolbar">
 		  <ul>
+		     {% if render.add %}
+			 <li class="button"><a href="/name/{{name.id}}/add">New Group</a></li>
+			 {% endif %}
 		  	 {% if render.acl %}
 			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
 			 {% endif %}
@@ -83,9 +88,6 @@
 			 {% endif %}
 			 {% if render.delete %}
 			 <li class="button"><a href="/name/{{name.id}}/delete">Delete</a></li>
-			 {% endif %}
-			 {% if render.add %}
-			 <li class="button"><a href="/name/{{name.id}}/add">New Group</a></li>
 			 {% endif %}
 			 {% if render.invite %}
 			 <li class="button"><a href="/name/{{name.id}}/invite">Invite</a></li>
