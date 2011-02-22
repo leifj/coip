@@ -94,17 +94,9 @@ class Name(models.Model):
         return NameLink.objects.filter(src=self,dst=dst,type=type,data=data).count() > 0
 
     def setacl(self,name,perm):
-        (link,b) = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
-        save = False
-        if not link.data:
-            link.data = ''
-            save = True
-        for p in perm:
-            #pprint(p)
-            if link.data.find(p) == -1:
-                link.data = link.data+p
-                save = True
-        if save:
+        (link,created) = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
+        if not (link.data and link.data == perm):
+            link.data = perm
             link.save()
         
     def rmacl(self,name,perm):
@@ -140,8 +132,8 @@ class Name(models.Model):
         if NameLink.objects.filter(src=self,type=NameLink.access_control,data__contains=perm,dst__memberships__user=user).count() > 0:
             return True
         
-        if user.is_superuser:
-            return True
+        #if user.is_superuser:
+        #    return True
         
         return False #user.is_superuser
     
