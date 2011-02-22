@@ -34,10 +34,11 @@ class Membership(models.Model):
         else:
             return "inactive";
     
-def add_member(name,user):
+def add_member(name,user,hidden=False):
     (m,created)  = Membership.objects.get_or_create(user=user,name=name)
-    if created or not m.enabled:
+    if created or not m.enabled or m.hidden != hidden:
         m.enabled = True
+        m.hidden = hidden
         m.save()
         
 def disable_member(name,user):
