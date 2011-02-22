@@ -35,7 +35,7 @@ def merge(request,pkey=None):
 def home(request):
     memberships = []
     try:
-        memberships = Membership.objects.filter(user=request.user)
+        memberships = Membership.objects.filter(user=request.user,hidden=False)
     except ObjectDoesNotExist:
         pass
     
@@ -47,10 +47,10 @@ def home(request):
     home = lookup('user:'+request.user.username,autocreate=True)
     home.short = "%s (%s)" % (profile.display_name,profile.identifier)
     home.save()
-    add_member(home,profile.user)
-    home.setacl(home,"rliwd")
+    add_member(home,profile.user,hidden=True)
+    home.setacl(home,"rwl") #don't allow users to delete or reset acls on their home, nor invite members - that would be confusing as hell
     
-    names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control).all()]
+    names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control,data__contains='i').all()]
     
     return respond_to(request, {'text/html': 'apps/userprofile/home.html'},{'memberships': memberships,'names': names})
 
