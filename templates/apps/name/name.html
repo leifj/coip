@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	{% endif %}
-	{% if memberships %}
+	{% if memberships and render.invite %}
 	<h3>Members</h3>
 	<div id="memberships">
 		{% for m in memberships.all %}
@@ -37,7 +37,7 @@
 		{% endfor %}
 	</div>
 	{% endif %}
-	{% if invitations %}
+	{% if invitations and render.invite %}
 	<h3>Pending invitations</h3>
 	<div id="invitations">
 		{% for i in invitations.all %}
@@ -55,7 +55,7 @@
 		   </div>
 		</div>
 		{% empty %}
-		<p>There are no pending invitations.{% if render.invite %}<a class="tip" title="Invite user" href="/name/{{name.id}}/invite">Invite someone!</a>{% endif %}</p>
+		<p>There are no pending invitations. <a class="tip" title="Invite someone!" href="/name/{{name.id}}/invite">Invite someone!</a></p>
 		{% endfor %}
 	</div>
 	{% endif %}
