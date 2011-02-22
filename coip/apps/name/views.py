@@ -51,11 +51,11 @@ def add(request,id):
     parent = get_object_or_404(Name,pk=id)
         
     if id:
-        if not parent.has_permission(request.user,'i'):
+        if not parent.has_permission(request.user,'w'):
             return HttpResponseForbidden('You are not allowed to create names under '+parent)
     else:
         if not request.user.admin:
-            return HttpResponseForbidden('You are not allowed to create names')
+            return HttpResponseForbidden('You are not allowed to create names in the root')
     
     if request.method == 'POST':
         name = Name(parent=parent,creator=request.user)

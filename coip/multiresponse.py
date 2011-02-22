@@ -34,7 +34,7 @@ def make_response_dict(request,d={}):
         name = d['name']
         if name:
             d['render'] = {'delete': name.has_permission(request.user,'d'),
-                           'insert': name.has_permission(request.user,'i'),
+                           'insert': name.has_permission(request.user,'w'),
                            'edit': name.has_permission(request.user,'w'),
                            'invite': name.has_permission(request.user,'i'),
                            'up': (name.parent and name.parent.has_permission(request.user,'r')) or not name.parent}

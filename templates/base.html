@@ -72,19 +72,19 @@
 	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
 		  <ul>
 		  	 {% if render.edit %}
-			 <li><a class="tip" title="Modify access rights" href="/name/{{name.id}}/link/0"><span class="ui-icon ui-icon-unlocked"></span></a></li>
+			 <li><a class="tip" title="Modify Access Rights" href="/name/{{name.id}}/link/0"><span class="ui-icon ui-icon-unlocked"></span></a></li>
 			 {% endif %}
 		     {% if render.edit %}
 			 <li><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
 			 {% endif %}
 			 {% if render.delete %}
-			 <li><a class="tip" title="Permanently remove this" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+			 <li><a class="tip" title="Permanently Remove Group" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
 			 {% endif %}
 			 {% if render.insert %}
-			 <li><a class="tip" title="Create child" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+			 <li><a class="tip" title="Add Group" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
 			 {% endif %}
 			 {% if render.invite %}
-			 <li><a class="tip" title="Invite someone to join" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+			 <li><a class="tip" title="Invite Member" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
 			 {% endif %}
 			 <li><a class="tip" title="Refresh" href="/name/id/{{name.id}}"><span class="ui-icon ui-icon-refresh"></span></a></li>
 		   </ul>

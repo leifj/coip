@@ -5,7 +5,7 @@
 <table style="margin-bottom: 20px;">
 {% for ace in acl %}
 <tr>
-   <td>Members of <a href="/name/id/{{ace.dst.id}}">{{ace.dst}} ({{ace.dst.short}})</a></td>
+   <td>{{ace.dst|acldstdisplay}}</td>
    <td>{{ace.data|permdisplay}}</td>
    <td><a href="/namelink/{{ace.id}}/remove"><span class="ui-icon ui-icon-trash"></span></td>
 </tr>
