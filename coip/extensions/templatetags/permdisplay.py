@@ -12,7 +12,8 @@ perms = {'r':'read',
          'w':'write',
          'd':'delete',
          'i':'manage members',
-         'l':'list members'} 
+         'l':'list members',
+         'a':'manage rights'} 
 
 def permdisplay(perm):
     if perm:
@@ -32,7 +33,7 @@ def acldstdisplay(dst):
         else:
             return "Unknown user \"%s\"" % username
     else:
-        return "Members of <a tip=\"%s\" href=\"/name/%d\">%s</a>" % (dst.display,dst.id,dst.short)
+        return "Members of <a class=\"tip\" title=\"%s\" href=\"/name/id/%d\">%s</a>" % (dst.display,dst.id,dst.short)
     
 
 acldstdisplay.is_safe = True

@@ -67,7 +67,7 @@ def add(request,id):
     else:
         form = NewNameForm()
         
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': parent,'formtitle': 'Create new name','submitname': 'Create'})
+    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': parent,'formtitle': 'Add group','submitname': 'Create'})
 
 @login_required
 def edit(request,id):
@@ -91,7 +91,7 @@ def edit(request,id):
 def editacl(request,id,type):
     name = get_object_or_404(Name,pk=id)
     
-    if not name.has_permission(request.user,'w'):
+    if not name.has_permission(request.user,'a'):
         return render403("You do not have permission to change permissions on %s" % (name))
     
     if request.method == 'POST':
