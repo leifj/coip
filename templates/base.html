@@ -60,40 +60,36 @@
 <div id="notification"></div>
 <div id="container">
 	<div id="header">
+	   {% if name %}
+	   <div style="float: left;" class="button toolbar">
+		   <a class="tip" title="This is the full name of the group. This is the name that will be exposed to applications." href="/name/id/{{name.id}}">{{ name }}</a>
+	   </div>
+	   {% endif %}
 	   {% if user.is_authenticated %}
-	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
+	   <div class="navlist toolbar">
 	      <ul>
-	         <li><a title="Logout" class="tip" id="logout" href="/accounts/logout"><span class="ui-icon ui-icon-power"></span></a></li>
-	         <li><a title="{{ profile.display_name }} ({{ profile.identifier }})" class="tip" href="/user/home"><span class="ui-icon ui-icon-home"></span></a></li>
+	         <li class="button"><a id="logout" href="/accounts/logout">Logout</a></li>
 	      </ul>
 	   </div>
 	   {% endif %}
 	   {% if name %}
-	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
+	   <div class="navlist toolbar">
 		  <ul>
-		  	 {% if render.edit %}
-			 <li><a class="tip" title="Modify Access Rights" href="/name/{{name.id}}/link/0"><span class="ui-icon ui-icon-unlocked"></span></a></li>
+		  	 {% if render.acl %}
+			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
 			 {% endif %}
 		     {% if render.edit %}
-			 <li><a class="tip" title="Modify" href="/name/{{name.id}}/edit"><span class="ui-icon ui-icon-wrench"></span></a></li>
+			 <li class="button"><a href="/name/{{name.id}}/edit">Modify</a></li>
 			 {% endif %}
 			 {% if render.delete %}
-			 <li><a class="tip" title="Permanently Remove Group" href="/name/{{name.id}}/delete"><span class="ui-icon ui-icon-trash"></span></a></li>
+			 <li class="button"><a href="/name/{{name.id}}/delete">Delete</a></li>
 			 {% endif %}
-			 {% if render.insert %}
-			 <li><a class="tip" title="Add Group" href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-plusthick"></span></a></li>
+			 {% if render.add %}
+			 <li class="button"><a href="/name/{{name.id}}/add">New Group</a></li>
 			 {% endif %}
 			 {% if render.invite %}
-			 <li><a class="tip" title="Invite Member" href="/name/{{name.id}}/invite"><span class="ui-icon ui-icon-heart"></span></a></li>
+			 <li class="button"><a href="/name/{{name.id}}/invite">Invite</a></li>
 			 {% endif %}
-			 <li><a class="tip" title="Refresh" href="/name/id/{{name.id}}"><span class="ui-icon ui-icon-refresh"></span></a></li>
-		   </ul>
-	   </div>
-	   {% endif %}
-	   {% if name %}
-	   <div class="ui-widget ui-state-default ui-corner-all navlist toolbar">
-		   <ul>
-		      <li class="tip" title="This is the full name of the group. This is the name that will be exposed to applications.">{{ name }}</li>
 		   </ul>
 	   </div>
 	   {% endif %}
