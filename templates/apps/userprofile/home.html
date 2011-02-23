@@ -24,10 +24,10 @@
 	   </div>
 	</div>
 	{% empty %}
-	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You are not a member of any groups yet...</p>
+	<p>You are not a member of any groups yet...</p>
 	{% endfor %}
 </div>
-<h3>Names</h3>
+<h3>Groups</h3>
 <div id="names">
 	{% for n,p in names %}
 	<div id="n{{n.id}}">
@@ -37,7 +37,7 @@
 	   </div>
 	</div>
 	{% empty %}
-	<p style="padding: 5px;" class="ui-corner-all ui-state-highlight">You do not control any names</p>
+	<p>You do not have control over any groups yet...</p>
 	{% endfor %}
 </div>
 {% endblock %}

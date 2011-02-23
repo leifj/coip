@@ -31,6 +31,9 @@ LANGUAGE_CODE = 'us-en'
 
 SITE_ID = 1
 
+PREFIX_URL = 'http://localhost:8000'
+NOREPLY = 'noreply@localhost'
+
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True

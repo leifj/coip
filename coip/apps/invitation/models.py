@@ -11,6 +11,7 @@ from pprint import pformat
 from django.core.mail import send_mail
 from coip.apps.userprofile.models import last_used_profile
 import logging
+from coip.settings import PREFIX_URL, NOREPLY
 
 class Invitation(models.Model):
     '''
@@ -39,13 +40,13 @@ class Invitation(models.Model):
 ---
 
 If you want to accept the invitation open this link in your browser:
-http://localhost/invitation/%s/accept
+%s/invitation/%s/accept
 
 To view information about \'%s\' open this link in your browser:
-http://localhost/name/%s
+%s/name/id/%s
 
-''' % (pinviter.display_name,pinviter.identifier,self.name.short,self.message,self.nonce,self.name.short,self.name.id),
-                  'noreply@coip.example.com',
+''' % (pinviter.display_name,pinviter.identifier,self.name.short,self.message,PREFIX_URL,self.nonce,self.name.short,PREFIX_URL,self.name.id),
+                  NOREPLY,
                   [self.email], 
                   fail_silently=False)
         return
