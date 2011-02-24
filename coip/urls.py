@@ -28,11 +28,11 @@ urlpatterns = patterns('',
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
     # Names
     (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
-    (r'^name/(?P<name>.+)$',                         'coip.apps.name.views.show_by_name'),
     (r'^name$',                                      'coip.apps.name.views.show_root'),
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
+    (r'^name/(?P<name>.+)$',                         'coip.apps.name.views.show_by_name'),
     # Name Links
     (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+).json$',               'coip.apps.name.views.links'),
     (r'^namelink/(?P<id>[0-9]+)/remove$',               'coip.apps.name.views.removelink'),
