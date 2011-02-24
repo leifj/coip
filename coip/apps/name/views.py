@@ -177,7 +177,7 @@ def show_by_id(request,id=None):
 
 def _tree_node(name,depth):
     state = 'closed'
-    return {'data': { 'title': name.relative_name(), 'attr': {'href': '/name/id/%d' % name.id} },
+    return {'data': { 'title': name.relative_name(), 'attr': {'href': name.url() } },
             'state': state,
             'attr': {'id': name.id}}
     

@@ -34,7 +34,7 @@ $(function() {
     <div id="tree">
 		{% if name and render.up %}
 		{% if name.parent %}
-		<a href="/name/id/{{name.parent.id}}">.. (up one level)</a>
+		<a href="{{name.parent.url}}">.. (up one level)</a>
 		{% else %}
 		<a href="/name">.. (up one level)</a>
 		{% endif %}
@@ -62,7 +62,7 @@ $(function() {
 </div>
 <div id="right">
 <div id="headline">
-<a style="text-decoration: none" href="{% if name %}/name/id/{{name.id}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}{% endif %}</a>
+<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}{% endif %}</a>
 </div>
 {% block content %}{% endblock %}
 </div>

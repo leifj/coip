@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.signals import pre_save
 import logging
+from coip.settings import PREFIX_URL
 
 class Attribute(models.Model):
     name = models.CharField(unique=True,max_length=255)
@@ -49,7 +50,7 @@ class Name(models.Model):
     def __unicode__(self):
         return self.display
     
-    def display_str(self):
+    def display_str_urn(self):
         n = self
         str = ""
         while n:
@@ -66,6 +67,28 @@ class Name(models.Model):
             n = n.parent
         
         return str
+    
+    def display_str_url(self):
+        n = self
+        str = ""
+        while n:
+            sep = ""
+            av = n.relative_name()
+            
+            if n.parent:
+                if not '=' in av:
+                    sep = '/'
+                else:
+                    sep = ';'
+                    
+            str = sep+av+str
+            n = n.parent
+        
+        return str
+    
+    def url(self):
+        return "%s/name/%s" % (PREFIX_URL,self.display_str_url())
+        
     
     def remove(self,recursive=False):
         if recursive:
@@ -141,7 +164,7 @@ class Name(models.Model):
         return filter(lambda s: s.has_permission(user,perm),self.children.all())
     
 def set_display(sender,**kwargs):
-    kwargs['instance'].display = kwargs['instance'].display_str()
+    kwargs['instance'].display = kwargs['instance'].display_str_urn()
     
 pre_save.connect(set_display,sender=Name)
     
@@ -222,7 +245,7 @@ def walkto(root,nameparts,autocreate=False):
     return name
 
 def lookup(name,autocreate=False):
-    return walkto(None,nameparts=re.compile('[;:]').split(name),autocreate=autocreate)
+    return walkto(None,nameparts=re.compile('[\/;:]').split(name),autocreate=autocreate)
 
 def attribute(a):
     Attribute.objects.get_or_create(name=a)
