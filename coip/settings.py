@@ -9,7 +9,7 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
-BASE_DIR = "/home/leifj/work/sunet.se/coip"
+BASE_DIR = "."
 MANAGERS = ADMINS
 DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
 DATABASE_NAME = '%s/sqlite.db' % BASE_DIR             # Or path to database file if using sqlite3.
@@ -39,7 +39,7 @@ NOREPLY = 'noreply@localhost'
 USE_I18N = True
 
 MEDIA_ROOT = "%s/site-media" % BASE_DIR
-ADMIN_MEDIA_ROOT = "/usr/lib/pymodules/python2.5/django/contrib/admin/media"
+ADMIN_MEDIA_ROOT = "%s/admin-media" % BASE_DIR 
 MEDIA_URL = '/site-media/'
 ADMIN_MEDIA_PREFIX = '/admin-media/'
 
