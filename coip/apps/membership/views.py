@@ -13,7 +13,7 @@ def show(request,id):
     if not name.has_permission(request.user,'r'):
         return render403("You do not have permission to view membership information for %s" % (name))
     
-    return respond_to({'text/html': 'apps/membership/membership.html'}, 
+    return respond_to(request,{'text/html': 'apps/membership/membership.html'}, 
                       {'membership': membership,
                        'render': {'edit': name.has_permission(request.user,'w'),
                                   'delete': name.has_permission(request.user,'d'),
