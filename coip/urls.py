@@ -26,6 +26,11 @@ urlpatterns = patterns('',
     (r'^user/merge/(?P<pkey>.+)$',                  'coip.apps.userprofile.views.merge'),
     (r'^user/merge$',                               'coip.apps.userprofile.views.merge'),
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
+    # Invitations
+    (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
+    (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),
+    (r'^invitation/(?P<id>[0-9]+)/resend$',          'coip.apps.invitation.views.resend'),
+    (r'^invitation/(?P<nonce>[^\/]+)/accept$',       'coip.apps.invitation.views.accept'),
     # Names
     (r'^name/id/(?P<id>[0-9]+)$',                    'coip.apps.name.views.show_by_id'),
     (r'^name$',                                      'coip.apps.name.views.show_root'),
@@ -42,11 +47,6 @@ urlpatterns = patterns('',
     (r'^link/(?P<id>[0-9]+)/remove$',                'coip.apps.link.views.remove'),
     # Membership
     (r'^membership/(?P<id>[0-9]+)$',                 'coip.apps.membership.views.show'),
-    # Invitations
-    (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
-    (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),
-    (r'^invitation/(?P<id>[0-9]+)/resend$',          'coip.apps.invitation.views.resend'),
-    (r'^invitation/(?P<nonce>[^\/]+)/accept$',       'coip.apps.invitation.views.accept'),
     # JSON Tree
     (r'^ctree.json$',                                'coip.apps.name.views.ctree'),
     (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),

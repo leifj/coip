@@ -45,8 +45,7 @@ def accept(request,nonce):
         membership.enabled = True
         membership.save()
     
-    for i in Invitation.objects.filter(user=request.user,name=invitation.name).all:
-        i.delete()
+    invitation.delete()
     
     return HttpResponseRedirect("/membership/%d" % (membership.id))
 
