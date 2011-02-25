@@ -32,6 +32,7 @@ $(function() {
 {% block main %}
 <div id="left">
     <div id="tree">
+        <b>{{ prefix_url }}</b>
 		{% if name and render.up %}
 		{% if name.parent %}
 		<a href="{{name.parent.url}}">.. (up one level)</a>
