@@ -150,7 +150,8 @@ def show(request,name):
             memberships = name.memberships
             invitations = name.invitations
         return respond_to(request, 
-                          {'text/html': 'apps/name/name.html'}, 
+                          {'text/html': 'apps/name/name.html',
+                           'application/json': json_response({'name': name.display, 'url': name.url(), 'short': name.short}) },
                           {'name': name,
                            'memberships':memberships,
                            'invitations':invitations})
