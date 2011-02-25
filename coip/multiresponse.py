@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from coip.apps.userprofile.utils import user_profile
 from django.utils import simplejson
 from django.template import loader
+from coip.settings import PREFIX_URL
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -30,6 +31,7 @@ def make_response_dict(request,d={}):
         d['user'] = request.user
         d['profile'] = user_profile(request)
 
+    d['prefix_url'] = PREFIX_URL
     if d.has_key('name'):
         name = d['name']
         if name:
