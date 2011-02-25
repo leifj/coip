@@ -89,6 +89,8 @@ class Name(models.Model):
     def url(self):
         return "%s/name/%s" % (PREFIX_URL,self.display_str_url())
         
+    def summary(self):
+        return {'name': self.display, 'url': self.url(), 'short': self.short}
     
     def remove(self,recursive=False):
         if recursive:

@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     (r'^user/merge/(?P<pkey>.+)$',                  'coip.apps.userprofile.views.merge'),
     (r'^user/merge$',                               'coip.apps.userprofile.views.merge'),
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
+    (r'^user/(.+)/groups.json$',                    'coip.apps.name.views.user_groups'),
     # Invitations
     (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
     (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),

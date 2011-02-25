@@ -14,6 +14,7 @@ import logging
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
     PermissionForm
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 @login_required
 def delete(request,id):
@@ -151,12 +152,16 @@ def show(request,name):
             invitations = name.invitations
         return respond_to(request, 
                           {'text/html': 'apps/name/name.html',
-                           'application/json': json_response({'name': name.display, 'url': name.url(), 'short': name.short}) },
+                           'application/json': json_response(name.summary()) },
                           {'name': name,
                            'memberships':memberships,
                            'invitations':invitations})
     else:
         return render403()
+
+def user_groups(request,username):
+    user = get_object_or_404(User,username=username)
+    return json_response([link.src.summary() for link in NameLink.objects.filter(dst__memberships__user=user,type=NameLink.access_control,data__contains='i').all()])
 
 @login_required
 def show_by_name(request,name=None):
