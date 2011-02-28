@@ -10,6 +10,8 @@ div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
 div#footer li { float: left; margin: 0 0.15em}
 .navlist ul { list-style: none; padding: 0; margin: 0; }
 .navlist li { float: right; display: inline; margin: 0 0.15em; }
+.ilist ul { list-style: none inside; padding: 0; margin: 0; }
+.ilist li { float: left; display: inline; margin: 0; }
 .description { inherit: none; margin-bottom: 10px; }
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
 .name { font: 100% "Trebuchet MS", sans-serif; margin-top: 5px;}

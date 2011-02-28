@@ -31,15 +31,20 @@ $(function() {
 {% block title %}COIP{% if name %} - {{name.shortname}}{% else %} - top{% endif %}{% endblock %}
 {% block main %}
 <div id="left">
-    <div id="tree">
-        <b>{{ prefix_url }}</b>
-		{% if name and render.up %}
-		{% if name.parent %}
-		<a href="{{name.parent.url}}">.. (up one level)</a>
-		{% else %}
-		<a href="/name">.. (up one level)</a>
-		{% endif %}
-		{% endif %}
+   <div id="tree">
+    	<div style="margin-left: -40px;">
+	    	<ul class="ilist">
+		        <li><b>{{ prefix_url }}</b></li>
+				{% if name and render.up %}
+				{% if name.parent %}
+				<li><a href="{{name.parent.url}}"><div class="ui-icon ui-icon-arrowreturnthick-1-w"></div></a></li>
+				{% else %}
+				<li><a href="/name"><div class="ui-icon ui-icon-arrowreturnthick-1-w"></div></a></li>
+				{% endif %}
+				{% endif %}
+			</ul>
+		</div>
+		<div class="clear"></div>
 		<div id="jstree"></div>
    </div>
    <!-- div id="related">
