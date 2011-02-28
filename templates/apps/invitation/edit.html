@@ -1,1 +1,9 @@
-{% extends "edit.html" %}
+{% extends "edit_fieldsets.html" %}
+{% block widgets %}
+    $('#id_expires').datepicker({'dateFormat': 'yy-mm-dd','timeFormat': 'hh:ii:ss'});
+	$('#form').formwizard({
+    	validationEnabled: true,
+    	focusFirstInput: true,
+    	textSubmit: "Finish"
+    });
+{% endblock %}

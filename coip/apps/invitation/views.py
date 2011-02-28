@@ -34,7 +34,7 @@ def invite(request,id):
         invitation=Invitation(message="Please consider joining my group!",expires=exp.strftime("%Y-%m-%d"))
         form = InvitationForm(instance=invitation);
     
-    return respond_to(request,{'text/html': 'apps/invitation/edit.html'},{'form': form,'name': name,'formtitle': 'Invite to %s' % (name),'submitname': 'Invite User'})
+    return respond_to(request,{'text/html': 'apps/invitation/edit.html'},{'form': form,'name': name,'formtitle': 'Invite someone to join %s' % (name.short),'submitname': 'Invite User'})
 
 @login_required
 def accept(request,nonce):

@@ -45,7 +45,7 @@ def delete(request,id):
     else:
         form = NameDeleteForm()
             
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Remove %s' % (name.short) ,'submitname': 'Delete'})
+    return respond_to(request,{'text/html': 'apps/name/delete.html'},{'form': form,'name': name,'formtitle': 'Remove %s' % (name.short) ,'submitname': 'Delete'})
 
 @login_required
 def add(request,id):
@@ -68,7 +68,7 @@ def add(request,id):
     else:
         form = NewNameForm()
         
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': parent,'formtitle': 'Add group','submitname': 'Create'})
+    return respond_to(request,{'text/html': 'apps/name/add.html'},{'form': form,'name': parent,'formtitle': 'Add group','submitname': 'Create'})
 
 @login_required
 def edit(request,id):
@@ -85,7 +85,7 @@ def edit(request,id):
     else:
         form = NameEditForm(instance=name)
         
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Change name','submitname': 'Update'})
+    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Modify %s' % name.short,'submitname': 'Update'})
             
 
 @login_required
@@ -182,7 +182,10 @@ def show_by_id(request,id=None):
         return HttpResponseNotFound()
 
 def _tree_node(name,depth):
-    state = 'closed'
+    if depth > 2:
+        state = "closed"
+    else:
+        state = 'open'
     return {'data': { 'title': name.relative_name(), 'attr': {'href': name.url() } },
             'state': state,
             'attr': {'id': name.id}}

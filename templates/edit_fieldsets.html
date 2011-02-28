@@ -1,0 +1,41 @@
+{% extends "tree.html" %}
+{% block widgets %}{% endblock %}
+{% block content %}
+    {% block beforeform %}
+    {% endblock %}
+	<form method="POST" id="form">
+		<div class="infopanel">
+		    <h1>{{formtitle}}</h1>
+		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+			{% for fieldset in form.fieldsets %}
+			  <fieldset id="{{fieldset.name}}" class="{{ fieldset.classes }}">
+			  {% if fieldset.legend %}
+			    <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
+			  {% endif %}
+			  {% if fieldset.description %}
+			    <p>{{ fieldset.description }}</p>
+			  {% endif %}
+			  <ul class="links">
+			  {% for field in fieldset %}
+			    {% if field.is_hidden %}
+			      {{ field }}
+			    {% else %}
+			      <li class="links" {{ field.row_attrs }}>
+			        {{ field.errors }}
+			        {{ field.label_tag }}
+			        {{ field }}
+			      </li>
+			    {% endif %}
+			  {% endfor %}
+			  </ul>
+			  </fieldset>
+			{% endfor %}
+		</div>
+		<br/>
+		<div class="button">
+			<input type="reset" value="Back"/>
+		    <input type="submit" value="Finish" />
+		    <input type="button" style="float: right;" onClick="document.location='{{name.url}}'" value="Cancel"/>
+	    </div>
+	</form>
+{% endblock %}

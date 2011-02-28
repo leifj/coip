@@ -7,6 +7,7 @@ from django import forms
 from coip.apps.name.models import Name, Attribute, NameLink
 from django.forms import fields
 from django.forms.widgets import HiddenInput, CheckboxSelectMultiple
+from form_utils.forms import BetterModelForm, BetterForm
     
 class NameForm(forms.ModelForm):
     class Meta:
@@ -16,21 +17,42 @@ class AttributeForm(forms.ModelForm):
     class Meta:
         model = Attribute
 
-class NameEditForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))
-    
+class NameEditForm(BetterModelForm):
+    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))    
     class Meta:
         model = Name
         fields = ['short','description']
-        
-class NewNameForm(forms.ModelForm):
+        fieldsets = [('step1', {'fields': ['short', 'description'],
+                                'legend': 'Describe your group',
+                                'classes': ['step submit_step'], 
+                                'description': 'Provide a short and (optionally) longer description of your group..'})]
+
+class NewNameForm(BetterModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))
+    value = forms.CharField(label="Name")
     class Meta:
         model = Name
-        fields = ['type','value','short','description']
+        fields = ['value','short','description','type']
+        fieldsets = [('step1', {'fields': ['value'], 
+                                'legend': 'Step 1: Name your group',
+                                'classes': ['step'],
+                                'description': 'Provide a short identifier for your groups. Spaces are not allowed here.'}),
+                     ('step2', {'fields': ['short', 'description'],
+                                'legend': 'Step 2: Describe your group',
+                                'classes': ['step'], 
+                                'description': 'Provide a short and (optionally) longer description of your group..'}),
+                     ('step3', {'fields': ['type'],
+                                'legend': 'Step 3 (optional): Advanced options',
+                                'classes': ['step','submit_step'],
+                                'description': 'Only set the type if you know what you are doing. You almost certainly do not need this.'})]
         
-class NameDeleteForm(forms.Form):
+class NameDeleteForm(BetterForm):
     recursive = fields.BooleanField(label="Also delete everything below this name?",required=False)
+    class Meta:
+        fieldsets = [('step1', {'fields': ['recursive'], 
+                                'legend': 'Confirm deletion of your group',
+                                'classes': ['step'],
+                                'description': 'This is a destructive operation - there is no way to recover your group once it has been deleted!'})]
     
 class NameLinkForm(forms.ModelForm):
     class Meta:

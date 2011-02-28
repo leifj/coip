@@ -10,7 +10,7 @@ div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
 div#footer li { float: left; margin: 0 0.15em}
 .navlist ul { list-style: none; padding: 0; margin: 0; }
 .navlist li { float: right; display: inline; margin: 0 0.15em; }
-.description { inherit: none; margin-bottom: 10px;}
+.description { inherit: none; margin-bottom: 10px; }
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
 .name { font: 100% "Trebuchet MS", sans-serif; margin-top: 5px;}
 div.toolbar{ padding: 4px; float: right; margin-right: 50px; margin-top: 6px; margin-bottom: 20px;}
@@ -38,3 +38,6 @@ div#main{ font: 100% "Trebuchet MS", sans-serif; width:95%; height:auto !importa
 .infopanel label { display:block; }
 div .hidden {visibility:hidden;}
 .listheader { padding-left: 20px; }
+.button { margin: 5px; }
+legend {  font: 120% "Trebuchet MS", sans-serif; font-weight: bold;  }
+
