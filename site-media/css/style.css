@@ -34,8 +34,8 @@ div#tree { padding-bottom: 50px;}
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 .clear { clear: both; }
-div#content { font: 120% "Trebuchet MS", sans-serif; }
-div#main{ font: 100% "Trebuchet MS", sans-serif; width:95%; height:auto !important; height:100%; min-height: 100%;}
+div#content { }
+div#main{ width:95%; height:auto !important; height:100%; min-height: 100%;}
 .code{font: 110% "Courier", fixed}
 .infopanel { padding: 5px; }
 .infopanel label { display:block; }
