@@ -24,7 +24,7 @@
 	    {% endautoescape %}
 		{% endif %}
 		{% if name %}
-		<div class="ilist">
+		<div class="rlist">
 		  <ul>
 		  	 {% if render.acl %}
 			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
@@ -55,7 +55,7 @@
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
 		   <div>
 			   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
-			   <div class="navlist" style="margin-top: 10px;">
+			   <div class="rlist">
 		         <ul>
 		            {% if user == m.user %}
 		            <li class="button"><a href="/name/{{name.id}}/{{m.user.username}}/leave">Leave Group</a></li>
@@ -82,7 +82,7 @@
 		   <h3 class="listheader">{{i.email}}</h3>
 		   <div>
 		   	  <div>{{i.email}} was invited to {{i.name.shortname}} {{i.timecreated|datehumanize}} by {{i.inviter}}.</div>
-		      <div class="navlist" style="margin-top: 10px;">
+		      <div class="rlist">
 		         <ul>
 		            <li class="button"><a href="/invitation/{{i.id}}/cancel">Cancel</a></li>
 		            <li class="button"><a href="/invitation/{{i.id}}/resend">Resend</a></li>
