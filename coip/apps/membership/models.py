@@ -9,12 +9,14 @@ from coip.apps.name.models import Name
 import datetime
 from pprint import pformat
 import logging
+from coip.apps.service.models import Service
 
 class Membership(models.Model):
     '''
     Membership in a namespace/group
     '''
     user = models.ForeignKey(User,blank=True,null=True,related_name='user')
+    service = models.ForeignKey(Service,blank=True,null=True,related_name='service')
     name = models.ForeignKey(Name,related_name='memberships')
     enabled = models.BooleanField()
     hidden = models.BooleanField()
@@ -33,22 +35,43 @@ class Membership(models.Model):
             return "active"
         else:
             return "inactive";
+        
+    def is_user(self):
+        return self.user != None
     
-def add_member(name,user,hidden=False):
-    (m,created)  = Membership.objects.get_or_create(user=user,name=name)
+    def is_service(self):
+        return self.service != None
+    
+def add_member(name,userorservice,hidden=False):
+    if isinstance(userorservice,User):
+        (m,created)  = Membership.objects.get_or_create(user=userorservice,name=name)
+    else:
+        (m,created)  = Membership.objects.get_or_create(service=userorservice,name=name)
+        
     if created or not m.enabled or m.hidden != hidden:
         m.enabled = True
         m.hidden = hidden
         m.save()
         
-def disable_member(name,user):
-    m = Membership.objects.get(name=name,user=user)
+def disable_member(name,userorservice):
+    if isinstance(userorservice,User):
+        m = Membership.objects.get(name=name,user=userorservice)
+    else:
+        m = Membership.objects.get(name=name,service=userorservice)
     if m:
         m.enabled = False
         m.save()
         
-def remove_member(name,user):
-    m = Membership.objects.get(name=name,user=user)
+def remove_member(name,userorservice):
+    if isinstance(userorservice,User):
+        m = Membership.objects.get(name=name,user=userorservice)
+    else:
+        m = Membership.objects.get(name=name,service=userorservice)
     if m:
         m.delete()
         
+def has_member(name,userorservice):
+    if isinstance(userorservice,User):
+        return Membership.objects.filter(name=name,user=userorservice)
+    else:
+        return Membership.objects.filter(name=name,service=userorservice)

@@ -39,7 +39,7 @@ def delete(request,id):
                 name.remove(False)
             
             if parent:
-                return HttpResponseRedirect("/name/id/%d" % parent.id)
+                return HttpResponseRedirect(parent.url())
             else:
                 return HttpResponseRedirect("/name");
     else:
@@ -64,7 +64,7 @@ def add(request,id):
         if form.is_valid():
             name = form.save()
             name.copyacl(name.parent)
-            return HttpResponseRedirect("/name/id/%d" % name.id)
+            return HttpResponseRedirect(name.url())
     else:
         form = NewNameForm()
         
@@ -81,7 +81,7 @@ def edit(request,id):
         form = NameEditForm(request.POST,instance=name)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect("/name/id/%d" % name.id)
+            return HttpResponseRedirect(name.url())
     else:
         form = NameEditForm(instance=name)
         

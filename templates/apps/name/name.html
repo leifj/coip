@@ -17,12 +17,35 @@
     {% if not name %}
 	<h1>This is the top of the namespace</h1>
 	{% endif %}
-    {% if name.description %}
-    <div id="description" class="ui-widget infopanel">
-       {% autoescape off %}
-	   <p class="description">{{name.description|safe}}</p>
-	   {% endautoescape %}
+    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all">
+	    {% if name.description %}
+	    {% autoescape off %}
+	    <p class="description">{{name.description|safe}}</p>
+	    {% endautoescape %}
+		{% endif %}
+		{% if name %}
+		<div class="navlist toolbar">
+		  <ul>
+		  	 {% if render.acl %}
+			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
+			 {% endif %}
+		     {% if render.edit %}
+			 <li class="button"><a href="/name/{{name.id}}/edit">Modify</a></li>
+			 {% endif %}
+			 {% if render.delete %}
+			 <li class="button"><a href="/name/{{name.id}}/delete">Delete</a></li>
+			 {% endif %}
+			 {% if render.invite %}
+			 <li class="button"><a href="/name/{{name.id}}/invite">Invite</a></li>
+			 {% endif %}
+			 {% if render.join %}
+			 <li class="button"><a href="/name/{{name.id}}/join">Join</a></li>
+			 {% endif %}
+		   </ul>
+		</div>
+		<div class="clear"></div>
 	</div>
+	
 	{% endif %}
 	{% if memberships and render.invite %}
 	<h3>Members</h3>
@@ -30,7 +53,21 @@
 		{% for m in memberships.all %}
 		<div id="m{{m.id}}" class="{{m.status}}">
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
-		   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
+		   <div>
+			   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
+			   <div class="navlist" style="margin-top: 10px;">
+		         <ul>
+		            {% if user == m.user %}
+		            <li class="button"><a href="/name/{{name.id}}/{{m.user.username}}/leave">Leave Group</a></li>
+		            {% else %} 
+		            {% if render.kick %} 
+		            <li class="button"><a href="/name/{{name.id}}/{{m.user.username}}/leave">Kick</a></li>
+		            {% endif %}
+		            {% endif %}
+		         </ul>
+		      </div>
+		      <div class="clear"></div>
+		   </div>
 		</div>
 		{% empty %}
 		<p>No members yet...</p>

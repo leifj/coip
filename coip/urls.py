@@ -38,6 +38,8 @@ urlpatterns = patterns('',
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
+    (r'^name/(?P<id>[0-9]+)/join$',                  'coip.apps.membership.views.join'),
+    (r'^name/(?P<id>[0-9]+)/(?P<member>[^\/]+)/leave$',                  'coip.apps.membership.views.leave'),
     (r'^name/(?P<name>.+)(?:\.([^\.]+))?$',          'coip.apps.name.views.show_by_name'),
     # Name Links
     (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+).json$',               'coip.apps.name.views.links'),

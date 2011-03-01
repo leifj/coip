@@ -7,6 +7,7 @@ from coip.apps.userprofile.utils import user_profile
 from django.utils import simplejson
 from django.template import loader
 from coip.settings import PREFIX_URL
+from coip.apps.membership.models import has_member
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -38,8 +39,10 @@ def make_response_dict(request,d={}):
             d['render'] = {'delete': name.has_permission(request.user,'d'),
                            'edit': name.has_permission(request.user,'w'),
                            'invite': name.has_permission(request.user,'i'),
+                           'kick': name.has_permission(request.user,'i'),
                            'acl': name.has_permission(request.user,'a'),
                            'add': name.has_permission(request.user,'w'),
+                           'join': name.has_permission(request.user,'i') and not has_member(name,request.user),
                            'up': (name.parent and name.parent.has_permission(request.user,'r')) or not name.parent}
 
     return d
