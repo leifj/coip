@@ -5,14 +5,14 @@ label { display:block; }
 #modal-dialog { font-size: 110%; }
 #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
 #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
-div#footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px;}
+div#footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px; margin-right: 50px;}
 div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
 div#footer li { float: left; margin: 0 0.15em}
 .navlist ul { list-style: none; padding: 0; margin: 0; }
 .navlist li { float: right; display: inline; margin: 0 0.15em; }
-.ilist ul { list-style: none inside; padding: 0; margin: 0; }
-.ilist li { float: left; display: inline; margin: 0; }
-.description {  padding: 5px; }
+.ilist ul { list-style: none inside; padding: inherit; }
+.ilist li { float: left; display: inline; padding: inherit; }
+p.description {  }
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
 .name { font: 100% "Trebuchet MS", sans-serif; margin-top: 5px;}
 div.toolbar{ padding: 4px; float: right; margin-right: 50px; margin-top: 6px; margin-bottom: 20px;}
@@ -35,7 +35,7 @@ a:hover { text-decoration: underline; }
 div#content { font: 120% "Trebuchet MS", sans-serif; }
 div#main{ font: 100% "Trebuchet MS", sans-serif; width:95%; height:auto !important; height:100%; min-height: 100%;}
 .code{font: 110% "Courier", fixed}
-.infopanel { padding-left: 10px; padding-bottom: 10px;}
+.infopanel { padding: 5px; }
 .infopanel label { display:block; }
 div .hidden {visibility:hidden;}
 .listheader { padding-left: 20px; }

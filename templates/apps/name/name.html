@@ -17,14 +17,14 @@
     {% if not name %}
 	<h1>This is the top of the namespace</h1>
 	{% endif %}
-    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all">
+    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
 	    {% if name.description %}
 	    {% autoescape off %}
 	    <p class="description">{{name.description|safe}}</p>
 	    {% endautoescape %}
 		{% endif %}
 		{% if name %}
-		<div class="navlist toolbar">
+		<div class="ilist">
 		  <ul>
 		  	 {% if render.acl %}
 			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
