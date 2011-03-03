@@ -19,20 +19,29 @@ class AttributeForm(forms.ModelForm):
 
 class NameEditForm(BetterModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))    
+    error_css_class = 'error'
+    required_css_class = 'required'
     class Meta:
         model = Name
-        fields = ['short','description']
+        fields = ['short','description','format']
         fieldsets = [('step1', {'fields': ['short', 'description'],
                                 'legend': 'Describe your group',
-                                'classes': ['step submit_step'], 
-                                'description': 'Provide a short and (optionally) longer description of your group..'})]
+                                'classes': ['step'], 
+                                'description': 'Provide a short and (optionally) longer description of your group.'}),
+                     ('step2', {'fields': ['format'],
+                                'legend': 'Step 2 (optional): Advanced options',
+                                'classes': ['step','submit_step'],
+                                'description': 'Only change these settings if you know what you are doing.'})            
+                    ]
 
 class NewNameForm(BetterModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))
     value = forms.CharField(label="Name")
+    #error_css_class = 'error'
+    #required_css_class = 'required'
     class Meta:
         model = Name
-        fields = ['value','short','description','type']
+        fields = ['value','short','description','type','format']
         fieldsets = [('step1', {'fields': ['value'], 
                                 'legend': 'Step 1: Name your group',
                                 'classes': ['step'],
@@ -40,11 +49,11 @@ class NewNameForm(BetterModelForm):
                      ('step2', {'fields': ['short', 'description'],
                                 'legend': 'Step 2: Describe your group',
                                 'classes': ['step'], 
-                                'description': 'Provide a short and (optionally) longer description of your group..'}),
-                     ('step3', {'fields': ['type'],
+                                'description': 'Provide a short and (optionally) longer description of your group.'}),
+                     ('step3', {'fields': ['type','format'],
                                 'legend': 'Step 3 (optional): Advanced options',
                                 'classes': ['step','submit_step'],
-                                'description': 'Only set the type if you know what you are doing. You almost certainly do not need this.'})]
+                                'description': 'Only change these settings if you know what you are doing...'})]
         
 class NameDeleteForm(BetterForm):
     recursive = fields.BooleanField(label="Also delete everything below this name?",required=False)

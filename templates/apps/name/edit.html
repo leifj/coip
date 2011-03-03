@@ -2,9 +2,14 @@
 {% block widgets %}
     $('#id_expires').datepicker({'dateFormat': 'yy-mm-dd','timeFormat': 'hh:ii:ss'});
     $('#id_description').wysiwyg();
-    $('#form').formwizard({
+    $('#wizard').formwizard({
     	validationEnabled: true,
     	focusFirstInput: true,
-    	textSubmit: "Finish"
+    	textSubmit: "Finish",
+    	validationOptions: {
+    		rules: {
+    			short: 'required'
+    		}
+    	}
     });
 {% endblock %}

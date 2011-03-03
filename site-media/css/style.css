@@ -41,6 +41,5 @@ div#main{ width:95%; height:auto !important; height:100%; min-height: 100%;}
 .infopanel label { display:block; }
 div .hidden {visibility:hidden;}
 .listheader { padding-left: 20px; }
-.button { margin: 5px; }
+.button { margin-right: 2px; }
 legend {  font: 120% "Trebuchet MS", sans-serif; font-weight: bold;  }
-

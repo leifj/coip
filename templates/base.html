@@ -1,61 +1,45 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
 <head>
-        <link type="text/css" href="/site-media/css/flick/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
-        <link type="text/css" href="/site-media/css/jquery.jnotify.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/flick/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
+        <!-- link type="text/css" href="/site-media/css/jquery.jnotify.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.tooltip.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/jquery.tagInput.css" rel="stylesheet" />
-        <link type="text/css" href="/site-media/css/jquery.multiselect2side.css" rel="stylesheet" />
+        <link type="text/css" href="/site-media/css/jquery.multiselect2side.css" rel="stylesheet" /-->
         <link type="text/css" href="/site-media/css/jquery.wysiwyg.css" rel="stylesheet" />
         <link type="text/css" href="/site-media/css/style.css" rel="stylesheet"/>
-        <script type="text/javascript" src="/site-media/js/jquery-1.4.2.min.js"></script>
-        <script type="text/javascript" src="/site-media/js/jquery-ui-1.8.2.custom.min.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery-1.4.4.min.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery-ui-1.8.10.custom.min.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.tooltip.pack.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.gravatar.js"></script>
         <script type="text/javascript" src="/site-media/js/md5.js"></script>
-        <script type="text/javascript" src="/site-media/js/jquery.jnotify.js"></script>
+        <!-- script type="text/javascript" src="/site-media/js/jquery.jnotify.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.cookie.js"></script>
-        <script type="text/javascript" src="/site-media/js/jquery.timers.js"></script>
-        <script type="text/javascript" src="/site-media/js/jquery.tagInput.js"></script>
+        <script type="text/javascript" src="/site-media/js/jquery.timers.js"></script -->
+        <!-- script type="text/javascript" src="/site-media/js/jquery.tagInput.js"></script-->
         <!-- script type="text/javascript" src="/site-media/js/jquery.multiselect2side.js"></script -->
         <script type="text/javascript" src="/site-media/js/jquery.jstree.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.wysiwyg.js"></script>
-        <script type="text/javascript" src="/site-media/js/bbq.js"></script>
+        <!-- script type="text/javascript" src="/site-media/js/jquery.form.js"></script-->
         <script type="text/javascript" src="/site-media/js/jquery.validate.js"></script>
-        <script type="text/javascript" src="/site-media/js/jquery.form.js"></script>
+        <script type="text/javascript" src="/site-media/js/bbq.js"></script>
         <script type="text/javascript" src="/site-media/js/jquery.form.wizard-3.0.4.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}{% endblock %}</title>
 		<script type="text/javascript">
-		   function _i(message) {
-		   	  $('#notification').jnotifyAddMessage({
-		          text: message,
-		          permanent: false,
-		          type: 'info'
-		      });
-		   }
-		   function _e(message) {
-		   	  $('#notification').jnotifyAddMessage({
-		          text: message,
-		          permanent: true,
-		          type: 'error'
-		      });
-		   }
 		$(function() {
 		   $("input:submit, input:reset, input:button, a",".button").button();
-		   $('#notification').jnotifyInizialize({
-		      oneAtTime: false,
-		      appendType: 'append'
-		   }).css({
-		      'font-size': "120%",
-		      'position': 'absolute',
-		      'marginTop': '20px',
-		      'padding': '15px',
-		      'right': '20px',
-		      'width': '250px',
-		      'z-index': '9999'
-		   });
 		   $('.tip').tooltip({showURL: false});
+		   $.validator.setDefaults({
+				highlight: function(input) {
+					$(input).addClass("ui-state-error");
+					$(input).removeClass("ui-state-default");
+				},
+				unhighlight: function(input) {
+					$(input).removeClass("ui-state-error");
+					$(input).addClass("ui-state-default");
+				}
+		   });
 		});
 		</script>
         {% block js %}{% endblock %}

@@ -3,39 +3,40 @@
 {% block content %}
     {% block beforeform %}
     {% endblock %}
-	<form method="POST" id="form">
-		<div class="infopanel">
+    <div class="infopanel">
+		<form method="POST" id="wizard" class="bbq" style="padding: 5px;">
 		    <h1>{{formtitle}}</h1>
 		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
 			{% for fieldset in form.fieldsets %}
 			  <fieldset id="{{fieldset.name}}" class="{{ fieldset.classes }}">
-			  {% if fieldset.legend %}
-			    <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
-			  {% endif %}
-			  {% if fieldset.description %}
-			    <p>{{ fieldset.description }}</p>
-			  {% endif %}
-			  <ul class="links">
-			  {% for field in fieldset %}
-			    {% if field.is_hidden %}
-			      {{ field }}
-			    {% else %}
-			      <li class="links" {{ field.row_attrs }}>
-			        {{ field.errors }}
-			        {{ field.label_tag }}
-			        {{ field }}
-			      </li>
-			    {% endif %}
-			  {% endfor %}
-			  </ul>
+				  {% if fieldset.legend %}
+				  <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
+				  {% endif %}
+				  {% if fieldset.description %}
+				  <p>{{ fieldset.description }}</p>
+				  {% endif %}
+				  <ul class="links">
+				  {% for field in fieldset %}
+				    {% if field.is_hidden %}
+				      {{ field }}
+				    {% else %}
+				      <li class="links" {{ field.row_attrs }}>
+				        {{ field.errors }}
+				        {{ field.label_tag }}
+				        {{ field }}
+				      </li>
+				    {% endif %}
+				  {% endfor %}
+				  </ul>
 			  </fieldset>
 			{% endfor %}
-		</div>
-		<br/>
-		<div class="button">
-			<input type="reset" value="Back"/>
-		    <input type="submit" value="Finish" />
-		    <input type="button" style="float: right;" onClick="document.location='{{name.url}}'" value="Cancel"/>
-	    </div>
-	</form>
+			<div class="ilist button" style="padding-bottom: 10px;">
+			   <ul>
+			      <li><input type="reset" value="Back"/></li>
+			      <li><input type="submit" value="Finish"/></li>
+			      <li><input type="button" style="float: right;" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+			   </ul>
+		    </div>
+		</form>
+	</div>
 {% endblock %}

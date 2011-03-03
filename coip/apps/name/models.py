@@ -21,10 +21,13 @@ class Attribute(models.Model):
     def __unicode__(self):
         return self.name;
 
+FMT_URN = 0
+FMT_URL = 1
+
 class Name(models.Model):
     '''
     A name-space/authorization/right/group/collaboration/thing
-    '''
+    '''   
     type = models.ForeignKey(Attribute, blank=True, null=True,related_name='names')
     value = models.CharField(max_length=255)
     parent = models.ForeignKey('self', blank=True, null=True,related_name='children')
@@ -32,8 +35,15 @@ class Name(models.Model):
     creator = models.ForeignKey(User,blank=True, null=True)
     display = models.TextField(editable=False)
     description = models.TextField(blank=True)
+    format = models.SmallIntegerField(default=FMT_URN,choices=((FMT_URN,"URN"),(FMT_URL,"URL")))
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
+    
+    def mode(self):
+        if not self.format:
+            return FMT_URN
+        else:
+            return self.format
     
     def shortname(self):
         if self.short:
@@ -49,6 +59,14 @@ class Name(models.Model):
     
     def __unicode__(self):
         return self.display
+    
+    def display_str(self):
+        if self.mode() == FMT_URN:
+            return self.display_str_urn()
+        elif self.mode() == FMT_URL:
+            return self.display_str_url()
+        else:
+            raise Exception,"unknown format for %s (%d)" % (self.value,self.id)
     
     def display_str_urn(self):
         n = self
@@ -88,6 +106,12 @@ class Name(models.Model):
     
     def url(self):
         return "%s/name/%s" % (PREFIX_URL,self.display_str_url())
+    
+    def uri(self):
+        if self.mode() == FMT_URN:
+            return self.display
+        else: # implement more format as needed
+            return "%s/name/%s" % (PREFIX_URL,self.display)
         
     def summary(self):
         return {'name': self.display, 'url': self.url(), 'short': self.short}
@@ -166,7 +190,7 @@ class Name(models.Model):
         return filter(lambda s: s.has_permission(user,perm),self.children.all())
     
 def set_display(sender,**kwargs):
-    kwargs['instance'].display = kwargs['instance'].display_str_urn()
+    kwargs['instance'].display = kwargs['instance'].display_str()
     
 pre_save.connect(set_display,sender=Name)
     

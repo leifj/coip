@@ -1,9 +1,15 @@
 {% extends "edit_fieldsets.html" %}
 {% block widgets %}
     $('#id_expires').datepicker({'dateFormat': 'yy-mm-dd','timeFormat': 'hh:ii:ss'});
-	$('#form').formwizard({
+	$('#wizard').formwizard({
     	validationEnabled: true,
     	focusFirstInput: true,
-    	textSubmit: "Finish"
+    	textSubmit: "Finish",
+    	validationOptions: {
+    		rules: {
+    			email: 'email required',
+    			expires: 'date required'
+    		}
+    	}
     });
 {% endblock %}
