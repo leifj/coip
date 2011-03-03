@@ -140,15 +140,15 @@ def links(request,id,type=NameLink.access_control):
     
 
 @login_required
-def removelink(request,id):
-    link = get_object_or_404(NameLink,pk=id)
+def rmacl(request,id,aclid):
+    link = get_object_or_404(NameLink,pk=aclid)
     name = link.src
     type = link.type
     if not name.has_permission(request.user,'w'):
         return render403("You do not have permission to remove name links from %s" % (name))
     
     link.delete()
-    return HttpResponseRedirect("/name/{{name.id}}/link/{{type}}")
+    return HttpResponseRedirect("/name/%d/acl/%s" % (name.id,type))
     
 @login_required
 def show_root(request):

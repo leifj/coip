@@ -44,10 +44,11 @@ urlpatterns = patterns('',
     (r'^name/(?P<id>[0-9]+)/leave/(?P<membername>[^\/]+)$',                  'coip.apps.membership.views.leave'),
     # Name Links
     (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+).json$',               'coip.apps.name.views.links'),
-    (r'^namelink/(?P<id>[0-9]+)/remove$',               'coip.apps.name.views.removelink'),
     # ACL
-    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)$',    'coip.apps.name.views.lsacl'),
-    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/add$',    'coip.apps.name.views.addacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)$',         'coip.apps.name.views.lsacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/add$',     'coip.apps.name.views.addacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/copy$',    'coip.apps.name.views.copyacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<aclid>[0-9]+)/remove$',  'coip.apps.name.views.rmacl'),
     # Links
     (r'^name/(?P<id>[0-9]+)/addlink$',               'coip.apps.link.views.add'),
     (r'^name/(?P<name>.+)(?:\.([^\.]+))?$',          'coip.apps.name.views.show_by_name'),
