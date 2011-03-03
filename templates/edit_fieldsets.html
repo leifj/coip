@@ -20,9 +20,10 @@
 				    {% if field.is_hidden %}
 				      {{ field }}
 				    {% else %}
-				      <li class="links" {{ field.row_attrs }}>
+				      <li class="links {% if field.field.required %}required{% endif %}" {{ field.row_attrs }}>
 				        {{ field.errors }}
-				        {{ field.label_tag }}
+				        <label for="id_{{ field.html_name }}">{{ field.label }}
+                        {% if field.field.required %}<b>*</b>{% endif %}</label>
 				        {{ field }}
 				      </li>
 				    {% endif %}
