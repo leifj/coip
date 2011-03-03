@@ -48,7 +48,7 @@ def home(request):
     home.short = "%s (%s)" % (profile.display_name,profile.identifier)
     home.save()
     add_member(home,profile.user,hidden=True)
-    home.setacl(home,"rwl") #don't allow users to delete or reset acls on their home, nor invite members - that would be confusing as hell
+    home.setacl(home,"rwlda") #don't allow users to delete or reset acls on their home, nor invite members - that would be confusing as hell
     
     names = [(link.src,link.data) for link in NameLink.objects.filter(dst__memberships__user=request.user,type=NameLink.access_control,data__contains='i').all()]
     
