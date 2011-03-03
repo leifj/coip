@@ -6,7 +6,7 @@ Created on Jun 24, 2010
 from django import forms
 from coip.apps.name.models import Name, Attribute, NameLink
 from django.forms import fields
-from django.forms.widgets import HiddenInput, CheckboxSelectMultiple
+from django.forms.widgets import HiddenInput, CheckboxSelectMultiple, TextInput
 from form_utils.forms import BetterModelForm, BetterForm
     
 class NameForm(forms.ModelForm):
@@ -71,7 +71,23 @@ class NameLinkForm(forms.ModelForm):
 class NameLinkDeleteForm(forms.Form):
     confirm = fields.BooleanField(label="Confirm")
     
-class PermissionForm(forms.Form):
+class PermissionForm(BetterForm):
     dst = fields.IntegerField(widget=HiddenInput)
-    subject = fields.CharField(min_length=1024)
-    permissions = fields.MultipleChoiceField(widget=CheckboxSelectMultiple,choices=[('r','read'),('w','write'),('l','list'),('i','insert'),('d','delete')])
+    subject = fields.CharField(max_length=1024,label="Group",widget=TextInput(attrs={'size': 40}))
+    permissions = fields.MultipleChoiceField(widget=CheckboxSelectMultiple,
+                                             choices=[('r','read'),
+                                                      ('w','write'),
+                                                      ('l','list members and groups'),
+                                                      ('i','manage members'),
+                                                      ('d','delete'),
+                                                      ('a','manage access')])
+    class Meta:
+        fieldsets = [('subject',{'fields': ['dst','subject'],
+                               'legend': 'Step 1: Select a group',
+                               'classes': ['step'],
+                               'description': 'Start typing in the textfield to find the group you want.'}),
+                     ('permission',{'fields': ['permissions'],
+                                    'legend': 'Step 2: Set permissions',
+                                    'classes': ['step','submit_step'],
+                                    'description': 'Select the rights that members of the group should have.'})]
+        

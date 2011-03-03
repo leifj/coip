@@ -1,0 +1,51 @@
+{% extends "edit_fieldsets.html" %}
+{% load permdisplay %}
+{% block widgets %}
+   	$('#wizard').formwizard({
+    	validationEnabled: true,
+    	focusFirstInput: true,
+    	textSubmit: "Finish",
+    	validationOptions: {
+    		rules: {
+    			subject_label: 'required'
+    		}
+    	}
+    });
+    $('#id_subject').autocomplete({
+    		source: "/name/search.json",
+    		focus: function(event, ui) {
+                $('#id_subject').val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $('#id_subject').val(ui.item.label);
+                $('#id_dst').val(ui.item.value);
+                return false;
+            },
+			minLength: 2,
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
+    });
+{% endblock %}
+{% block beforeform %}
+<h1>Permissions on {{name.short}}</h1>
+<div id="acl" style="margin-bottom: 20px;">
+{% for ace in acl %}
+<div id="{{acc.id}}">
+   <h3 class="listheader">Permissions for {{ace.dst|acldstdisplay}}</h3>
+   <div>
+      <div>{{ace.dst|acldstdisplay}} {{ace.data|permdisplay}}.</div>
+      <div class="rlist button">
+         <ul>
+            <li><a href="/namelink/{{ace.id}}/remove">Remove</a></li>
+         </ul>
+      </div>
+   </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

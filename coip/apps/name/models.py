@@ -204,6 +204,7 @@ class NameLink(models.Model):
     
     access_control = 0
     part_of = 1
+    child_access_control = 2
     
     def __unicode__(self):
         return "%s -> %s [%s %s]" % (self.src,self.dst,self.type,self.data)
