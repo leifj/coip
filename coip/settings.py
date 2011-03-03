@@ -89,4 +89,5 @@ INSTALLED_APPS = (
     'coip.apps.invitation',
     'coip.apps.userprofile',
     'coip.apps.link',
+    'coip.apps.entity'
 )
