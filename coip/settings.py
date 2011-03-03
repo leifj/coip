@@ -83,6 +83,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django_extensions',
+    'tagging',
     'coip.extensions',
     'coip.apps.name',
     'coip.apps.membership',

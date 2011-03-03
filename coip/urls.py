@@ -51,6 +51,8 @@ urlpatterns = patterns('',
     (r'^link/(?P<id>[0-9]+)/remove$',                'coip.apps.link.views.remove'),
     # Membership
     (r'^membership/(?P<id>[0-9]+)$',                 'coip.apps.membership.views.show'),
+    # Tag
+    (r'^tag/(?P<type>(\S+))/(?P<id>[0-9]+)/add$',                 'coip.apps.tag.views.add'),
     # JSON Tree
     (r'^ctree.json$',                                'coip.apps.name.views.ctree'),
     (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),

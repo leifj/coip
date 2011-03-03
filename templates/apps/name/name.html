@@ -63,6 +63,7 @@
 		         <ul>
 		            {% if user == m.user %}
 		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Leave Group</a></li>
+		            <li class="button"><a href="/tag/membership/{{m.id}}/add">Tag</a></li>
 		            {% else %} 
 		            {% if render.kick %} 
 		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Remove from Group</a></li>
