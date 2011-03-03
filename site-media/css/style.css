@@ -14,7 +14,7 @@ div#footer li { float: left; margin: 0 0.15em}
 .ilist li { float: left; display: inline; padding: inherit; }
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
-p.description {  }
+p.description { padding-top: 20px; padding-bottom: 5px; }
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
 .name { font: 100% "Trebuchet MS", sans-serif; margin-top: 5px;}
 div.toolbar{ padding: 4px; float: right; margin-right: 50px; margin-top: 6px; margin-bottom: 20px;}

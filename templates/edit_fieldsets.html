@@ -13,7 +13,7 @@
 				  <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
 				  {% endif %}
 				  {% if fieldset.description %}
-				  <p>{{ fieldset.description }}</p>
+				  <p class="description">{{ fieldset.description }}</p>
 				  {% endif %}
 				  <ul class="links">
 				  {% for field in fieldset %}
@@ -35,7 +35,9 @@
 			   <ul>
 			      <li><input type="reset" value="Back"/></li>
 			      <li><input type="submit" value="Finish"/></li>
-			      <li><input type="button" style="float: right;" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+			      {% if name %}
+			      <li style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+			      {% endif %}
 			   </ul>
 		    </div>
 		</form>

@@ -38,9 +38,13 @@
 			 {% if render.invite %}
 			 <li class="button"><a href="/name/{{name.id}}/invite">Invite</a></li>
 			 {% endif %}
-			 {% if render.join %}
-			 <li class="button"><a href="/name/{{name.id}}/join">Join</a></li>
+			 {% if render.invite %}
+			 <li class="button"><a href="/name/{{name.id}}/join">Add Member</a></li>
 			 {% endif %}
+			 {% if render.join %}
+			 <li class="button"><a href="/name/{{name.id}}/join/{{user.username}}">Join</a></li>
+			 {% endif %}
+			 
 		   </ul>
 		</div>
 		<div class="clear"></div>
@@ -58,10 +62,10 @@
 			   <div class="rlist">
 		         <ul>
 		            {% if user == m.user %}
-		            <li class="button"><a href="/name/{{name.id}}/{{m.user.username}}/leave">Leave Group</a></li>
+		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Leave Group</a></li>
 		            {% else %} 
 		            {% if render.kick %} 
-		            <li class="button"><a href="/name/{{name.id}}/{{m.user.username}}/leave">Remove from Group</a></li>
+		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Remove from Group</a></li>
 		            {% endif %}
 		            {% endif %}
 		         </ul>
