@@ -60,13 +60,13 @@
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
 		   <div>
 			   <div>
-				    {{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}} 
-				   	and has the following role{{m.tags|pluralize}}:
+				    {{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}
+				    {% if m.tags %}and has the following role{{m.tags|pluralize}}:
 			          <ul>
 			             {% for tag in m.tags %}
 			             <li>{{ tag|escape }}</li>
 			             {% endfor %}
-			          </ul>		
+			          </ul>{%endif%}.		
 			   </div>
 			   <div class="rlist button">
 		         <ul>

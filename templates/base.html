@@ -40,6 +40,20 @@
 					$(input).addClass("ui-state-default");
 				}
 		   });
+		   
+		   function validUser(value,element) {
+		   		var valid = false;
+				$.ajax({
+				  url: "/user/info/"+value+".json",
+				  async: false,
+				  dataType: 'json',
+				  success: function (json) {
+				    valid = true;
+				  }
+				});
+			    return valid;
+		   }
+		   $.validator.addMethod("validUser", validUser, "Please enter a valid user.");
 		});
 		</script>
         {% block js %}{% endblock %}

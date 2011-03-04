@@ -34,7 +34,13 @@ def join(request,id,membername=None):
         m = Membership(name=name,enabled=True)
         form = MembershipForm(request.POST,instance=m)
         if form.is_valid():
-            m = form.save()
+            if form.cleaned_data.has_key('user'):
+                add_member(name,form.cleaned_data['user'])
+            elif form.cleaned_data.has_key('entity'):
+                add_member(name,form.cleaned_data['entity'])
+            else:
+                raise Exception,"Bad form state - should not happen at all!"
+            
             return HttpResponseRedirect(name.url())
         else:
             return respond_to(request,

@@ -27,6 +27,8 @@ urlpatterns = patterns('',
     (r'^user/merge$',                               'coip.apps.userprofile.views.merge'),
     (r'^user/home$',                                'coip.apps.userprofile.views.home'),
     (r'^user/(.+)/groups.json$',                    'coip.apps.name.views.user_groups'),
+    (r'^user/search.json$',                         'coip.apps.userprofile.views.search'),
+    (r'^user/info/(.+).json$',                      'coip.apps.userprofile.views.info'),
     # Invitations
     (r'^name/(?P<id>[0-9]+)/invite$',                'coip.apps.invitation.views.invite'),
     (r'^invitation/(?P<id>[0-9]+)/cancel$',          'coip.apps.invitation.views.cancel'),
@@ -47,7 +49,7 @@ urlpatterns = patterns('',
     # ACL
     (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)$',         'coip.apps.name.views.lsacl'),
     (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/add$',     'coip.apps.name.views.addacl'),
-    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/copy$',    'coip.apps.name.views.copyacl'),
+    #(r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/copy$',    'coip.apps.name.views.copyacl'),
     (r'^name/(?P<id>[0-9]+)/acl/(?P<aclid>[0-9]+)/remove$',  'coip.apps.name.views.rmacl'),
     # Links
     (r'^name/(?P<id>[0-9]+)/addlink$',               'coip.apps.link.views.add'),

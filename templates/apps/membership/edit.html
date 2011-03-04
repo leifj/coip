@@ -3,6 +3,30 @@
     $('#wizard').formwizard({
     	validationEnabled: true,
     	focusFirstInput: true,
-    	textSubmit: "Finish"
+    	textSubmit: "Finish",
+    	validationOptions: {
+    		rules: {
+    			username: 'validUser'
+    		}
+    	}
+    });
+    $('#id_username').autocomplete({
+    		source: "/user/search.json",
+    		focus: function(event, ui) {
+                $('#id_username').val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $('#id_username').val(ui.item.label);
+                $('#id_user').val(ui.item.value);
+                return false;
+            },
+			minLength: 2,
+			open: function() {
+				$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+			},
+			close: function() {
+				$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+			}
     });
 {% endblock %}
