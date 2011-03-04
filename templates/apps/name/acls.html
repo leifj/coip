@@ -1,14 +1,32 @@
-{% extends "edit.html" %}
+{% extends "tree.html" %}
 {% load permdisplay %}
-{% block beforeform %}
-<h1>Permissions on {{name}}</h1>
-<table style="margin-bottom: 20px;">
+{% block widgets %}
+    $("#acl").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false
+   	});
+{% endblock %}
+{% block content %}
+<h1>Permissions on {{name.short}}</h1>
+<div id="acl" style="margin-bottom: 20px;">
 {% for ace in acl %}
-<tr>
-   <td>{{ace.dst|acldstdisplay}}</td>
-   <td>{{ace.data|permdisplay}}</td>
-   <td><a href="/namelink/{{ace.id}}/remove"><span class="ui-icon ui-icon-trash"></span></td>
-</tr>
+	<div id="{{ace.id}}">
+	   <h3 class="listheader">Permissions for {{ace.dst|acldstdisplay}}</h3>
+	   <div>
+	      <div>{{ace.dst|acldstdisplay}} {{ace.data|permdisplay}}.</div>
+	      <div class="rlist button">
+	         <ul>
+	            <li><a href="/name/{{ace.src.id}}/acl/{{ace.id}}/remove">Remove</a></li>
+	         </ul>
+	      </div>
+	   </div>
+	</div>
 {% endfor %}
-</table>
+</div>
+<div class="ilist button">
+   <ul>
+      <li><a href="/name/{{name.id}}/acl/0/add">Add Permission</a></li>
+   </ul>
+</div>
 {% endblock %}

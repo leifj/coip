@@ -3,8 +3,8 @@
 {% block content %}
     {% block beforeform %}
     {% endblock %}
-    <div class="infopanel">
-		<form method="POST" id="wizard" class="bbq" style="padding: 5px;">
+    <div>
+		<form method="POST" id="wizard" class="bbq formpadding">
 		    <h1>{{formtitle}}</h1>
 		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
 			{% for fieldset in form.fieldsets %}
@@ -22,9 +22,9 @@
 				    {% else %}
 				      <li class="links {% if field.field.required %}required{% endif %}" {{ field.row_attrs }}>
 				        {{ field.errors }}
-				        <label for="id_{{ field.html_name }}">{{ field.label }}
+				        <label for="id_{{ field.html_name }}" class="fieldlabel">{{ field.label }}
                         {% if field.field.required %}<b>*</b>{% endif %}</label>
-				        {{ field }}
+				        <div class="fieldinput">{{ field }}</div>
 				      </li>
 				    {% endif %}
 				  {% endfor %}

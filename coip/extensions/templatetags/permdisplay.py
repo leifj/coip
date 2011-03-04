@@ -25,7 +25,7 @@ permdisplay.is_safe = True
 register.filter(permdisplay)    
 
 def acldstdisplay(dst):
-    if dst.display.startswith("user:"):
+    if dst.display.startswith("user:") and dst.display.count(":") == 1:
         (pfx,username) = split(dst.display,":",1)
         user = User.objects.get(username=username)
         if user:
@@ -33,7 +33,7 @@ def acldstdisplay(dst):
         else:
             return "Unknown user \"%s\"" % username
     else:
-        return "Members of <a class=\"tip\" title=\"%s\" href=\"/name/id/%d\">%s</a>" % (dst.display,dst.id,dst.short)
+        return "members of %s (%s)" % (dst.short,dst.display)
     
 
 acldstdisplay.is_safe = True

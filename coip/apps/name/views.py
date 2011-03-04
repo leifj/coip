@@ -9,12 +9,13 @@ from django.http import HttpResponseNotFound, HttpResponseForbidden,\
     HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from coip.multiresponse import respond_to, json_response, render403
-from pprint import pformat
+from pprint import pformat, pprint
 import logging
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
     PermissionForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 @login_required
 def delete(request,id):
@@ -89,7 +90,18 @@ def edit(request,id):
             
 
 @login_required
-def editacl(request,id,type):
+def lsacl(request,id,type=NameLink.access_control):
+    name = get_object_or_404(Name,pk=id)
+    
+    if not name.has_permission(request.user,'a'):
+        return render403("You do not have permission to list permissions on %s" % (name))
+
+    return respond_to(request,
+                      {'text/html': 'apps/name/acls.html'},
+                      {'name': name, 'acl': name.lsacl()})
+
+@login_required
+def addacl(request,id,type=NameLink.access_control):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'a'):
@@ -103,13 +115,17 @@ def editacl(request,id,type):
             p = form.cleaned_data['permissions']
             if not p:
                 p = []
-            perms = p.join('')
-            link = NameLink.objects.get_or_create(src=name,dst=dst,type=NameLink.access_control)
+            perms = "".join(p)
+            (link,created) = NameLink.objects.get_or_create(src=name,dst=dst,type=NameLink.access_control)
             link.data = perms
             link.save()
-
-    form = PermissionForm()
-    return respond_to(request,{'text/html': 'apps/name/acls.html'},{'form': form, 'name': name, 'acl': name.lsacl(),'formtitle': 'Add Permission','submitname':'Add'})
+            return HttpResponseRedirect("/name/%s/acl/%s" % (id,type))
+    else:
+        form = PermissionForm()
+    
+    return respond_to(request,
+                      {'text/html': 'apps/name/addace.html'},
+                      {'form': form, 'name': name,'formtitle': 'Add Permission','submitname':'Add'})
 
 @login_required
 def links(request,id,type=NameLink.access_control):
@@ -124,15 +140,15 @@ def links(request,id,type=NameLink.access_control):
     
 
 @login_required
-def removelink(request,id):
-    link = get_object_or_404(NameLink,pk=id)
+def rmacl(request,id,aclid):
+    link = get_object_or_404(NameLink,pk=aclid)
     name = link.src
     type = link.type
     if not name.has_permission(request.user,'w'):
         return render403("You do not have permission to remove name links from %s" % (name))
     
     link.delete()
-    return HttpResponseRedirect("/name/{{name.id}}/link/{{type}}")
+    return HttpResponseRedirect("/name/%d/acl/%s" % (name.id,type))
     
 @login_required
 def show_root(request):
@@ -208,3 +224,11 @@ def rtree(request,id=None):
 @login_required
 def ctree(request,id=None):
     return _tree(request,id,False)
+
+@login_required
+def search(request):
+    list = []
+    if request.REQUEST.has_key('term'):
+        term = request.REQUEST['term']
+        list = [{'label': name.short,'value': name.id} for name in Name.objects.filter(Q(short__contains=term) | Q(value__contains=term))]
+    return json_response(list)

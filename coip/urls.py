@@ -35,19 +35,23 @@ urlpatterns = patterns('',
     # Names
     (r'^name/id/(?P<id>[0-9]+)(?:\.([^\.]+))?$',     'coip.apps.name.views.show_by_id'),
     (r'^name$',                                      'coip.apps.name.views.show_root'),
+    (r'^name/search.json$',                          'coip.apps.name.views.search'),
     (r'^name/(?P<id>[0-9]+)/edit$',                  'coip.apps.name.views.edit'),
     (r'^name/(?P<id>[0-9]+)/delete$',                'coip.apps.name.views.delete'),
     (r'^name/(?P<id>[0-9]+)/add$',                   'coip.apps.name.views.add'),
     (r'^name/(?P<id>[0-9]+)/join$',                  'coip.apps.membership.views.join'),
     (r'^name/(?P<id>[0-9]+)/join/(?P<membername>[^\/]+)$',                  'coip.apps.membership.views.join'),
     (r'^name/(?P<id>[0-9]+)/leave/(?P<membername>[^\/]+)$',                  'coip.apps.membership.views.leave'),
-    (r'^name/(?P<name>.+)(?:\.([^\.]+))?$',          'coip.apps.name.views.show_by_name'),
     # Name Links
     (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+).json$',               'coip.apps.name.views.links'),
-    (r'^namelink/(?P<id>[0-9]+)/remove$',               'coip.apps.name.views.removelink'),
-    (r'^name/(?P<id>[0-9]+)/link/(?P<type>[0-9]+)$',    'coip.apps.name.views.editacl'),
+    # ACL
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)$',         'coip.apps.name.views.lsacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/add$',     'coip.apps.name.views.addacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<type>[0-9]+)/copy$',    'coip.apps.name.views.copyacl'),
+    (r'^name/(?P<id>[0-9]+)/acl/(?P<aclid>[0-9]+)/remove$',  'coip.apps.name.views.rmacl'),
     # Links
     (r'^name/(?P<id>[0-9]+)/addlink$',               'coip.apps.link.views.add'),
+    (r'^name/(?P<name>.+)(?:\.([^\.]+))?$',          'coip.apps.name.views.show_by_name'),
     (r'^link/(?P<id>[0-9]+)/remove$',                'coip.apps.link.views.remove'),
     # Membership
     (r'^membership/(?P<id>[0-9]+)$',                 'coip.apps.membership.views.show'),

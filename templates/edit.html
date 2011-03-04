@@ -4,31 +4,33 @@
     $('#id_description').wysiwyg();
 {% endblock %}
 {% block content %}
-    {% block beforeform %}
-    {% endblock %}
-	<form method="POST" class="ui-helper-reset ui-widget-contents ui-corner-all">
-		<div class="infopanel">
-		    <h1>{{formtitle}}</h1>
-			<table class="formtable">
-		      {% for field in form %}
-		        <tr>
-		          <td>
-			          {% if not field.is_hidden %}
-			          <div class="ui-widget fieldlabel">{{ field.label_tag }}</div>
-			          {% endif %}
-			          {% if field.errors %}
-			          <div class="ui-widget ui-state-error">{{ field.errors }}</div>
-			          {% endif %}
-			          <div class="ui-widget">{{ field }}</div>
-		          </td>
-		        </tr>
-		      {% endfor %}
-		    </table>
-		</div>
-		<br/>
-		<div class="button">
-		    <input type="submit" value="{{submitname}}" />
-		    <input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/>
+{% block beforeform %}{% endblock %}
+<div>
+	<form method="POST" class="bbq ui-helper-reset ui-widget ui-widget-content ui-corner-all formpadding">
+	    <h1>{{formtitle}}</h1>
+		<table class="formtable">
+	      {% for field in form %}
+	        <tr>
+	          <td>
+		          {% if not field.is_hidden %}
+		          <div class="ui-widget fieldlabel">{{ field.label_tag }}</div>
+		          {% endif %}
+		          {% if field.errors %}
+		          <div class="ui-widget ui-state-error">{{ field.errors }}</div>
+		          {% endif %}
+		          <div class="ui-widget">{{ field }}</div>
+	          </td>
+	        </tr>
+	      {% endfor %}
+	    </table>
+		<div class="ilist button" style="padding-bottom: 10px;">
+		   <ul>
+		      <li><input type="submit" value="{{submitname}}" /></li>
+		      {% if name %}
+		      <li style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Done"/></li>
+		      {% endif %} 
+		   </ul>
 	    </div>
 	</form>
+</div>
 {% endblock %}

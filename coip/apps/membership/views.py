@@ -36,6 +36,10 @@ def join(request,id,membername=None):
         if form.is_valid():
             m = form.save()
             return HttpResponseRedirect(name.url())
+        else:
+            return respond_to(request,
+                              {'text/html': 'apps/membership/edit.html'},
+                              {'form': form,'name': name, 'formtitle': 'Add a member to %s' % name.short})
     else:
         if membername:
             try:
