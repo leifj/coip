@@ -61,13 +61,9 @@
 		   <div>
 			   <div>
 				    {{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}
-				    {% if m.tags %}and has the following role{{m.tags|pluralize}}:
-			          <ul>
-			             {% for tag in m.tags %}
-			             <li>{{ tag|escape }}</li>
-			             {% endfor %}
-			          </ul>{%endif%}.		
+				    {% if m.tags %}with role{{m.tags|pluralize}}: {% for tag in m.tags %}<b>{{ tag|escape }}</b>&nbsp;{%endfor%}{%endif%}		
 			   </div>
+			   <br/>
 			   <div class="rlist button">
 		         <ul>
 		            {% if render.edit %}
