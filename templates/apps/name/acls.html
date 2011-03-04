@@ -27,6 +27,9 @@
 <div class="ilist button">
    <ul>
       <li><a href="/name/{{name.id}}/acl/0/add">Add Permission</a></li>
+      {% if name %}
+      <li style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+	  {% endif %}
    </ul>
 </div>
 {% endblock %}

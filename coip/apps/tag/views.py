@@ -11,16 +11,22 @@ import logging
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from coip.apps.membership.models import Membership
-from forms import *
 from tagging.models import Tag
 
-def add(request, type, id):
+def modify(request, type, id):
     if type == "membership":
         tagobj = get_object_or_404(Membership, pk=id)
-    else: return HttpResponseNotFound()
+        name = tagobj.name
+        tagtype = "roles"
+    else: 
+        return HttpResponseNotFound()
+    
+    if not name.has_permission(request.user,'w'):
+        return render403("You do not have permission to modify roles on members of %s" % (name))
+    
     if request.method == 'POST':
-        if tagobj.user == request.user:
-            for tag in request.POST.getlist('item[tags][]'):
-                Tag.objects.add_tag(tagobj, tag)
-            return HttpResponseRedirect(request.META["HTTP_REFERER"])
-    return respond_to(request,{'text/html': 'apps/tag/add.html'},{'tagobj': tagobj, 'type': type, 'name': tagobj.name})
+        to_tags = request.POST.getlist('tags[]')
+        Tag.objects.update_tags(tagobj,' '.join(to_tags))
+        return HttpResponseRedirect(name.url())
+    
+    return respond_to(request,{'text/html': 'apps/tag/modify.html'},{'tagobj': tagobj, 'tagtype': tagtype, 'type': type, 'name': tagobj.name})

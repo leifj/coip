@@ -1,0 +1,23 @@
+{% extends "tree.html" %}
+{% block widgets %}
+	$("#taglist").tagit({
+		existingTags: [{% for t in tagobj.tags %}'{{t}}',{% endfor %}],
+		namePrefix: 'tags'
+	});
+{% endblock %}
+{% block content %}
+    <div>
+       <h1>Modify {{tagtype|escape}} on {{type|escape}} {{name.short|escape}}</h1>
+       <form method="POST" class="bbq ui-helper-reset ui-widget ui-widget-content ui-corner-all formpadding">
+          <div style="margin-top: 20px;">
+            <ul id="taglist"></ul>
+          </div>
+          <div class="ilist button" style="padding-bottom: 10px;" >
+             <ul>
+                <li><input type="submit" value="Save Changes" /></li>
+                <li style="float: right;"><input type="button" onClick="history.go(-1)" value="Cancel"/></li>
+             </ul>
+          </div>
+       </form>
+   </div>
+{% endblock %}

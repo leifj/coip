@@ -59,18 +59,22 @@
 		<div id="m{{m.id}}" class="{{m.status}}">
 		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
 		   <div>
-			   <div>{{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}.</div>
-			   <div class="rlist">
+			   <div>
+				    {{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}} 
+				   	and has the following role{{m.tags|pluralize}}:
+			          <ul>
+			             {% for tag in m.tags %}
+			             <li>{{ tag|escape }}</li>
+			             {% endfor %}
+			          </ul>		
+			   </div>
+			   <div class="rlist button">
 		         <ul>
-		            {% if user == m.user %}
-		            <b>Role{{ m.tags|pluralize }} in this group</b><br>
-		            {% for tag in m.tags %}<ul>{{ tag|escape }}</ul>{% endfor %}
-		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Leave Group</a></li>
-		            <li class="button"><a href="/tag/membership/{{m.id}}/add">Add role</a></li>
-		            {% else %} 
-		            {% if render.kick %} 
-		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Remove from Group</a></li>
+		            {% if render.edit %}
+		            <li><a href="/tag/membership/{{m.id}}/modify">Modify Roles</a></li>
 		            {% endif %}
+		            {% if render.kick %}
+		            <li><a href="/name/{{name.id}}/leave/{{m.user.username}}">{% if m.user == user %}Leave{% else %}Remove from{% endif %} Group</a></li>
 		            {% endif %}
 		         </ul>
 		      </div>

@@ -1,5 +1,10 @@
 (function($) {
 
+	/** Available options are:
+		*   availableTags (Array) -- Used as tag suggestions
+		*   existingTags (Array) *optional -- Used to prefill the tag selector with tags
+		*   namePrefix (String) *optional -- Used as input name attribute, default to "item[tags]"
+		*/
 	$.fn.tagit = function(options) {
 
 		var el = this;
@@ -17,6 +22,12 @@
 		el.html (html_input_field);
 
 		tag_input		= el.children(".tagit-new").children(".tagit-input");
+		
+		if (typeof options.existingTags != 'undefined' && typeof options.existingTags == 'object') {
+			for(var i in options.existingTags) {
+				create_choice(options.existingTags[i]);
+			}
+		}
 
 		$(this).click(function(e){
 			if (e.target.tagName == 'A') {
@@ -48,7 +59,7 @@
 
 				if (typed != "") {
 					if (is_new (typed)) {
-						create_choice (typed);
+						create_choice(typed);
 					}
 					// Cleaning the input.
 					tag_input.val("");
@@ -81,11 +92,12 @@
 			return is_new;
 		}
 		function create_choice (value){
+			name_prefix = (typeof(options.namePrefix) == 'undefined') ? 'item[tags]' : options.namePrefix;
 			var el = "";
 			el  = "<li class=\"tagit-choice\">\n";
 			el += value + "\n";
 			el += "<a class=\"close\">x</a>\n";
-			el += "<input type=\"hidden\" style=\"display:none;\" value=\""+value+"\" name=\"item[tags][]\">\n";
+			el += "<input type=\"hidden\" style=\"display:none;\" value=\""+value+"\" name=\""+name_prefix+"[]\">\n";
 			el += "</li>\n";
 			var li_search_tags = this.tag_input.parent();
 			$(el).insertBefore (li_search_tags);
