@@ -1,6 +1,7 @@
 {% extends "tree.html" %}
 {% load datehumanize %}
 {% load userdisplay %}
+{% load tagging_tags %}
 {% block widgets %}
     $("#memberships").accordion({
    		header: 'h3',
@@ -62,8 +63,10 @@
 			   <div class="rlist">
 		         <ul>
 		            {% if user == m.user %}
+		            <b>Role{{ m.tags|pluralize }} in this group</b><br>
+		            {% for tag in m.tags %}<ul>{{ tag|escape }}</ul>{% endfor %}
 		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Leave Group</a></li>
-		            <li class="button"><a href="/tag/membership/{{m.id}}/add">Tag</a></li>
+		            <li class="button"><a href="/tag/membership/{{m.id}}/add">Add role</a></li>
 		            {% else %} 
 		            {% if render.kick %} 
 		            <li class="button"><a href="/name/{{name.id}}/leave/{{m.user.username}}">Remove from Group</a></li>

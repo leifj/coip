@@ -1,7 +1,34 @@
 {% extends "tree.html" %}
+{% block js %}
+<script>
+	$(document).ready(function(){
+		$("#taglist").tagit({
+			existingTags: [{% for t in tagobj.tags %}'{{t}}',{% endfor%}],
+			namePrefix: 'tags'
+		});
+	});
+</script>
+{% endblock %}
+
 {% block content %}
-	<h1>Add tag to {{ type|escape }}</h1>
+	<h1>Add role to {{ type|escape }} {{ name }}</h1>
     <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
-{{ tagobj }}
-</div>
+      <h3 class="altheader">Current role{{ tagobj.tags|pluralize }} in this group</h3>
+	  {% for tag in tagobj.tags %}<b>{{ tag|escape }} </b>{% endfor %}
+      	<h3>Add</h3>
+      <div class="altcontent">
+        <form method="POST" action="">{% csrf_token %}
+                  <div style="margin-top: 20px;">
+                    <ul id="taglist"></ul>
+                  </div>
+                  <br/>
+                  <div class="button">
+                    <input type="submit" value="Save Changes" />
+                        <input type="button" onClick="history.go(-1)" value="Cancel"/>
+                  </div>
+        </form>
+      </div>
+   </div>
+
+
 {% endblock %}

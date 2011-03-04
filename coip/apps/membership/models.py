@@ -10,6 +10,7 @@ import datetime
 from pprint import pformat
 import logging
 from coip.apps.entity.models import Entity
+import tagging
 
 class Membership(models.Model):
     '''
@@ -75,3 +76,5 @@ def has_member(name,member_name):
         return Membership.objects.filter(name=name,user=member_name)
     else:
         return Membership.objects.filter(name=name,entity=member_name)
+
+tagging.register(Membership)
