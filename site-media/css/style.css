@@ -14,6 +14,8 @@ div#footer li { float: left; margin: 0 0.15em}
 .ilist li { float: left; display: inline; padding: inherit; }
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
+.clist ul { list-style: none; }
+.clist li { display: block; }
 .formpadding { padding: 5px; }
 p.description { padding-top: 20px; padding-bottom: 5px; }
 div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
