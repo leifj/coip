@@ -46,7 +46,7 @@ def delete(request,id):
     else:
         form = NameDeleteForm()
             
-    return respond_to(request,{'text/html': 'apps/name/delete.html'},{'form': form,'name': name,'formtitle': 'Remove %s' % (name.short) ,'submitname': 'Delete'})
+    return respond_to(request,{'text/html': 'apps/name/delete.html'},{'form': form,'name': name,'formtitle': 'Remove %s' % (name.shortname()) ,'submitname': 'Delete'})
 
 @login_required
 def add(request,id):
@@ -86,7 +86,7 @@ def edit(request,id):
     else:
         form = NameEditForm(instance=name)
         
-    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Modify %s' % name.short,'submitname': 'Update'})
+    return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Modify %s' % name.shortname(),'submitname': 'Update'})
             
 
 @login_required
@@ -230,5 +230,5 @@ def search(request):
     list = []
     if request.REQUEST.has_key('term'):
         term = request.REQUEST['term']
-        list = [{'label': name.short,'value': name.id} for name in Name.objects.filter(Q(short__contains=term) | Q(value__contains=term))]
+        list = [{'label': name.shortname(),'value': name.id} for name in Name.objects.filter(Q(short__contains=term) | Q(value__contains=term))]
     return json_response(list)
