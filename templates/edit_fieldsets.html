@@ -3,7 +3,6 @@
 {% block content %}
     {% block beforeform %}
     {% endblock %}
-    <div>
 		<form method="POST" id="wizard" class="bbq formpadding">
 		    <h1>{{formtitle}}</h1>
 		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
@@ -31,7 +30,7 @@
 				  </ul>
 			  </fieldset>
 			{% endfor %}
-			<div class="ilist button" style="padding-bottom: 10px;">
+			<div class="ilist button" style="padding-bottom: 30px; padding-top: 5px;">
 			   <ul>
 			      <li><input type="reset" value="Back"/></li>
 			      <li><input type="submit" value="Finish"/></li>
@@ -41,5 +40,4 @@
 			   </ul>
 		    </div>
 		</form>
-	</div>
 {% endblock %}
