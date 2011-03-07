@@ -25,7 +25,7 @@
         <script type="text/javascript" src="/site-media/js/jquery.form.wizard-3.0.4.js"></script>
         <script type="text/javascript" src="/site-media/js/tag-it.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}{% endblock %}</title>
+        <title>COIP{% if name %} - {{name.shortname}}{% else %} - top{% endif %}</title>
 		<script type="text/javascript">
 		$(function() {
 		   $("input:submit, input:reset, input:button, a",".button").button();
@@ -63,7 +63,7 @@
 <div id="container">
 	<div id="header">
 	   {% if name %}
-	   <div style="float: left;" class="navlist toolbar">
+	   <div style="float: left;" class="navlist">
 	       <ul>
 	       	  {% if render.add %}
 			  <li class="button"><a href="/name/{{name.id}}/add">Add Group</a></li>
@@ -73,14 +73,14 @@
 	   </div>
 	   {% endif %}
 	   {% if user.is_authenticated %}
-	   <div class="navlist toolbar">
+	   <div class="navlist">
 	      <ul>
 	         <li class="button"><a id="logout" href="/accounts/logout">Logout</a></li>
 	      </ul>
 	   </div>
 	   {% endif %}
 	   {% if noname %}
-	   <div class="navlist toolbar">
+	   <div class="navlist">
 		  <ul>
 		  	 {% if render.acl %}
 			 <li class="button"><a href="/name/{{name.id}}/link/0">Modify Access</a></li>
@@ -100,11 +100,7 @@
 	   <div class="clear"></div>
 	</div>
 	<div id="content">
-		<div id="headline">{% block headline %}{% endblock %}</div>
-		<div id="main">
-		   	{% block main %}{% endblock %}
-		</div>
-		<div class="clear"></div>
+	    {% block main %}{% endblock %}
 	</div>
 	<div id="footer">
 	   <ul>

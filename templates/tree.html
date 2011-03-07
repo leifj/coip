@@ -25,12 +25,10 @@ $(function() {
 });
 </script>
 {% endblock %}
-{% block headline %}
-<!-- a style="text-decoration: none" href="{% if name %}/name/id/{{name.id}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}Top{% endif %}</a-->
-{% endblock %}
-{% block title %}COIP{% if name %} - {{name.shortname}}{% else %} - top{% endif %}{% endblock %}
 {% block main %}
-<div id="left">
+<div class="leftright">
+<ul>
+<li style="width: 35%">
    <div id="tree">
     	<div class="ilist">
 	    	<ul>
@@ -45,7 +43,7 @@ $(function() {
 			</ul>
 		</div>
 		<div class="clear"></div>
-		<div id="jstree"></div>
+		<div class="ui-helper-reset" id="jstree"></div>
    </div>
    <!-- div id="related">
    		{% if name and name.links %}
@@ -65,11 +63,14 @@ $(function() {
    		<div class="clear"></div>
    		{% endif %}
    </div -->
-</div>
-<div id="right">
-<div id="headline">
-<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}{% endif %}</a>
-</div>
-{% block content %}{% endblock %}
-</div>
+</li>
+<li style="margin-left: 10px; width: 59%;">
+	<div id="headline">
+		<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/{% endif %}">{% if name %}{{name.shortname}}{% else %}Top of the namespace{% endif %}</a>
+	</div>
+	<div>
+    	{% block content %}{% endblock %}
+    </div>
+</li>
+</ul>
 {% endblock %}

@@ -16,9 +16,7 @@
    	});
 {% endblock %}
 {% block content %}
-    {% if not name %}
-	<h1>This is the top of the namespace</h1>
-	{% endif %}
+	{% if name.description or render.acl or render.edit or render.delete or render.invite or render.join %}
     <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
 	    {% if name.description %}
 	    {% autoescape off %}
@@ -45,37 +43,36 @@
 			 {% endif %}
 			 {% if render.join %}
 			 <li class="button"><a href="/name/{{name.id}}/join/{{user.username}}">Join</a></li>
-			 {% endif %}
-			 
+			 {% endif %}	 
 		   </ul>
 		</div>
+		{% endif %}
 		<div class="clear"></div>
 	</div>
-	
 	{% endif %}
-	{% if memberships and render.invite %}
+	{% if memberships %}
 	<h3>Members</h3>
 	<div id="memberships">
 		{% for m in memberships.all %}
 		<div id="m{{m.id}}" class="{{m.status}}">
-		   <h3 class="listheader">{{m.user|lastidentifier}}</h3>
+		   <h3 class="listheader">{{m|memberdisplay}}</h3>
 		   <div>
 			   <div>
-				    {{m.user|userdisplay}} ({{m.user|lastidentifier}}) became a member of {{name.shortname}} {{m.timecreated|datehumanize}}
+				    {{m|memberdisplay}} became a member of {{name.shortname}} {{m.timecreated|datehumanize}}
 				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
-				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}.	
+				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}	
 			   </div>
 			   <div class="rlist button">
 		         <ul>
-		            {% if render.edit %}
+		            {% if render.edit and m.user %} <!-- only allow roles for users right now -->
 		            <li><a href="/tag/membership/{{m.id}}/modify">Modify Roles</a></li>
 		            {% endif %}
-		            {% if render.kick %}
+		            {% if render.kick and m.user %} <!-- only allow removing members for users right now -->
 		            <li><a href="/name/{{name.id}}/leave/{{m.user.username}}">{% if m.user == user %}Leave{% else %}Remove from{% endif %} Group</a></li>
 		            {% endif %}
 		         </ul>
 		      </div>
-		      <div class="clear"></div>
+		      <!-- div class="clear"></div-->
 		   </div>
 		</div>
 		{% empty %}
@@ -97,7 +94,7 @@
 		            <li class="button"><a href="/invitation/{{i.id}}/resend">Resend</a></li>
 		         </ul>
 		      </div>
-		      <div class="clear"></div>
+		      <!-- div class="clear"></div -->
 		   </div>
 		</div>
 		{% empty %}

@@ -1,28 +1,29 @@
-html { height: 100%; margin: 0; padding: 0;}
-body { font: 61.8% "Trebuchet MS", sans-serif; width: 70%; height: 100%; margin:0; padding:0;}
-div#container { position: relative; height:auto !important; height:100%; min-height:100%; margin: 0; margin-left: 50px;}
+html,body { font-size: 80%; font-family: arial, sans-serif; height: 100%; margin:0; padding:0;}
+div#container { position: relative; width: 70%; height:auto !important; height:100%; min-height:100%; margin: 0; margin-left: 50px;}
 label { display:block; }
 #modal-dialog { font-size: 110%; }
 #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
 #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
-div#footer { font: 100% "Trebuchet MS", sans-serif; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px; margin-right: 50px;}
+div#footer { font-size: 100%; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px; margin-right: 50px;}
 div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
 div#footer li { float: left; margin: 0 0.15em}
 .navlist ul { list-style: none; padding: 0; margin: 0; }
-.navlist li { float: right; display: inline; margin: 0 0.15em; }
+.navlist li { float: right; display: inline;}
 .ilist ul { list-style: none inside; padding: inherit; }
 .ilist li { float: left; display: inline; padding: inherit; }
+.leftright ul { display: inline; list-style: none inside; padding: inherit; }
+.leftright li { display: inline-block; padding: inherit; vertical-align: top; }
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
 .clist ul { list-style: none; }
 .clist li { display: block; }
 .formpadding { padding: 5px; }
 p.description { padding-top: 20px; padding-bottom: 5px; }
-div#headline{ font: 300% "Trebuchet MS", sans-serif; margin-bottom: 20px;}
-.name { font: 100% "Trebuchet MS", sans-serif; margin-top: 5px;}
-div.toolbar{ padding: 4px; float: right; margin-right: 50px; margin-top: 6px; margin-bottom: 20px;}
+div#header { margin-top: 5px; margin-bottom: 20px; margin-right: 50px; }
+div#headline{ font-size: 300%; margin-bottom: 20px;}
+.name { margin-top: 5px;}
 div#left { float: left; width: 30%; padding-left: 5px; }
-div#right { float: right; width: 65%; padding-left: 20px;  height: 400px; }
+div#right { float: right; width: 65%; }
 div#related { position: absolute; bottom: 30%;}
 ul.links { list-style: none inside; padding: 0; margin: 0; }
 li.links { padding: 0; margin: 0; }
@@ -35,16 +36,15 @@ div#tree { padding-bottom: 50px;}
 #linklist { float: right; margin-right: 50px; }
 #linklist ul{ list-style: none; padding: 0; margin: 0; }
 #linklist li{ float: left; margin: 0 0.15em}
-#linklist a{ font: 120% "Trebuchet MS", sans-serif; }
+#linklist a{ }
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 .clear { clear: both; }
-div#content { }
-div#main{ width:95%; height:auto !important; height:100%; min-height: 100%;}
+div#content { padding-bottom: 5px; }
 .code{font: 110% "Courier", fixed}
-.infopanel { padding: 5px; }
+.infopanel { padding: 1em 2.2em; }
 .infopanel label { display:block; }
 div .hidden {visibility:hidden;}
 .listheader { padding-left: 20px; }
-.button { margin-right: 2px; }
-legend {  font: 120% "Trebuchet MS", sans-serif; font-weight: bold;  }
+.button {  }
+legend {  font-size: 120%; font-weight: bold;  }
