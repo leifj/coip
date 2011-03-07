@@ -32,6 +32,14 @@ def acldstdisplay(dst):
             return userdisplay(user)
         else:
             return "Unknown user \"%s\"" % username
+    elif dst.display == 'system:anyusers':
+        return "all users"
+    elif dst.display == 'system:anyentity':
+        return "all services and identity providers"
+    elif dst.display == 'system:anysp':
+        return "all services"
+    elif dst.display == 'system:anyidp':
+        return "all identity providers"
     else:
         return "members of %s (%s)" % (dst.short,dst.display)
     
