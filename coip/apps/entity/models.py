@@ -14,10 +14,11 @@ class Entity(models.Model):
     
     SP = 0
     IDP = 1
+    OTHER = 2
     
     entityId = CharField(max_length=1024,unique=True,editable=False)
     display_name = CharField(max_length=1024,blank=True,null=True)
-    type = SmallIntegerField(blank=False,editable=False,choices=((IDP,"Identity Provider"),(SP,"Service Provider")))
+    type = SmallIntegerField(blank=True,editable=False,choices=((IDP,"Identity Provider"),(SP,"Service Provider"),(OTHER,"Other Entity")))
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
     
