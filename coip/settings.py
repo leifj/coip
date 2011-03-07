@@ -33,6 +33,7 @@ SITE_ID = 1
 
 PREFIX_URL = 'http://localhost:8000'
 NOREPLY = 'noreply@localhost'
+METADATA = 'http://md.swamid.se/md/swamid-1.0.xml'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
