@@ -30,3 +30,12 @@ def lastidentifier(user):
 
 lastidentifier.is_safe = True
 register.filter(lastidentifier)
+
+def memberdisplay(membership):
+    if membership.user:
+        return userdisplay(membership.user)
+    else:
+        return membership.entity.display_name
+    
+memberdisplay.is_safe = True
+register.filter(memberdisplay)
