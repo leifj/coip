@@ -37,8 +37,6 @@ div#tree { padding-bottom: 50px;}
 #linklist ul{ list-style: none; padding: 0; margin: 0; }
 #linklist li{ float: left; margin: 0 0.15em}
 #linklist a{ }
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
 .clear { clear: both; }
 div#content { padding-bottom: 5px; }
 .code{font: 110% "Courier", fixed}
