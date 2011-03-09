@@ -31,7 +31,7 @@ class Invitation(models.Model):
         
     def send_email(self):
         pinviter = last_used_profile(self.inviter)
-        send_mail('Invitation to join \'%s\'' % (self.name.short),
+        send_mail('Invitation to join \'%s\'' % (self.name.shortname()),
                   '''
 %s (%s) has invited you to join \'%s\':
 
@@ -43,9 +43,9 @@ If you want to accept the invitation open this link in your browser:
 %s/invitation/%s/accept
 
 To view information about \'%s\' open this link in your browser:
-%s/name/id/%s
+%s
 
-''' % (pinviter.display_name,pinviter.identifier,self.name.short,self.message,PREFIX_URL,self.nonce,self.name.short,PREFIX_URL,self.name.id),
+''' % (pinviter.display_name,pinviter.identifier,self.name.shortname(),self.message,PREFIX_URL,self.nonce,self.name.shortname(),self.name.url()),
                   NOREPLY,
                   [self.email], 
                   fail_silently=False)
