@@ -27,7 +27,19 @@ class Membership(models.Model):
     expires = models.DateTimeField(blank=True,null=True)
     
     def __unicode__(self):
-        return "%s in %s" % (self.user,self.name)
+        who = "(unknown)"
+        if self.user:
+            who = self.user
+        elif self.entity:
+            who = self.entity
+            
+        status = ""
+        if not self.enabled:
+            status = " (disabled)"
+        hidden = ""
+        if self.hidden:
+            hidden = " (hidden)"
+        return "%s in %s%s%s" % (who,self.name,status,hidden)
     
     def valid(self):
         return self.enabled and datetime.date.today() > self.expires
