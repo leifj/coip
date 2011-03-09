@@ -160,20 +160,21 @@ def show(request,name):
     if not name:
         raise Http404()
     
-    if name.has_permission(request.user,'r'):
-        memberships = None
-        invitations = None
-        if name.has_permission(request.user,'l'):
-            memberships = name.memberships
-            invitations = name.invitations
-        return respond_to(request, 
-                          {'text/html': 'apps/name/name.html',
-                           'application/json': json_response(name.summary()) },
-                          {'name': name,
-                           'memberships':memberships,
-                           'invitations':invitations})
-    else:
-        return render403()
+    if not name.has_permission(request.user,'r'):
+        return render403("You are not allowed to look at that group.")
+    
+    memberships = None
+    invitations = None
+    if name.has_permission(request.user,'l'):
+        memberships = name.memberships.filter(hidden=False)
+        invitations = name.invitations
+    return respond_to(request, 
+                      {'text/html': 'apps/name/name.html',
+                       'application/json': json_response(name.summary()) },
+                      {'name': name,
+                       'memberships':memberships,
+                       'invitations':invitations})
+
 
 def user_groups(request,username):
     user = get_object_or_404(User,username=username)
