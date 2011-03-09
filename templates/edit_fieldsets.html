@@ -3,7 +3,7 @@
 {% block content %}
     {% block beforeform %}
     {% endblock %}
-		<form method="POST" id="wizard" class="bbq formpadding">
+		<form method="POST" id="wizard" class="bbq infopanel">
 		    <h1>{{formtitle}}</h1>
 		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
 			{% for fieldset in form.fieldsets %}
@@ -30,14 +30,15 @@
 				  </ul>
 			  </fieldset>
 			{% endfor %}
-			<div class="ilist button" style="padding-bottom: 30px; padding-top: 5px;">
+			<div class="ilist" style="padding-bottom: 30px; padding-top: 5px;">
 			   <ul>
-			      <li><input type="reset" value="Back"/></li>
-			      <li><input type="submit" value="Finish"/></li>
+			      <li class="button left"><input type="reset" value="Back"/></li>
+			      <li class="button left"><input type="submit" value="Finish"/></li>
 			      {% if name %}
-			      <li style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+			      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
 			      {% endif %}
 			   </ul>
 		    </div>
+		    <div class="clear"></div>
 		</form>
 {% endblock %}

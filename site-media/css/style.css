@@ -9,10 +9,10 @@ div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
 div#footer li { float: left; margin: 0 0.15em}
 .navlist ul { list-style: none; padding: 0; margin: 0; }
 .navlist li { float: right; display: inline;}
-.ilist ul { list-style: none inside; padding: inherit; }
-.ilist li { float: left; display: inline; padding: inherit; }
-.leftright ul { display: inline; list-style: none inside; padding: inherit; }
-.leftright li { display: inline-block; padding: inherit; vertical-align: top; }
+.ilist ul { list-style: none inside; padding: 0px; margin: 0px; }
+.ilist li { display: inline-block; padding: 0px; margin: 0px; }
+.leftright ul { display: inline; list-style: none inside; padding: 0px; }
+.leftright li { display: inline-block; padding: 0px; vertical-align: top; }
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
 .clist ul { list-style: none; }
@@ -48,3 +48,5 @@ div .hidden {visibility:hidden;}
 .listheader { padding-left: 20px; }
 .button {  }
 legend {  font-size: 120%; font-weight: bold;  }
+.right  { float: right; }
+.left { float: left; }

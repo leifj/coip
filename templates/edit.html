@@ -6,7 +6,7 @@
 {% block content %}
 {% block beforeform %}{% endblock %}
 <div>
-	<form method="POST" class="bbq ui-helper-reset ui-widget ui-widget-content ui-corner-all formpadding">
+	<form method="POST" class="bbq ui-helper-reset ui-widget ui-widget-content ui-corner-all infopanel">
 	    <h1>{{formtitle}}</h1>
 		<table class="formtable">
 	      {% for field in form %}
@@ -23,11 +23,11 @@
 	        </tr>
 	      {% endfor %}
 	    </table>
-		<div class="ilist button" style="padding-bottom: 10px;">
+		<div class="ilist" style="padding-bottom: 10px;">
 		   <ul>
-		      <li><input type="submit" value="{{submitname}}" /></li>
+		      <li class="button left"><input type="submit" value="{{submitname}}" /></li>
 		      {% if name %}
-		      <li style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Done"/></li>
+		      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Done"/></li>
 		      {% endif %} 
 		   </ul>
 	    </div>
