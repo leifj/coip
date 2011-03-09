@@ -7,12 +7,14 @@
 	$("#names").accordion({
    		header: 'h3',
    		collapsible: true,
-        active: false
+        active: false,
+        autoHeight: false
    	});
    	$("#memberships").accordion({
    		header: 'h3',
    		collapsible: true,
-        active: false
+        active: false,
+        autoHeight: false
    	});
 {% endblock %}
 {% block content %}
@@ -24,7 +26,7 @@
 		   <h3 class="listheader">{{m.name.shortname}}</h3>
 		   <div>
 			   <div>
-				    You became a member of {{m.name.shortname}} {{m.timecreated|datehumanize}}
+				    You became a member of <a href="{{m.name.url}}">{{m.name.shortname}}</a> {{m.timecreated|datehumanize}}
 				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
 				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}	
 			   </div>
