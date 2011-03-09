@@ -18,30 +18,34 @@ class AttributeForm(forms.ModelForm):
         model = Attribute
 
 class NameEditForm(BetterModelForm):
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))    
     error_css_class = 'error'
     required_css_class = 'required'
     class Meta:
         model = Name
         fields = ['short','description','format']
+        widgets = {'description': forms.Textarea(attrs={'cols': 62, 'rows': 6}),
+                   'short':  forms.TextInput(attrs={'size': 40})}
         fieldsets = [('step1', {'fields': ['short', 'description'],
-                                'legend': 'Describe your group',
+                                'legend': 'Step 1: Describe your group',
                                 'classes': ['step'], 
                                 'description': 'Provide a short and (optionally) longer description of your group.'}),
                      ('step2', {'fields': ['format'],
-                                'legend': 'Step 2 (optional): Advanced options',
+                                'legend': 'Step 2: (optional): Advanced options',
                                 'classes': ['step','submit_step'],
                                 'description': 'Only change these settings if you know what you are doing.'})            
                     ]
 
 class NewNameForm(BetterModelForm):
-    description = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 6}))
+    error_css_class = 'error'
+    required_css_class = 'required'
     value = forms.CharField(label="Name")
     #error_css_class = 'error'
     #required_css_class = 'required'
     class Meta:
         model = Name
         fields = ['value','short','description','type','format']
+        widgets = {'description': forms.Textarea(attrs={'cols': 60, 'rows': 6}),
+                   'short':  forms.TextInput(attrs={'size': 40})}
         fieldsets = [('step1', {'fields': ['value'], 
                                 'legend': 'Step 1: Name your group',
                                 'classes': ['step'],
