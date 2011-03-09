@@ -1,5 +1,7 @@
 {% extends "tree.html" %}
 {% load datehumanize %}
+{% load userdisplay %}
+{% load tagging_tags %}
 {% block widgets %}
 	$("#gravatar").append($.gravatar($('#email').text()));
 	$("#names").accordion({
@@ -14,26 +16,44 @@
    	});
 {% endblock %}
 {% block content %}
-<h3>Memberships</h3>
-<div id="memberships">
-	{% for m in memberships.all %}
-	<div id="m{{m.id}}" class="{{m.status}}">
-	   <h3 class="listheader">{{m.name.shortname}}</h3>
-	   <div>
-	   	  You became a member of <a href="/name/id/{{m.name.id}}">{{m.name.shortname}}</a> {{m.timecreated|datehumanize}}
-	   </div>
+    {% if memberships %}
+	<h3>Memberships</h3>
+	<div id="memberships">
+		{% for m in memberships.all %}
+		<div id="m{{m.id}}" class="{{m.status}}">
+		   <h3 class="listheader">{{m.name.shortname}}</h3>
+		   <div>
+			   <div>
+				    You became a member of {{m.name.shortname}} {{m.timecreated|datehumanize}}
+				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
+				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}	
+			   </div>
+			   <div class="rlist button">
+		         <ul>
+		            {% if render.edit and m.user %} <!-- only allow roles for users right now -->
+		            <li><a href="/tag/membership/{{m.id}}/modify">Modify Roles</a></li>
+		            {% endif %}
+		            {% if render.kick and m.user %} <!-- only allow removing members for users right now -->
+		            <li><a href="/name/{{name.id}}/leave/{{m.user.username}}">{% if m.user == user %}Leave{% else %}Remove from{% endif %} Group</a></li>
+		            {% endif %}
+		         </ul>
+		      </div>
+		      <!-- div class="clear"></div-->
+		   </div>
+		</div>
+		{% empty %}
+		<p>No members yet...</p>
+		{% endfor %}
 	</div>
-	{% empty %}
-	<p>You are not a member of any groups yet...</p>
-	{% endfor %}
-</div>
+	{% endif %}
+
 <h3>Groups</h3>
 <div id="names">
 	{% for n,p in names %}
 	<div id="n{{n.id}}">
 	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-		  <a href="/name/id/{{n.id}}">{{n.shortname}}</a>
+		  <a href="/name/id/{{n.id}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}}.
 	   </div>
 	</div>
 	{% empty %}
