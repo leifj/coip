@@ -28,7 +28,7 @@
 			   <div>
 				    You became a member of <a href="{{m.name.url}}">{{m.name.shortname}}</a> {{m.timecreated|datehumanize}}
 				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
-				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}	
+				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}
 			   </div>
 			   <div class="rlist button">
 		         <ul>
@@ -55,7 +55,7 @@
 	<div id="n{{n.id}}">
 	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-		  <a href="/name/id/{{n.id}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}}.
+		  <a href="/name/{{n.url}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}} and has {{n.memberships|length}} member{{n.memberships|pluralize}}.
 	   </div>
 	</div>
 	{% empty %}

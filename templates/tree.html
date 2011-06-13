@@ -35,9 +35,9 @@ $(function() {
 		        <li><b>{{ prefix_url }}</b></li>
 				{% if name and render.up %}
 				{% if name.parent %}
-				<li><a href="{{name.parent.url}}"><div class="ui-icon ui-icon-arrowreturnthick-1-w"></div></a></li>
+				<li><a class="tip" title="Up one level" href="{{name.parent.url}}"><span style="vertical-align: bottom;" class="ui-icon ui-icon-arrowthick-1-n"></span></a></li>
 				{% else %}
-				<li><a href="/name"><div class="ui-icon ui-icon-arrowreturnthick-1-w"></div></a></li>
+				<li><a class="tip" title="Up one level" href="/name"><span style="vertical-align: bottom;" class="ui-icon ui-icon-arrowthickstop-1-n"></span></a></li>
 				{% endif %}
 				{% endif %}
 			</ul>
@@ -64,7 +64,7 @@ $(function() {
    		{% endif %}
    </div -->
 </li>
-<li style="margin-left: 10px; width: 59%;">
+<li style="margin-bottom: 80px; margin-left: 10px; width: 59%;">
 	<div id="headline">
 		<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>
 	</div>

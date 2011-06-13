@@ -1,50 +1,86 @@
-html,body { font-size: 80%; font-family: arial, sans-serif; height: 100%; margin:0; padding:0;}
-div#container { position: relative; width: 70%; height:auto !important; height:100%; min-height:100%; margin: 0; margin-left: 50px;}
-label { display:block; }
+html,body { font-size: 80%; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; height: 100%; margin:0; padding:0;}
+body { min-width: 600px; width: 90%; }
+div#container { position: relative; height:auto !important; height: 100%; min-height: 80%; margin-left: 50px; margin-top: 0; padding-bottom: 90px;}
 #modal-dialog { font-size: 110%; }
 #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
 #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
-div#footer { font-size: 100%; border-top: 1px solid #CECECE; position: absolute; bottom: 0; width: 100%; padding-bottom: 50px; margin-right: 50px;}
-div#footer ul { margin-right: 50px; list-style: none; padding: 0; margin: 0; }
-div#footer li { float: left; margin: 0 0.15em}
-.navlist ul { list-style: none; padding: 0; margin: 0; }
+div#intro { font-size: 150%; margin-top: 50px; }
+div#footer { margin-right: 50px; border-top: 1px solid #CECECE; position: absolute; bottom: 0; padding-bottom: 0px; width: 100%; }
+div#footer ul { list-style: none; padding: 0; margin: 0; }
+div#footer li { display: inline; }
+div#footer li li { display: block; }
+div#footer ul ul { float: left; padding-right: 50px; }
+div#header { margin: 0;  padding: 0; padding-bottom: 30px; padding-top: 10px; }
+div#header img { width: 100%; border: 0; margin-top: 5px;}
+div#headline{ font-size: 300%; margin-bottom: 20px;}
+h3.listheader { padding-left: 20px; }
+.navlist ul { list-style: none; padding: 0; margin: 0; font-size: 90%; }
 .navlist li { float: right; display: inline;}
-.ilist ul { list-style: none inside; padding: 0px; margin: 0px; }
-.ilist li { display: inline-block; padding: 0px; margin: 0px; }
+.ilist { padding: 0px; margin: 0px; }
+.ilist ul { list-style: none; }
+.ilist li { display: inline-block; }
 .leftright ul { display: inline; list-style: none inside; padding: 0px; }
 .leftright li { display: inline-block; padding: 0px; vertical-align: top; }
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
 .clist ul { list-style: none; }
-.clist li { display: block; }
-.formpadding { padding: 5px; }
-p.description { padding-top: 20px; padding-bottom: 5px; }
-div#header { margin-top: 5px; margin-bottom: 20px; margin-right: 50px; }
-div#headline{ font-size: 300%; margin-bottom: 20px;}
-.name { margin-top: 5px;}
-div#left { float: left; width: 30%; padding-left: 5px; }
-div#right { float: right; width: 65%; }
-div#related { position: absolute; bottom: 30%;}
+.clist li { display: list-item; }
+.nlist ul { list-style: none; }
+.nlist li { display: list-item; list-style: none; }
+.square li { list-style: none inside none; }
+.description { clear: both; margin-top: 10px; padding-top: 15px; }
+p.info { font-size: 120%; margin-top: 10px; padding-top: 15px; }
+div.toolbar{ padding: 4px; float: right; margin-right: 30px; margin-bottom: 20px; margin-top: 50px; }
+#linklist { float: right; }
+#linklist ul{ list-style: none; padding: 0; margin: 0; }
+#linklist li{ float: left; margin: 0 0.15em}
+#linklist a{ font: 120% "Trebuchet MS", sans-serif; }
+.clear { clear: both; }
+#content{ padding-bottom: 50px; }
+.code{font: 110% "Courier", fixed}
+#rhs{ float: right; margin-right: 80px; width: 20%; }
+#main{ float: left; margin-left: 0px; width:70%}
+.code{font: 110% "Courier", fixed}
+.infopanel { padding: 1em 2.2em; }
+div .hidden {visibility:hidden;}
+form .ui-widget ul,ol { list-style: none inside; padding: 0; margin: 0; }
+form .ui-widget li { float: right; border-right: 1px solid #CECECE; padding-right: 5px; margin: 0; vertical-align: middle;}
+form fieldset legend { font-size: 120%; font-weight: bold; padding: 5px; }
+form fieldset { margin-left: 20px; }
+form fieldset input[type=text] { height: 25px; }
+form fieldset label {font-weight: bold; }
+.error { padding: 5px; }
 ul.links { list-style: none inside; padding: 0; margin: 0; }
 li.links { padding: 0; margin: 0; }
 form .ui-widget ul { list-style: none inside; padding: 0; margin: 0; }
 form .ui-widget li { float: right; border-right: 1px solid #CECECE; padding-right: 5px; margin: 0; vertical-align: middle;}
-.fieldlabel { font-weight: bold; }
-.fieldinput ul { list-style: none inside; padding: 0; margin: 0; }
-.fieldinput li { padding: 0; margin: 0; }
-div#tree { padding-bottom: 50px;}
-#linklist { float: right; margin-right: 50px; }
-#linklist ul{ list-style: none; padding: 0; margin: 0; }
-#linklist li{ float: left; margin: 0 0.15em}
-#linklist a{ }
-.clear { clear: both; }
-div#content { padding-bottom: 5px; }
-.code{font: 110% "Courier", fixed}
-.infopanel { padding: 1em 2.2em; }
-.infopanel label { display:block; }
-div .hidden {visibility:hidden;}
-.listheader { padding-left: 20px; }
-.button {  }
-legend {  font-size: 120%; font-weight: bold;  }
+.ui-icon { display: inline-block !important; }
+.minipanel { padding-top: 5px; padding-bottom: 5px; padding-left: 6px; padding-right: 6px; }
 .right  { float: right; }
 .left { float: left; }
+.fieldinput ul { list-style: none inside; padding: 0; margin: 0; }
+.fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
+div .fieldinput { margin-top: 10px; }
+a, a:hover, a:visited {
+	color: #E37424;
+	text-decoration: none;
+}
+h1, h1 a {
+	color: #E37424;
+	font-size: 220%;
+}
+h2, h2 a {
+	color: #E37424;
+	font-size: 150%
+}
+
+#files { width: 520px; clear: both; margin: 20px 0 10px; }
+#files .viewport { width: 500px; height: 200px; overflow: hidden; position: relative; }
+#files .overview { list-style: none; position: absolute; left: 0; top: 0; }
+#files .thumb .end,
+#files .thumb { background-color: #003D5D; }
+#files .scrollbar { position: relative; float: right; width: 15px; }
+#files .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
+#files .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
+#files .thumb .end { overflow: hidden; height: 5px; width: 13px; }
+#files .disable{ display: none; }
