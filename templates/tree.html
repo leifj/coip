@@ -26,12 +26,10 @@ $(function() {
 </script>
 {% endblock %}
 {% block main %}
-<div class="leftright">
-<ul>
-<li style="width: 35%">
-   <div id="tree">
-    	<div class="ilist">
-	    	<ul>
+<ul class="leftright">
+	<li class="leftright" style="width: 35%">
+	   <div class="ui-helper-reset" id="tree">
+	    	<ul class="ilist" style="padding-left: 0px;">
 		        <li><b>{{ prefix_url }}</b></li>
 				{% if name and render.up %}
 				{% if name.parent %}
@@ -41,36 +39,34 @@ $(function() {
 				{% endif %}
 				{% endif %}
 			</ul>
+			<div class="ui-helper-reset" id="jstree"></div>
+	   </div>
+	   <!-- div id="related">
+	   		{% if name and name.links %}
+	   		<h3 style="float: left;">Related resources</h3>
+	   		{% if render.edit %}
+	   		<a style="float: left; margin-top: 11px;" class="tip" title="Add Link" href="/name/{{name.id}}/addlink"><span class="ui-icon ui-icon-plus"></span></a>
+	   		{% endif %}
+	   		<div class="clear"></div>
+	   		<ul class="links"">
+	   		{% for link in name.links.all %}
+	   		   <li>
+	   		      <a class="tip" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>
+	   		      <a class="tip" title="Remove link" href="/link/{{link.id}}/remove"><span class="ui-icon ui-icon-close" style="float: right; clear: both;"></span></a>
+	   		   </li>
+	   		{% endfor %}
+	   		</ul>
+	   		<div class="clear"></div>
+	   		{% endif %}
+	   </div -->
+	</li>
+	<li class="leftright" style="margin-bottom: 80px; margin-left: 10px; width: 59%;">
+		<div id="headline">
+			<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>
 		</div>
-		<div class="clear"></div>
-		<div class="ui-helper-reset" id="jstree"></div>
-   </div>
-   <!-- div id="related">
-   		{% if name and name.links %}
-   		<h3 style="float: left;">Related resources</h3>
-   		{% if render.edit %}
-   		<a style="float: left; margin-top: 11px;" class="tip" title="Add Link" href="/name/{{name.id}}/addlink"><span class="ui-icon ui-icon-plus"></span></a>
-   		{% endif %}
-   		<div class="clear"></div>
-   		<ul class="links"">
-   		{% for link in name.links.all %}
-   		   <li>
-   		      <a class="tip" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>
-   		      <a class="tip" title="Remove link" href="/link/{{link.id}}/remove"><span class="ui-icon ui-icon-close" style="float: right; clear: both;"></span></a>
-   		   </li>
-   		{% endfor %}
-   		</ul>
-   		<div class="clear"></div>
-   		{% endif %}
-   </div -->
-</li>
-<li style="margin-bottom: 80px; margin-left: 10px; width: 59%;">
-	<div id="headline">
-		<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>
-	</div>
-	<div>
-    	{% block content %}{% endblock %}
-    </div>
-</li>
+		<div>
+	    	{% block content %}{% endblock %}
+	    </div>
+	</li>
 </ul>
 {% endblock %}

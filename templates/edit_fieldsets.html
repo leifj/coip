@@ -14,12 +14,12 @@
 				  {% if fieldset.description %}
 				  <p class="description">{{ fieldset.description }}</p>
 				  {% endif %}
-				  <ul class="links">
+				  <ul class="inputs">
 				  {% for field in fieldset %}
 				    {% if field.is_hidden %}
 				      {{ field }}
 				    {% else %}
-				      <li class="links {% if field.field.required %}required{% endif %}" {{ field.row_attrs }}>
+				      <li class="inputs {% if field.field.required %}required{% endif %}" {{ field.row_attrs }}>
 				        {{ field.errors }}
 				        <label for="id_{{ field.html_name }}" class="fieldlabel">{{ field.label }}
                         {% if field.field.required %}<b>*</b>{% endif %}</label>
@@ -30,15 +30,12 @@
 				  </ul>
 			  </fieldset>
 			{% endfor %}
-			<div class="ilist" style="padding-bottom: 30px; padding-top: 5px;">
-			   <ul>
-			      <li class="button left"><input type="reset" value="Back"/></li>
-			      <li class="button left"><input type="submit" value="Finish"/></li>
-			      {% if name %}
-			      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
-			      {% endif %}
-			   </ul>
-		    </div>
-		    <div class="clear"></div>
+		   <ul class="ilist" style="padding-bottom: 30px; padding-top: 5px;">
+		      <li class="button left"><input type="reset" value="Back"/></li>
+		      <li class="button left"><input type="submit" value="Finish"/></li>
+		      {% if name %}
+		      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+		      {% endif %}
+		   </ul>
 		</form>
 {% endblock %}

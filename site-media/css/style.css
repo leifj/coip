@@ -16,11 +16,10 @@ div#headline{ font-size: 300%; margin-bottom: 20px;}
 h3.listheader { padding-left: 20px; }
 .navlist ul { list-style: none; padding: 0; margin: 0; font-size: 90%; }
 .navlist li { float: right; display: inline;}
-.ilist { padding: 0px; margin: 0px; }
-.ilist ul { list-style: none; }
-.ilist li { display: inline-block; }
-.leftright ul { display: inline; list-style: none inside; padding: 0px; }
-.leftright li { display: inline-block; padding: 0px; vertical-align: top; }
+.ilist ul { list-style: none; margin: 0, padding 0; }
+.ilist li { display: inline-block; margin: 0, padding 0;}
+ul.leftright { padding: 0px; margin: 0px; }
+li.leftright { display: inline-block; list-style: none inside; padding: 0px; vertical-align: top;}
 .rlist ul { list-style: none inside; padding: inherit; }
 .rlist li { float: right; display: inline; padding: inherit; }
 .clist ul { list-style: none; }
@@ -43,24 +42,25 @@ div.toolbar{ padding: 4px; float: right; margin-right: 30px; margin-bottom: 20px
 .code{font: 110% "Courier", fixed}
 .infopanel { padding: 1em 2.2em; }
 div .hidden {visibility:hidden;}
-form .ui-widget ul,ol { list-style: none inside; padding: 0; margin: 0; }
-form .ui-widget li { float: right; border-right: 1px solid #CECECE; padding-right: 5px; margin: 0; vertical-align: middle;}
+form fieldset ul,ol { list-style: none inside; padding: 0; margin: 0; }
 form fieldset legend { font-size: 120%; font-weight: bold; padding: 5px; }
 form fieldset { margin-left: 20px; }
 form fieldset input[type=text] { height: 25px; }
-form fieldset label {font-weight: bold; }
+form fieldset label { font-weight: bold;}
+.fieldinput ul { list-style: none inside; padding: 0; margin: 0; }
+.fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
+ul.inputs { list-style: none inside; padding: 0; margin: 0; }
+li.inputs { padding: 0; margin: 0; margin-top: 10px;}
+
 .error { padding: 5px; }
 ul.links { list-style: none inside; padding: 0; margin: 0; }
 li.links { padding: 0; margin: 0; }
-form .ui-widget ul { list-style: none inside; padding: 0; margin: 0; }
-form .ui-widget li { float: right; border-right: 1px solid #CECECE; padding-right: 5px; margin: 0; vertical-align: middle;}
+#form .ui-widget ul { list-style: none inside; padding: 0; margin: 0; }
+#form .ui-widget li { float: right; border-right: 1px solid #CECECE; padding-right: 5px; margin: 0; vertical-align: middle;}
 .ui-icon { display: inline-block !important; }
 .minipanel { padding-top: 5px; padding-bottom: 5px; padding-left: 6px; padding-right: 6px; }
 .right  { float: right; }
 .left { float: left; }
-.fieldinput ul { list-style: none inside; padding: 0; margin: 0; }
-.fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
-div .fieldinput { margin-top: 10px; }
 a, a:hover, a:visited {
 	color: #E37424;
 	text-decoration: none;
