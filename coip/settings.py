@@ -23,6 +23,13 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake'
+    }
+}
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -60,11 +67,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',         
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'coip.middleware.UserMappingMiddleware',
-    'django.contrib.auth.middleware.RemoteUserMiddleware'
+    'django.contrib.auth.middleware.RemoteUserMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware'
 )
 
 AUTHENTICATION_BACKENDS = (
