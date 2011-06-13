@@ -16,16 +16,18 @@
    	});
 {% endblock %}
 {% block content %}
-	{% if name.description or render.acl or render.edit or render.delete or render.invite or render.join %}
-    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
-	    {% if name.description %}
-	    {% autoescape off %}
-	    <p class="description">{{name.description|safe}}</p>
-	    {% endautoescape %}
-		{% endif %}
-		{% if name %}
-		<div class="rlist">
-		  <ul>
+    {% if name %}
+	    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
+		    {% if name.description  %}
+		    {% autoescape off %}
+		    {{name.description|safe}}
+		    {% endautoescape %}
+		    {% else %}
+		    <em>No description available...</em>
+		    {% endif %}
+		</div>
+		{% if render.acl or render.edit or render.delete or render.invite or render.join %}
+		<ul class="ilist" style="margin-top: 10px;">
 		  	 {% if render.acl %}
 			 <li class="button"><a href="/name/{{name.id}}/acl/0">Modify Access</a></li>
 			 {% endif %}
@@ -44,11 +46,8 @@
 			 {% if render.join %}
 			 <li class="button"><a href="/name/{{name.id}}/join/{{user.username}}">Join</a></li>
 			 {% endif %}	 
-		   </ul>
-		</div>
-		{% endif %}
-		<div class="clear"></div>
-	</div>
+		 </ul>
+	 	{% endif %}
 	{% endif %}
 	{% if memberships %}
 	<h3>Members</h3>
@@ -72,7 +71,6 @@
 		            {% endif %}
 		         </ul>
 		      </div>
-		      <!-- div class="clear"></div-->
 		   </div>
 		</div>
 		{% empty %}

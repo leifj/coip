@@ -24,13 +24,10 @@
 	</div>
 {% endfor %}
 </div>
-<div class="ui-helper-reset ui-widget ui-widget-content ui-corner-all infopanel">
    <ul class="ilist">
       <li class="button"><a href="/name/{{name.id}}/acl/0/add">Add Permission</a></li>
       {% if name %}
-      <li class="button" style="float: right;"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
 	  {% endif %}
    </ul>
-   <div class="clear"></div>
-</div>
 {% endblock %}

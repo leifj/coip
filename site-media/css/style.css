@@ -16,14 +16,19 @@ div#headline{ font-size: 300%; margin-bottom: 20px;}
 h3.listheader { padding-left: 20px; }
 .navlist ul { list-style: none; padding: 0; margin: 0; font-size: 90%; }
 .navlist li { float: right; display: inline;}
-.ilist ul { list-style: none; margin: 0, padding 0; }
-.ilist li { display: inline-block; margin: 0, padding 0;}
+
+ul.ilist { list-style: none inside; margin: 0; padding 0; padding-left: 0px}
+.ilist li { display: inline-block; margin: 0; padding 0; }
+
 ul.leftright { padding: 0px; margin: 0px; }
 li.leftright { display: inline-block; list-style: none inside; padding: 0px; vertical-align: top;}
-.rlist ul { list-style: none inside; padding: inherit; }
-.rlist li { float: right; display: inline; padding: inherit; }
-.clist ul { list-style: none; }
-.clist li { display: list-item; }
+
+ul.rlist { list-style: none inside; padding: 0; margin: 0; padding-left: 0px}
+.rlist li { float: right; display: inline; padding: 0; margin: 0; }
+
+ul.clist { list-style: none; padding: 0; margin: 0;}
+.clist li { display: list-item; padding: 0; margin: 0;}
+
 .nlist ul { list-style: none; }
 .nlist li { display: list-item; list-style: none; }
 .square li { list-style: none inside none; }
