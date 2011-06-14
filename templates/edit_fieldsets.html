@@ -3,11 +3,11 @@
 {% block content %}
     {% block beforeform %}
     {% endblock %}
+        <h2>{{formtitle}}</h2>
 		<form method="POST" id="wizard" class="bbq infopanel">
-		    <h1>{{formtitle}}</h1>
 		    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
 			{% for fieldset in form.fieldsets %}
-			  <fieldset id="{{fieldset.name}}" class="{{ fieldset.classes }}">
+			  <fieldset id="{{fieldset.name}}" class="fieldset {{ fieldset.classes }}">
 				  {% if fieldset.legend %}
 				  <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
 				  {% endif %}

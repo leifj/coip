@@ -47,15 +47,15 @@ div.toolbar{ padding: 4px; float: right; margin-right: 30px; margin-bottom: 20px
 .code{font: 110% "Courier", fixed}
 .infopanel { padding: 1em 2.2em; }
 div .hidden {visibility:hidden;}
-form fieldset ul,ol { list-style: none inside; padding: 0; margin: 0; }
-form fieldset legend { font-size: 120%; font-weight: bold; padding: 5px; }
-form fieldset { margin-left: 20px; }
-form fieldset input[type=text] { height: 25px; }
-form fieldset label { font-weight: bold;}
-.fieldinput ul { list-style: none inside; padding: 0; margin: 0; }
+form .fieldset ul,ol { list-style: none inside; padding: 0; margin: 0; }
+form .fieldset legend { font-size: 120%; font-weight: bold; }
+form .fieldset {  }
+form .fieldset input[type=text] { height: 25px; }
+form .fieldset label { font-weight: bold; }
+ul.fieldinput { list-style: none inside; padding: 0; margin: 0; }
 .fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
 ul.inputs { list-style: none inside; padding: 0; margin: 0; }
-li.inputs { padding: 0; margin: 0; margin-top: 10px;}
+.inputs li { padding: 0; margin: 0; margin-top: 10px;}
 
 .error { padding: 5px; }
 ul.links { list-style: none inside; padding: 0; margin: 0; }
@@ -68,7 +68,6 @@ li.links { padding: 0; margin: 0; }
 .left { float: left; }
 a, a:hover, a:visited {
 	color: #E37424;
-	text-decoration: none;
 }
 h1, h1 a {
 	color: #E37424;
