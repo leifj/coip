@@ -26,11 +26,11 @@ class NameEditForm(BetterModelForm):
         widgets = {'description': forms.Textarea(attrs={'cols': 62, 'rows': 6}),
                    'short':  forms.TextInput(attrs={'size': 40})}
         fieldsets = [('step1', {'fields': ['short', 'description'],
-                                'legend': 'Step 1: Describe your group',
+                                'legend': 'Name and Description',
                                 'classes': ['step'], 
                                 'description': 'Provide a short and (optionally) longer description of your group.'}),
                      ('step2', {'fields': ['format'],
-                                'legend': 'Step 2: (optional): Advanced options',
+                                'legend': 'Advanced',
                                 'classes': ['step','submit_step'],
                                 'description': 'Only change these settings if you know what you are doing.'})            
                     ]

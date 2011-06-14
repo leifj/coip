@@ -1,0 +1,45 @@
+{% extends "tree.html" %}
+{% block widgets %}{% endblock %}
+{% block content %}
+    {% block beforeform %}
+    {% endblock %}
+        <h2>{{formtitle}}</h2>
+        
+		<form method="POST">
+		  {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+	      <div id="tabs">
+			<ul>
+			{% for fieldset in form.fieldsets %}
+			   <li><a href="#{{fieldset.name}}">{{fieldset.legend}}</a></li>
+			{% endfor %}
+			</ul>
+			{% for fieldset in form.fieldsets %}
+			<div class="fieldset" id="{{fieldset.name}}">
+		  	  {% if fieldset.description %}
+			  <p class="description">{{ fieldset.description }}</p>
+			  {% endif %}
+			  <ul class="inputs">
+			  {% for field in fieldset %}
+			    {% if field.is_hidden %}
+			      {{ field }}
+			    {% else %}
+			      <li class="inputs {% if field.field.required %}required{% endif %}" {{ field.row_attrs }}>
+			        {{ field.errors }}
+			        <label for="id_{{ field.html_name }}" class="fieldlabel">{{ field.label }}
+                    {% if field.field.required %}<b>*</b>{% endif %}</label>
+			        <div class="fieldinput">{{ field }}</div>
+			      </li>
+			    {% endif %}
+			  {% endfor %}
+			  </ul>
+		    </div>
+		    {% endfor %}
+		  </div>
+		  <ul class="ilist" style="padding-bottom: 30px; padding-top: 10px; padding-left: 0px;">
+		     <li class="button left"><input type="submit" value="Update"/></li>
+		     {% if name %}
+		     <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
+		     {% endif %}
+		  </ul>
+		</form>
+{% endblock %}

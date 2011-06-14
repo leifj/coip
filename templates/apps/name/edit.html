@@ -1,15 +1,6 @@
-{% extends "edit_fieldsets.html" %}
+{% extends "edit_fieldsets_tabs.html" %}
 {% block widgets %}
     $('#id_expires').datepicker({'dateFormat': 'yy-mm-dd','timeFormat': 'hh:ii:ss'});
     $('#id_description').wysiwyg();
-    $('#wizard').formwizard({
-    	validationEnabled: true,
-    	focusFirstInput: true,
-    	textSubmit: "Finish",
-    	validationOptions: {
-    		rules: {
-    			short: 'required'
-    		}
-    	}
-    });
+    $('#tabs').tabs();
 {% endblock %}
