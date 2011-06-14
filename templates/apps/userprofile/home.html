@@ -40,7 +40,6 @@
 		            {% endif %}
 		         </ul>
 		      </div>
-		      <!-- div class="clear"></div-->
 		   </div>
 		</div>
 		{% empty %}
@@ -55,7 +54,7 @@
 	<div id="n{{n.id}}">
 	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-		  <a href="/name/{{n.url}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}} and has {{n.memberships|length}} member{{n.memberships|pluralize}}.
+		  <a href="{{n.url}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}} and has {{n.memberships|length}} member{{n.memberships|pluralize}}.
 	   </div>
 	</div>
 	{% empty %}
