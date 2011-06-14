@@ -123,10 +123,15 @@ class Name(models.Model):
         self.delete()
     
     def copyacl(self,name):
-        for ace in name.lsacl():
+        found_ace = False
+        for ace in name.lspacl():
+            found_ace = True
             self.setacl(ace.dst,ace.data)
             
-    
+        if not found_ace:
+            for ace in name.lsacl():
+                self.setacl(ace.dst,ace.data)
+            
     def link(self,dst,type,data):
         if not self.has_link(dst,NameLink.part_of,data):
             link = NameLink(src=self,dst=dst,type=type,data=data)
@@ -142,15 +147,18 @@ class Name(models.Model):
     def has_link(self,dst,type,data):
         return NameLink.objects.filter(src=self,dst=dst,type=type,data=data).count() > 0
 
-    def setacl(self,name,perm):
-        (link,created) = NameLink.objects.get_or_create(src=self,dst=name,type=NameLink.access_control)
+    def setacl(self,name,perm,type=0):
+        (link,created) = NameLink.objects.get_or_create(src=self,dst=name,type=type)
         if not (link.data and link.data == perm):
             link.data = perm
             link.save()
+            
+    def setpacl(self,name,perm):
+        return self.setacl(name, perm, NameLink.access_control_policy)
         
-    def rmacl(self,name,perm):
+    def rmacl(self,name,perm,type=0):
         try:
-            link = NameLink.objects.get(src=self,dst=name,type=NameLink.access_control)
+            link = NameLink.objects.get(src=self,dst=name,type=type)
             save = False
             for p in perm:
                 link.data = link.data.replace(p,'')
@@ -163,8 +171,14 @@ class Name(models.Model):
         except ObjectDoesNotExist:
             pass
         
-    def lsacl(self):
-        return NameLink.objects.filter(src=self,type=NameLink.access_control)
+    def rmpacl(self,name,perm):
+        return self.rmacl(name,perm,NameLink.access_control_policy)
+       
+    def lspacl(self):
+        return self.lsacl(NameLink.access_control_policy)
+    
+    def lsacl(self,type=0):
+        return NameLink.objects.filter(src=self,type=type)
         
     def add_partof(self,part):
         self.link(part,NameLink.part_of,None)
@@ -204,7 +218,7 @@ class NameLink(models.Model):
     
     access_control = 0
     part_of = 1
-    child_access_control = 2
+    access_control_policy = 2
     
     def __unicode__(self):
         return "%s -> %s [%s %s]" % (self.src,self.dst,self.type,self.data)

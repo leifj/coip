@@ -89,6 +89,8 @@ def edit(request,id):
     return respond_to(request,{'text/html': 'apps/name/edit.html'},{'form': form,'name': name,'formtitle': 'Modify %s' % name.shortname(),'submitname': 'Update'})
             
 
+# Access Control
+
 @login_required
 def lsacl(request,id,type=NameLink.access_control):
     name = get_object_or_404(Name,pk=id)
@@ -98,7 +100,7 @@ def lsacl(request,id,type=NameLink.access_control):
 
     return respond_to(request,
                       {'text/html': 'apps/name/acls.html'},
-                      {'name': name, 'acl': name.lsacl()})
+                      {'name': name, 'acl': name.lsacl(type), 'type': type, 'ispacl': type == NameLink.access_control_policy})
 
 @login_required
 def addacl(request,id,type=NameLink.access_control):
@@ -116,7 +118,7 @@ def addacl(request,id,type=NameLink.access_control):
             if not p:
                 p = []
             perms = "".join(p)
-            (link,created) = NameLink.objects.get_or_create(src=name,dst=dst,type=NameLink.access_control)
+            (link,created) = NameLink.objects.get_or_create(src=name,dst=dst,type=type)
             link.data = perms
             link.save()
             return HttpResponseRedirect("/name/%s/acl/%s" % (id,type))
@@ -156,6 +158,7 @@ def show_root(request):
                       {'text/html': 'apps/name/name.html'}, 
                       {'name': None, 'memberships': None, 'edit': False})
 
+@login_required
 def show(request,name):
     if not name:
         raise Http404()
@@ -175,7 +178,7 @@ def show(request,name):
                        'memberships':memberships,
                        'invitations':invitations})
 
-
+@login_required
 def user_groups(request,username):
     user = get_object_or_404(User,username=username)
     return json_response([link.src.summary() for link in NameLink.objects.filter(dst__memberships__user=user,type=NameLink.access_control,data__contains='i').all()])
@@ -215,7 +218,7 @@ def _tree(request,id=None,includeroot=False):
     if request.GET.has_key('depth'):
         depth = request.GET['depth']
     t = traverse(name,_tree_node,request.user,depth,includeroot)
-    logging.debug(t)
+    #logging.debug(t)
     return json_response(t)
 
 @login_required

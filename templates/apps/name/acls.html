@@ -8,7 +8,33 @@
    	});
 {% endblock %}
 {% block content %}
-<h1>Permissions on {{name.short}}</h1>
+
+{% if type == "2" %}
+<h2>Access Control Policy</h2>
+<div class="ui-widget" style="margin-bottom: 20px;">
+	<div class="ui-state-highlight ui-corner-all" style="padding: 0 .7em;"> 
+		<p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span> 
+		<strong>WARNING</strong> The entries below represents <strong>access control policy</strong> for {{name.short}}. Access
+		control policy is the default access control used when creating new groups below this group. Changes
+		will only affect <strong>newly created groups</strong> below this group. Only change this if you know
+		what you are doing.</p>
+		<p class="button"><a href="/name/{{name.id}}/acl/0">Switch to Normal Access Control View</a></p>
+	</div>
+</div>
+{% else %}
+<h2>Access Control</h2>
+<div class="ui-widget" style="margin-bottom: 20px;">
+	<div class="ui-state-default ui-corner-all" style="padding: 0 .7em;"> 
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+		The entries below represents access control for {{name.short}}. Only change this if you know
+		what you are doing. If you <em>really, really, really</em> know what you are doing you may also 
+		<a style="text-decoration: underline;" href="/name/{{name.id}}/acl/2">switch to access control policy view</a>
+		and change the default access control for groups created below this group.</p>
+	</div>
+</div>
+
+{% endif %}
+
 <div id="acl" style="margin-bottom: 20px;">
 {% for ace in acl %}
 	<div id="{{ace.id}}">
@@ -25,7 +51,7 @@
 {% endfor %}
 </div>
    <ul class="ilist">
-      <li class="button"><a href="/name/{{name.id}}/acl/0/add">Add Permission</a></li>
+      <li class="button"><a href="/name/{{name.id}}/acl/{{type}}/add">Add Permission</a></li>
       {% if name %}
       <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
 	  {% endif %}
