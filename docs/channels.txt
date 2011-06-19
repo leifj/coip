@@ -1,0 +1,19 @@
+
+
+* http://gmp.example.com/a/group#role => RSS with members of that role
+* use SAML metadata to manage keys for TLS or setup OAuth
+* A feed is a dynamic set of users - a provided group
+* A channel is a set of feeds created by a user in an SP in order to manage ACLs and content
+* Feeds are autocreated as people login to the SP bringing with them epe values. 
+* A feed come in several flavours: json, atom, etc depending on the gmp
+* Feeds are updated in the background
+* Feeds contain a set of cached users
+* A channel is a users view of a set of feeds, feeds are what gmp's provide to SPs
+
+content negotiation
+
+- http://gmp.example.com/a/group.atom#role => RSS/ATOM (+activity stream)
+- http://gmp.example.com/a/group.json#role => JSON metadata for the feed
+
+- http://gmp.example.com/a/group#role
+- http://gmp.example.com/a/group
