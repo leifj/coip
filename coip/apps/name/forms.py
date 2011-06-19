@@ -23,7 +23,7 @@ class NameEditForm(BetterModelForm):
     class Meta:
         model = Name
         fields = ['short','description','format']
-        widgets = {'description': forms.Textarea(attrs={'cols': 62, 'rows': 6}),
+        widgets = {'description': forms.Textarea(attrs={'cols': 68, 'rows': 6}),
                    'short':  forms.TextInput(attrs={'size': 40})}
         fieldsets = [('step1', {'fields': ['short', 'description'],
                                 'legend': 'Name and Description',
