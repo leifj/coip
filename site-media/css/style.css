@@ -5,7 +5,7 @@ div#container { position: relative; height:auto !important; height: 100%; min-he
 #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
 #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
 div#intro { font-size: 150%; margin-top: 50px; }
-div#footer { margin-right: 50px; border-top: 1px solid #CECECE; position: absolute; bottom: 0; padding-bottom: 0px; width: 100%; }
+div#footer { margin-right: 50px; border-top: 1px solid #CECECE; position: absolute; bottom: 0; padding-bottom: 20px; width: 100%; }
 div#footer ul { list-style: none; padding: 0; margin: 0; }
 div#footer li { display: inline; }
 div#footer li li { display: block; }
@@ -19,9 +19,6 @@ h3.listheader { padding-left: 20px; }
 
 ul.ilist { list-style: none inside; margin: 0; padding 0; padding-left: 0px}
 .ilist li { display: inline-block; margin: 0; padding 0; }
-
-ul.leftright { padding: 0px; margin: 0px; }
-li.leftright { display: inline-block; list-style: none inside; padding: 0px; vertical-align: top;}
 
 ul.rlist { list-style: none inside; padding: 0; margin: 0; padding-left: 0px}
 .rlist li { float: right; display: inline; padding: 0; margin: 0; }
@@ -78,13 +75,7 @@ h2, h2 a {
 	font-size: 150%
 }
 
-#files { width: 520px; clear: both; margin: 20px 0 10px; }
-#files .viewport { width: 500px; height: 200px; overflow: hidden; position: relative; }
-#files .overview { list-style: none; position: absolute; left: 0; top: 0; }
-#files .thumb .end,
-#files .thumb { background-color: #003D5D; }
-#files .scrollbar { position: relative; float: right; width: 15px; }
-#files .track { background-color: #D8EEFD; height: 100%; width:13px; position: relative; padding: 0 1px; }
-#files .thumb { height: 20px; width: 13px; cursor: pointer; overflow: hidden; position: absolute; top: 0; }
-#files .thumb .end { overflow: hidden; height: 5px; width: 13px; }
-#files .disable{ display: none; }
+#thesidebar, #thecontent, #theseparator { vertical-align: top; display: inline-block; }
+#thesidebar { width: 35%; float: left; }
+#thecontent { width: 58%; }
+#theseparator { display: none; }

@@ -60,7 +60,7 @@
 			   <div>
 				    {{m|memberdisplay}} became a member of {{name.shortname}} {{m.timecreated|datehumanize}}
 				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
-				    <ul class="clist">{% for tag in m.tags %}<li>{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}	
+				    <ul class="ilist">{% for tag in m.tags %}<li style="padding: 2px;">{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}
 			   </div>
 			   <div class="rlist button">
 		         <ul>
@@ -93,7 +93,6 @@
 		            <li class="button"><a href="/invitation/{{i.id}}/resend">Resend</a></li>
 		         </ul>
 		      </div>
-		      <!-- div class="clear"></div -->
 		   </div>
 		</div>
 		{% empty %}

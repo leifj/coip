@@ -3,43 +3,96 @@
 <script type="text/javascript">
 $(function() {
     {% block widgets %}{% endblock %}
-   	$('#jstree').jstree({
-   		'json_data': {
-   			'ajax': {
-   				'url': function(n) {
-   					if (n == -1) {
-   						return {% if name %}"/rtree/"+{{name.id}}+".json"{% else %}"/rtree.json"{% endif %};
-   					} else {
-   						return "/ctree/"+n.attr('id')+".json";
-   					}
-   				}
-   			},
-   			"progressive_render"  : true
-   		},
-   		'themes': {
-   			'theme': 'classic'
-   		},
-   		'animation': 0,
-   		'plugins': ['themes','json_data']
+   	function _hide_sidebar(first) {
+   		if (first) {
+   			$('#thesidebar').hide();
+   		} else {
+   			$('#thesidebar').hide("fast");
+   		}
+   		$('#theseparator').addClass('ui-icon-arrowthickstop-1-e');
+   		$('#theseparator').removeClass('ui-icon-arrowthickstop-1-w');
+   		$.cookie('sidebar', 'off', { expires: 30 });
+   		return "off";
+   	}
+   	function _show_sidebar(first) {
+   		_refresh_tree();
+   		if (first) {
+   			$('#thesidebar').show();
+   		} else {
+   			$('#thesidebar').show("fast");
+   		}
+   		$('#theseparator').removeClass('ui-icon-arrowthickstop-1-e');
+   		$('#theseparator').addClass('ui-icon-arrowthickstop-1-w');
+   		$.cookie('sidebar', 'on', { expires: 30 });
+   		return "on";
+   	}
+   	function _load_state() {
+   		c = $.cookie('sidebar');
+   		_hide_sidebar(true);
+	   	if (c == "on") {
+	   		_show_sidebar(true);
+	   		return "on";
+	   	} else {
+	   		return "off";
+	   	}
+	}
+	var sidebar = _load_state();
+	$('#theseparator').addClass('ui-icon');
+	//$('#theseparator').hover(function() {
+	//	$(this).addClass('ui-state-hover');
+	//},function() {
+	//	$(this).removeClass('ui-state-hover');
+	//});
+   	$('#theseparator').click(function() {
+   		if (sidebar == "on") {
+   			sidebar = _hide_sidebar();	
+	   	} else {
+	   		sidebar = _show_sidebar();
+	   	}
    	});
+   	// must be last to avoid loading the tree if it is invisible
+   	function _refresh_tree() {
+	   	$('#jstree').jstree({
+	   		'json_data': {
+	   			'ajax': {
+	   				'url': function(n) {
+	   					if (n == -1) {
+	   						return {% if name %}"/rtree/"+{{name.id}}+".json"{% else %}"/rtree.json"{% endif %};
+	   					} else {
+	   						return "/ctree/"+n.attr('id')+".json";
+	   					}
+	   				}
+	   			},
+	   			"progressive_render"  : true
+	   		},
+	   		'animation': 0,
+	   		'themeroller': {
+	   			'item': 'ui-state-none',
+	   			'opened': 'ui-icon-circlesmall-minus',
+	   			'closed': 'ui-icon-circlesmall-plus'
+	   		},
+	   		'plugins': ['json_data','themeroller']
+	   	});
+	   	$('#jstree').removeClass('ui-widget-content');
+	}
 });
 </script>
 {% endblock %}
 {% block main %}
-<ul class="leftright">
-	<li class="leftright" style="width: 35%">
-	   <div class="ui-helper-reset" id="tree">
-	    	<ul class="ilist" style="padding-left: 0px;">
-		        <li><b>{{ prefix_url }}</b></li>
-				{% if name and render.up %}
-				{% if name.parent %}
-				<li><a class="tip" title="Up one level" href="{{name.parent.url}}"><span style="vertical-align: bottom;" class="ui-icon ui-icon-arrowthick-1-n"></span></a></li>
-				{% else %}
-				<li><a class="tip" title="Up one level" href="/name"><span style="vertical-align: bottom;" class="ui-icon ui-icon-arrowthickstop-1-n"></span></a></li>
-				{% endif %}
-				{% endif %}
-			</ul>
-			<div class="ui-helper-reset" id="jstree"></div>
+
+<ul class="ilist" style="margin-bottom: 80px;">
+	<li id="thesidebar">
+	   <div id="tree">
+	      <ul class="clist">
+			{% if name %}
+			{% if name.parent %}
+			<li>{% if render.up %}<a href="{{name.parent.url}}">{%endif%}{{name.parent.url}}{%if render.up%}</a>{%endif%}</li>
+			{% else %}
+			<li><a href="/name">{{prefix_url}}</a></li>
+			{% endif %}
+			{% endif %}
+			<li><div style="min-height: 300px;" class="ui-helper-reset" id="jstree"></div></li>
+		  </ul>
 	   </div>
 	   <!-- div id="related">
 	   		{% if name and name.links %}
@@ -60,7 +113,8 @@ $(function() {
 	   		{% endif %}
 	   </div -->
 	</li>
-	<li class="leftright" style="margin-bottom: 80px; margin-left: 10px; width: 59%;">
+	<li id="theseparator">&nbsp;</li>
+	<li id="thecontent">
 		<div id="headline">
 			<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>
 		</div>
@@ -68,5 +122,6 @@ $(function() {
 	    	{% block content %}{% endblock %}
 	    </div>
 	</li>
+	
 </ul>
 {% endblock %}
