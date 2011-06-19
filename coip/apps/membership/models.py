@@ -17,8 +17,8 @@ class Membership(models.Model):
     '''
     Membership in a namespace/group
     '''
-    user = models.ForeignKey(User,blank=True,null=True,related_name='user')
-    entity = models.ForeignKey(Entity,blank=True,null=True,related_name='entity')
+    user = models.ForeignKey(User,blank=True,null=True,related_name='memberships')
+    entity = models.ForeignKey(Entity,blank=True,null=True,related_name='entity') # XXX should this be memberships too?
     name = models.ForeignKey(Name,related_name='memberships')
     enabled = models.BooleanField()
     hidden = models.BooleanField()

@@ -1,12 +1,13 @@
-from django.conf.urls.defaults import *
-
-# Uncomment the next two lines to enable the admin:
+from django.conf.urls.defaults import patterns,include
 from django.contrib import admin
 from django.contrib.auth.views import login
 from settings import ADMIN_MEDIA_ROOT
 from settings import MEDIA_ROOT
 from django.http import HttpResponseRedirect
 from coip.apps.auth.views import logout
+from coip.apps.opensocial import opensocial_v1
+from coip.apps.api import v1_api
+
 admin.autodiscover()
 
 def welcome(request):
@@ -64,4 +65,7 @@ urlpatterns = patterns('',
     (r'^ctree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.ctree'),
     (r'^rtree.json$',                                'coip.apps.name.views.rtree'),
     (r'^rtree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.rtree'),
+    # APIs
+    (r'^api/',                                       include(v1_api.urls)),
+    (r'^opensocial/',                                include(opensocial_v1.urls))
 )

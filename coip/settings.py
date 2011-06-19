@@ -58,6 +58,7 @@ ADMIN_MEDIA_PREFIX = '/admin-media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '!=ren*@$dklhfm$3#$h=a2g4r3)ra#+al)9kwi4&rpylr$3xnf'
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -67,13 +68,13 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',         
+    #'django.middleware.cache.UpdateCacheMiddleware',         
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'coip.middleware.UserMappingMiddleware',
     'django.contrib.auth.middleware.RemoteUserMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware'
+    #'django.middleware.cache.FetchFromCacheMiddleware'
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -99,6 +100,8 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django_extensions',
     'tagging',
+    'tastypie',
+    'oauth_provider',
     'coip.extensions',
     'coip.apps.name',
     'coip.apps.membership',
