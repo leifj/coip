@@ -21,7 +21,7 @@ def modify(request, type, id):
         return HttpResponseNotFound()
     
     if not name.has_permission(request.user,'w'):
-        return render403("You do not have permission to modify roles on members of %s" % (name))
+        return render403(request,"You do not have permission to modify roles on members of %s" % (name))
     
     if request.method == 'POST':
         to_tags = request.POST.getlist('tags[]')

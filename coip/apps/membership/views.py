@@ -21,7 +21,7 @@ def show(request,id):
     membership = get_object_or_404(Membership,pk=id)
     name = membership.name
     if not name.has_permission(request.user,'r'):
-        return render403("You do not have permission to view membership information for %s" % (name))
+        return render403(request,"You do not have permission to view membership information for %s" % (name))
     
     return respond_to(request,
                       {'text/html': 'apps/membership/membership.html'}, 
@@ -83,7 +83,7 @@ def import_metadata():
 def join(request,id,membername=None):
     name = get_object_or_404(Name,pk=id)
     if not name.has_permission(request.user,'i'):
-        return render403("You do not have permission to add members to %s" % (name))
+        return render403(request,"You do not have permission to add members to %s" % (name))
     
     if request.method == "POST":
         m = Membership(name=name,enabled=True)

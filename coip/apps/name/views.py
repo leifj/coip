@@ -22,7 +22,7 @@ def delete(request,id):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'d'):
-        return render403()
+        return render403(request)
     
     if request.method == 'POST':
         form = NameDeleteForm(request.POST)
@@ -96,7 +96,7 @@ def lsacl(request,id,type=NameLink.access_control):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'a'):
-        return render403("You do not have permission to list permissions on %s" % (name))
+        return render403(request,"You do not have permission to list permissions on %s" % (name))
 
     return respond_to(request,
                       {'text/html': 'apps/name/acls.html'},
@@ -107,7 +107,7 @@ def addacl(request,id,type=NameLink.access_control):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'a'):
-        return render403("You do not have permission to change permissions on %s" % (name))
+        return render403(request,"You do not have permission to change permissions on %s" % (name))
     
     if request.method == 'POST':
         form = PermissionForm(request.POST)
@@ -133,7 +133,7 @@ def addacl(request,id,type=NameLink.access_control):
 def links(request,id,type=NameLink.access_control):
     name = get_object_or_404(Name,pk=id)
     if not name.has_permission(request.user,'r'):
-        return render403("You do not have permission to list name links from %s" % (name))
+        return render403(request,"You do not have permission to list name links from %s" % (name))
     
     links = name.links.filter(type=type).all
     return respond_to(request,{'text/html': 'apps/name/links.html',
@@ -147,7 +147,7 @@ def rmacl(request,id,aclid):
     name = link.src
     type = link.type
     if not name.has_permission(request.user,'w'):
-        return render403("You do not have permission to remove name links from %s" % (name))
+        return render403(request,"You do not have permission to remove name links from %s" % (name))
     
     link.delete()
     return HttpResponseRedirect("/name/%d/acl/%s" % (name.id,type))
@@ -164,7 +164,7 @@ def show(request,name):
         raise Http404()
     
     if not name.has_permission(request.user,'r'):
-        return render403("You are not allowed to look at that group.")
+        return render403(request,"You are not allowed to look at that group.")
     
     memberships = None
     invitations = None

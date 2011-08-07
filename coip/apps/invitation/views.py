@@ -19,7 +19,7 @@ def invite(request,id):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'i'):
-        return render403('You are not allowed to invite users to '+name)
+        return render403(request,'You are not allowed to invite users to '+name)
     
     user = request.user
     if request.method == 'POST':
@@ -55,7 +55,7 @@ def cancel(request,id):
     name = invitation.name
     
     if not name.has_permission(request.user,'w'):
-        return render403('You are not allowed to cancel pending invitations to %s' % (name))
+        return render403(request,'You are not allowed to cancel pending invitations to %s' % (name))
     
     invitation.delete()
     return HttpResponseRedirect("/name/id/%d" % (name.id))
