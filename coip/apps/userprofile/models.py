@@ -5,6 +5,7 @@ Created on Jul 5, 2010
 '''
 from django.db import models
 from django.contrib.auth.models import User
+from coip.apps.name.models import Name
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User,blank=True,null=True,related_name='profiles')
@@ -15,6 +16,7 @@ class UserProfile(models.Model):
     identifier = models.CharField(max_length=1023,unique=True)
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
+    home = models.ForeignKey(Name,blank=True,null=True,editable=False)
     
     def __unicode__(self):
         return "%s [%s] - %s" % (self.identifier,self.user.username,self.display_name)

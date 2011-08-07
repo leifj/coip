@@ -48,6 +48,7 @@ def home(request):
     profile = user_profile(request)
     home = lookup('user:'+request.user.username,autocreate=True)
     home.short = "%s (%s)" % (profile.display_name,profile.identifier)
+    profile.home = home
     home.save()
     add_member(home,profile.user,hidden=True)
     home.setacl(home,"rwlda") #don't allow users to delete or reset acls on their home, nor invite members - that would be confusing as hell
