@@ -1,21 +1,26 @@
 html,body { font-size: 80%; font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; height: 100%; margin:0; padding:0;}
-body { min-width: 600px; width: 90%; }
-div#container { position: relative; height:auto !important; height: 100%; min-height: 80%; margin-left: 50px; margin-top: 0; padding-bottom: 90px;}
+body { min-width: 800px; width: 100%; }
+#container { position: relative; height:auto !important; height: 100%; min-height: 80%; margin-left: 0px; margin-top: 0; padding-bottom: 90px;}
+.centered { margin-right: auto; margin-left: auto;  width: 800px;  }
+#footer { width: 100%; position: absolute; bottom: 0; padding-bottom: 20px; background-color: #CECECE; }
+ul.list-of-lists { list-style: none; padding: 0; margin: 0; margin: 0;  padding: 0; padding-bottom: 30px; }
+ul.list-of-lists li { display: inline; }
+ul.list-of-lists li ul { float: left; padding-right: 50px; }
+ul.list-of-lists li ul li { display: block; }
+#header { width: 100%; padding-top: 5px; padding-bottom: 5px; background-color: #CECECE; margin-bottom: 10px;}
+#welcome { font-size: 150%; margin-top: 100px;}
+#topmenubar { padding-right: 50px; }
+#appname {  padding: 0px 50px;}
+.tabs { margin-top: 5px; }
+.tabs div { min-height: 280px; vertical-align: top; }
+#appname h1 { font-size: 230%; font-weight: bold; margin: 0 0;}
+#headline{ font-size: 300%; margin-bottom: 20px;}
+#content{ padding-bottom: 50px; margin-left: 20px; min-width: 600px; width: 90%; }
 #modal-dialog { font-size: 110%; }
 #modal-dialog input.text textarea { margin-bottom:12px; width:95%; padding: .4em; }
 #modal-dialog fieldset { padding:0; border:0; margin-top:25px; }
-div#intro { font-size: 150%; margin-top: 50px; }
-div#footer { margin-right: 50px; border-top: 1px solid #CECECE; position: absolute; bottom: 0; padding-bottom: 20px; width: 100%; }
-div#footer ul { list-style: none; padding: 0; margin: 0; }
-div#footer li { display: inline; }
-div#footer li li { display: block; }
-div#footer ul ul { float: left; padding-right: 50px; }
-div#header { margin: 0;  padding: 0; padding-bottom: 30px; padding-top: 10px; }
-div#header img { width: 100%; border: 0; margin-top: 5px;}
-div#headline{ font-size: 300%; margin-bottom: 20px;}
+
 h3.listheader { padding-left: 20px; }
-.navlist ul { list-style: none; padding: 0; margin: 0; font-size: 90%; }
-.navlist li { float: right; display: inline;}
 
 ul.ilist { list-style: none inside; margin: 0; padding 0; padding-left: 0px}
 .ilist li { display: inline-block; margin: 0; padding 0; }
@@ -29,20 +34,10 @@ ul.clist { list-style: none; padding: 0; margin: 0;}
 .nlist ul { list-style: none; }
 .nlist li { display: list-item; list-style: none; }
 .square li { list-style: none inside none; }
-.description { clear: both; margin-top: 10px; padding-top: 15px; }
-p.info { font-size: 120%; margin-top: 10px; padding-top: 15px; }
-div.toolbar{ padding: 4px; float: right; margin-right: 30px; margin-bottom: 20px; margin-top: 50px; }
-#linklist { float: right; }
-#linklist ul{ list-style: none; padding: 0; margin: 0; }
-#linklist li{ float: left; margin: 0 0.15em}
-#linklist a{ font: 120% "Trebuchet MS", sans-serif; }
+
 .clear { clear: both; }
-#content{ padding-bottom: 50px; }
 .code{font: 110% "Courier", fixed}
-#rhs{ float: right; margin-right: 80px; width: 20%; }
-#main{ float: left; margin-left: 0px; width:70%}
-.code{font: 110% "Courier", fixed}
-.infopanel { padding: 1em 2.2em; }
+
 div .hidden {visibility:hidden;}
 form .fieldset ul,ol { list-style: none inside; padding: 0; margin: 0; }
 form .fieldset legend { font-size: 120%; font-weight: bold; }
@@ -53,7 +48,7 @@ ul.fieldinput { list-style: none inside; padding: 0; margin: 0; }
 .fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
 ul.inputs { list-style: none inside; padding: 0; margin: 0; }
 .inputs li { padding: 0; margin: 0; margin-top: 10px;}
-
+.infopanel { padding: 1em 2.2em; }
 .error { padding: 5px; }
 ul.links { list-style: none inside; padding: 0; margin: 0; }
 li.links { padding: 0; margin: 0; }
@@ -75,7 +70,6 @@ h2, h2 a {
 	font-size: 150%
 }
 
-#thesidebar, #thecontent, #theseparator { vertical-align: top; display: inline-block; }
-#thesidebar { width: 35%; float: left; }
-#thecontent { width: 58%; }
-#theseparator { display: none; }
+#left, #main { vertical-align: top; display: inline-block; }
+#left { width: 250px; padding-right: 20px;}
+#main { width: 55%; }
