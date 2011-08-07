@@ -2,8 +2,11 @@
 {% block headline %}Login{% endblock %}
 {% block title %}COIP{% endblock %}
 {% block main %}
-<h2>Welcome!</h2>
-<p class="ui-state-highlight ui-corner-all">This is a technology preview of coip. Please consider signing up for the coip mailing list at coip &lt;at&gt; segate.sunet.se. Note that any data you enter 
-into this version of coip <em>will</em> get deleted as the database is reset regularly. Stay tuned!</p>
-<div class="button"><a href="/accounts/login-federated">Login</a></div>
+
+<div id="welcome">
+	<h2>Welcome!</h2>
+	<p>This is a technology preview of coip. Please consider signing up for the coip mailing list at coip &lt;at&gt; segate.sunet.se. Note that any data you enter 
+	into this version of coip <em>will</em> get deleted as the database is reset regularly. Stay tuned!</p>
+	<div class="button"><a href="/accounts/login-federated">Login</a></div>
+</div>
 {% endblock %}

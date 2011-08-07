@@ -3,56 +3,7 @@
 <script type="text/javascript">
 $(function() {
     {% block widgets %}{% endblock %}
-   	function _hide_sidebar(first) {
-   		if (first) {
-   			$('#thesidebar').hide();
-   		} else {
-   			$('#thesidebar').hide("fast");
-   		}
-   		$('#theseparator').addClass('ui-icon-arrowthickstop-1-e');
-   		$('#theseparator').removeClass('ui-icon-arrowthickstop-1-w');
-   		$.cookie('sidebar', 'off', { expires: 30 });
-   		return "off";
-   	}
-   	function _show_sidebar(first) {
-   		_refresh_tree();
-   		if (first) {
-   			$('#thesidebar').show();
-   		} else {
-   			$('#thesidebar').show("fast");
-   		}
-   		$('#theseparator').removeClass('ui-icon-arrowthickstop-1-e');
-   		$('#theseparator').addClass('ui-icon-arrowthickstop-1-w');
-   		$.cookie('sidebar', 'on', { expires: 30 });
-   		return "on";
-   	}
-   	function _load_state() {
-   		c = $.cookie('sidebar');
-   		_hide_sidebar(true);
-	   	if (c == "on") {
-	   		_show_sidebar(true);
-	   		return "on";
-	   	} else {
-	   		return "off";
-	   	}
-	}
-	var sidebar = _load_state();
-	$('#theseparator').addClass('ui-icon');
-	//$('#theseparator').hover(function() {
-	//	$(this).addClass('ui-state-hover');
-	//},function() {
-	//	$(this).removeClass('ui-state-hover');
-	//});
-   	$('#theseparator').click(function() {
-   		if (sidebar == "on") {
-   			sidebar = _hide_sidebar();	
-	   	} else {
-	   		sidebar = _show_sidebar();
-	   	}
-   	});
-   	// must be last to avoid loading the tree if it is invisible
-   	function _refresh_tree() {
-	   	$('#jstree').jstree({
+   	$('#jstree').jstree({
 	   		'json_data': {
 	   			'ajax': {
 	   				'url': function(n) {
@@ -73,55 +24,46 @@ $(function() {
 	   		},
 	   		'plugins': ['json_data','themeroller']
 	   	});
-	   	$('#jstree').removeClass('ui-widget-content');
-	}
+	//$('#jstree').removeClass('ui-widget-content');
+	//$('#tree').addClass('ui-widget ui-corner-all ui-widget-content');
+	$('#jstree').addClass('ui-corner-all');
+	$('#sidemenu').menu();
+	$('.tabs').tabs();
 });
 </script>
 {% endblock %}
 {% block main %}
 
-<ul class="ilist" style="margin-bottom: 80px;">
-	<li id="thesidebar">
-	   <div id="tree">
-	      <ul class="clist">
+<ul class="ilist" style="margin-bottom: 10px;">
+	<li id="left">
+		<ul id="sidemenu">
+			{% if user.is_authenticated %}
+			<li><a class="gravatar" href="#" title="{{profile.email}}"></a></li>
+			<li><a href="/user/home"><span class="ui-icon ui-icon-home"></span>{{profile.display_name}}</a></li>
+			{% endif %}
+			<li style="border-top: 1px solid black; width: 100%; margin-top: 5px;">&nbsp;</li>
 			{% if name %}
-			{% if name.parent %}
-			<li>{% if render.up %}<a href="{{name.parent.url}}">{%endif%}{{name.parent.url}}{%if render.up%}</a>{%endif%}</li>
+			<li><a href="/name/{{name.id}}/add"><span class="ui-icon ui-icon-newwin"></span>Create New Group</a></li>
 			{% else %}
-			<li><a href="/name">{{prefix_url}}</a></li>
+			<li><a href="/name/{{profile.home.id}}/add"><span class="ui-icon ui-icon-newwin"></span>Create New Group</a></li>
 			{% endif %}
-			{% endif %}
-			<li><div style="min-height: 300px;" class="ui-helper-reset" id="jstree"></div></li>
-		  </ul>
-	   </div>
-	   <!-- div id="related">
-	   		{% if name and name.links %}
-	   		<h3 style="float: left;">Related resources</h3>
-	   		{% if render.edit %}
-	   		<a style="float: left; margin-top: 11px;" class="tip" title="Add Link" href="/name/{{name.id}}/addlink"><span class="ui-icon ui-icon-plus"></span></a>
-	   		{% endif %}
-	   		<div class="clear"></div>
-	   		<ul class="links"">
-	   		{% for link in name.links.all %}
-	   		   <li>
-	   		      <a class="tip" title="{{link.text}}" href="{{link.url}}">{{link.text}}</a>
-	   		      <a class="tip" title="Remove link" href="/link/{{link.id}}/remove"><span class="ui-icon ui-icon-close" style="float: right; clear: both;"></span></a>
-	   		   </li>
-	   		{% endfor %}
-	   		</ul>
-	   		<div class="clear"></div>
-	   		{% endif %}
-	   </div -->
+		</ul>
+		<div class="tabs">
+			<ul>
+				<li><a href="#mygroups">My Groups</a></li>
+				<li><a href="#jstree">All Groups</a></li>
+			</ul>
+			<div id="jstree"></div>
+			<div id="mygroups">My groups</div>
+		</div>
 	</li>
-	<li id="theseparator">&nbsp;</li>
-	<li id="thecontent">
+	<li id="main">
 		<div id="headline">
-			<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>
+			{% block headline %}<a style="text-decoration: none" href="{% if name %}{{name.url}}{% else %}/user/home{% endif %}">{% if name %}{{name.shortname}}{% else %}Dashboard{% endif %}</a>{% endblock %}
 		</div>
 		<div>
 	    	{% block content %}{% endblock %}
 	    </div>
 	</li>
-	
 </ul>
 {% endblock %}
