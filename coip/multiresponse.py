@@ -54,8 +54,11 @@ def json_response(data):
     
     return r
 
-def render403(message="You don't seem to have enough rights for what you are trying to do....",dict={}):
+def render403(request,message="You don't seem to have enough rights for what you are trying to do....",dict={}):
     dict['message'] = message
+    dict['user'] = request.user
+    if request.user.is_authenticated():
+        dict['profile'] = user_profile(request)
     return HttpResponseForbidden(loader.render_to_string("403.html",dict))
     
 def respond_to(request, template_mapping, dict={}, suffix_mapping=default_suffix_mapping):
