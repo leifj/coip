@@ -30,9 +30,6 @@ class MappedUserProxy(User):
         self.user = user
         self.identifier = identifier
         
-    def __call__(self,*args,**kwargs):
-        return self.user.__call__(args,kwargs)
-        
     def __unicode__(self):
         return self.identifier.display_name
     
@@ -108,8 +105,8 @@ class MappedRemoteUserMiddleware(object):
             # We've never seen this identifier before. Create a new random uuid for the
             # django username and associate the identifier with it.
             user = auth.authenticate(remote_user=uuid.uuid4());
-            request.user.password = UNUSABLE_PASSWORD
-            request.user.save()
+            user.password = UNUSABLE_PASSWORD
+            user.save()
             identifier = Identifier.objects.create(user=user,value=username,type=Identifier.FEDERATION,idp=idp,verified=True)
             
         if not identifier:
