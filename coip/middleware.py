@@ -4,11 +4,10 @@ Created on Dec 13, 2010
 @author: leifj
 '''
 from django.core.exceptions import ObjectDoesNotExist, ImproperlyConfigured
-from coip.apps.userprofile.models import Identifier
+from coip.apps.user.models import Identifier
 from django_extensions.utils import uuid            
 from django.contrib import auth
-from django.contrib.auth.models import UNUSABLE_PASSWORD, User
-import logging
+from django.contrib.auth.models import UNUSABLE_PASSWORD
 
 def _headers(request,attr):
     v = request.META.get(attr)
@@ -24,7 +23,7 @@ def meta1(request,attr):
     else:
         return None
     
-class MappedRemoteUserMiddleware(object):
+class COIPRemoteUserMiddleware(object):
     """
     Middleware for utilizing Web-server-provided authentication.
 
@@ -58,7 +57,7 @@ class MappedRemoteUserMiddleware(object):
             if not request.user.is_anonymous():
                 user = request.user
                 identifier,created = Identifier.objects.get_or_create(user=user,value=user.username,type=Identifier.INTERNAL,verified=True)
-                request.identifier = identifier
+                user.get_profile().identifier = identifier
             return
         
         try:
@@ -130,8 +129,8 @@ class MappedRemoteUserMiddleware(object):
         if user:
             # User is valid.  Set request.user and persist user in the session
             # by logging the user in.
+            user.get_profile().identifier = identifier
             auth.login(request, user)
-            request.identifier = identifier
             
 
     def clean_username(self, username, request):

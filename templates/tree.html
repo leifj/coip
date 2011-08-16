@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load userdisplay %}
 {% block js %}
 <script type="text/javascript">
 $(function() {
@@ -39,7 +40,7 @@ $(function() {
 		<ul id="sidemenu">
 			{% if user.is_authenticated %}
 			<li><a class="gravatar" href="#" title="{{user.email}}"></a></li>
-			<li><a href="/user/home"><span class="ui-icon ui-icon-home"></span>{{user.get_full_name}}</a></li>
+			<li><a href="/user/home"><span class="ui-icon ui-icon-home"></span>{{user|userdisplay}}</a></li>
 			{% endif %}
 			<li style="border-top: 1px solid black; width: 100%; margin-top: 5px;">&nbsp;</li>
 			{% if name %}

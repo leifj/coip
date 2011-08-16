@@ -72,7 +72,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'coip.middleware.MappedRemoteUserMiddleware',
+    'coip.middleware.COIPRemoteUserMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware'
 )
 
@@ -80,6 +80,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.RemoteUserBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+AUTH_PROFILE_MODULE = 'user.UserProfile'
 
 ROOT_URLCONF = 'coip.urls'
 
@@ -105,7 +107,7 @@ INSTALLED_APPS = (
     'coip.apps.name',
     'coip.apps.membership',
     'coip.apps.invitation',
-    'coip.apps.userprofile',
+    'coip.apps.user',
     'coip.apps.link',
     'coip.apps.entity'
 )

@@ -4,10 +4,7 @@ Created on Jul 5, 2010
 @author: leifj
 '''
 from django.http import HttpResponseRedirect
-from coip.apps.userprofile.models import UserProfile, user_profile
-from coip.apps.name.models import lookup
 from django.views.decorators.cache import never_cache
-from coip.apps.membership.models import add_member
 
 
 def accounts_login_federated(request):

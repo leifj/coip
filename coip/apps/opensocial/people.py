@@ -4,7 +4,6 @@ Created on Jun 19, 2011
 @author: leifj
 '''
 from tastypie.resources import ModelResource
-from django.contrib.auth.models import User
 from coip.apps.opensocial.serializer import OpenSocialSerializer
 from django.conf.urls.defaults import url
 from coip.apps.membership.models import Membership
@@ -18,7 +17,7 @@ from django.shortcuts import get_object_or_404
 import logging
 from pprint import pformat
 from tastypie.bundle import Bundle
-from coip.apps.userprofile.models import Identifier
+from coip.apps.user.models import Identifier
 
 _rekey = {
           'objects': 'entry'

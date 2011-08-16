@@ -7,10 +7,13 @@ MOMENT = 120    # duration in seconds within which the time difference
  
 def userdisplay(user):
     cn = user.get_full_name()
-    if not cn and hasattr(user,'identifier'):
-        id = user.identifier
+    if not cn:
+        id = user.get_profile().identifier
         if id:
-            cn = user.identifier.value
+            if id.display_name:
+                cn = id.display_name
+            else:
+                cn = "%s according to %s"  % (id.value,id.idp)
     if not cn:
         cn = user.username
     return cn

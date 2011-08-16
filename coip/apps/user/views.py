@@ -10,9 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from coip.apps.name.models import NameLink
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from coip.apps.userprofile.models import Identifier
-
-    
+from coip.apps.user.models import Identifier
+ 
 @login_required
 def home(request):
     memberships = []
