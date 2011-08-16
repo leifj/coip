@@ -205,7 +205,7 @@ def _tree_node(name,depth):
         state = "closed"
     else:
         state = 'open'
-    return {'data': { 'title': name.relative_name(), 'attr': {'href': name.url() } },
+    return {'data': { 'title': name.shortname(), 'attr': {'href': name.url() } },
             'state': state,
             'attr': {'id': name.id}}
     
