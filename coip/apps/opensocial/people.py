@@ -4,7 +4,6 @@ Created on Jun 19, 2011
 @author: leifj
 '''
 from tastypie.resources import ModelResource
-from coip.apps.userprofile.models import UserProfile, last_used_profile
 from django.contrib.auth.models import User
 from coip.apps.opensocial.serializer import OpenSocialSerializer
 from django.conf.urls.defaults import url
@@ -19,6 +18,7 @@ from django.shortcuts import get_object_or_404
 import logging
 from pprint import pformat
 from tastypie.bundle import Bundle
+from coip.apps.userprofile.models import Identifier
 
 _rekey = {
           'objects': 'entry'
@@ -122,8 +122,8 @@ class PersonResource(OpenSocialResource):
     #memberships = ToManyField(MembershipResource,'memberships',full=True)
     
     class Meta:
-        queryset = User.objects.all()
-        fields = ['username']
+        queryset = Identifier.objects.filter(type=Identifier.FEDERATION)
+        fields = ['value']
         resource_name = 'people'
         serializer = OpenSocialSerializer()
         
@@ -138,8 +138,8 @@ class PersonResource(OpenSocialResource):
     def list_memberships(self, request, **kwargs):
         logging.debug(pformat(kwargs))
         try:
-            user = self.cached_obj_get(request=request, username=kwargs['username'])
-            logging.debug(pformat(user))
+            id = self.cached_obj_get(request=request, value=kwargs['username'])
+            logging.debug(pformat(id))
         except ObjectDoesNotExist:
             return HttpGone()
         except MultipleObjectsReturned:
@@ -157,8 +157,8 @@ class PersonResource(OpenSocialResource):
         
     def dehydrate(self,bundle):
         bundle = super(PersonResource,self).dehydrate(bundle)
-        bundle.data['id'] = bundle.data['username']
-        bundle.data['displayName'] = last_used_profile(bundle.obj).display_name
+        bundle.data['id'] = bundle.data['value']
+        bundle.data['displayName'] = bundle.data['display_name']
         del bundle.data['resource_uri']
-        del bundle.data['username']
+        del bundle.data['value']
         return bundle

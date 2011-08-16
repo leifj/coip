@@ -27,7 +27,7 @@ def invite(request,id):
         form = InvitationForm(request.POST,instance=invitation)
         if form.is_valid():
             invitation = form.save()
-            invitation.send_email()
+            invitation.send_email(user)
             return HttpResponseRedirect("/name/id/%d" % (name.id))
     else:
         exp = datetime.datetime.now()+datetime.timedelta(days=1)

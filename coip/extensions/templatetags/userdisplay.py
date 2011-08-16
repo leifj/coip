@@ -1,8 +1,4 @@
 from django import template
-from django.template import defaultfilters
-from coip.apps.userprofile.models import last_used_profile
-from pprint import pformat
-import logging
  
 register = template.Library()
  
@@ -10,26 +6,17 @@ MOMENT = 120    # duration in seconds within which the time difference
                 # will be rendered as 'a moment ago'
  
 def userdisplay(user):
-    try:
-        p = last_used_profile(user)
-        return p.display_name
-    except Exception,e:
-        logging.warning(e)
-        return user.username
+    cn = user.get_full_name()
+    if not cn and hasattr(user,'identifier'):
+        id = user.identifier
+        if id:
+            cn = user.identifier.value
+    if not cn:
+        cn = user.username
+    return cn
 
 userdisplay.is_safe = True
 register.filter(userdisplay)
-
-def lastidentifier(user):
-    #try:
-        p = last_used_profile(user)
-        return p.identifier
-    #except Exception,e:
-    #    pprint(e)
-    #    return user.username
-
-lastidentifier.is_safe = True
-register.filter(lastidentifier)
 
 def memberdisplay(membership):
     if membership.user:

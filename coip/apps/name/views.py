@@ -5,11 +5,10 @@ Created on Jul 6, 2010
 '''
 from coip.apps.name.models import Name, lookup, traverse, NameLink
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseNotFound, HttpResponseForbidden,\
-    HttpResponseRedirect, Http404
+from django.http import HttpResponseNotFound,HttpResponseRedirect, Http404
 from django.contrib.auth.decorators import login_required
 from coip.multiresponse import respond_to, json_response, render403
-from pprint import pformat, pprint
+from pprint import pformat
 import logging
 from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
     PermissionForm
@@ -29,7 +28,7 @@ def delete(request,id):
         if form.is_valid():
             parent = name.parent
             if not form.cleaned_data['recursive'] and name.children.count() > 0:
-                return HttpResponseForbidden("Will not delete non-empty node")
+                return render403(request,"Will not delete non-empty node")
             
             for link in name.links.all():
                 link.delete()
@@ -54,10 +53,10 @@ def add(request,id):
         
     if id:
         if not parent.has_permission(request.user,'w'):
-            return HttpResponseForbidden('You are not allowed to create names under '+parent)
+            return render403(request,'You are not allowed to create names under %s' % parent)
     else:
         if not request.user.admin:
-            return HttpResponseForbidden('You are not allowed to create names in the root')
+            return render403(request,'You are not allowed to create names in the root context')
     
     if request.method == 'POST':
         name = Name(parent=parent,creator=request.user)
@@ -76,7 +75,7 @@ def edit(request,id):
     name = get_object_or_404(Name,pk=id)
     
     if not name.has_permission(request.user,'w'):
-        return HttpResponseForbidden()
+        return render403(request,"You do not have write-permission here")
         
     if request.method == 'POST':
         form = NameEditForm(request.POST,instance=name)

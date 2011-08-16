@@ -3,11 +3,11 @@ import re
 from django.conf import settings
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseForbidden
-from coip.apps.userprofile.utils import user_profile
 from django.utils import simplejson
 from django.template import loader
 from coip.settings import PREFIX_URL
 from coip.apps.membership.models import has_member
+from coip.apps.userprofile.models import user_profile, Identifier
 
 default_suffix_mapping = {"\.htm(l?)$": "text/html",
                           "\.json$": "application/json",
@@ -30,7 +30,7 @@ def make_response_dict(request,d={}):
  
     if request.user.is_authenticated():
         d['user'] = request.user
-        d['profile'] = user_profile(request)
+        d['profile'] = user_profile(request.user)
 
     d['prefix_url'] = PREFIX_URL
     if d.has_key('name'):
@@ -58,7 +58,7 @@ def render403(request,message="You don't seem to have enough rights for what you
     dict['message'] = message
     dict['user'] = request.user
     if request.user.is_authenticated():
-        dict['profile'] = user_profile(request)
+        dict['profile'] = user_profile(request.user)
     return HttpResponseForbidden(loader.render_to_string("403.html",dict))
     
 def respond_to(request, template_mapping, dict={}, suffix_mapping=default_suffix_mapping):

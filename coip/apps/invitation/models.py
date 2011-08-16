@@ -6,11 +6,7 @@ Created on Jun 23, 2010
 from django.db import models
 from django.contrib.auth.models import User
 from coip.apps.name.models import Name
-import datetime
-from pprint import pformat
 from django.core.mail import send_mail
-from coip.apps.userprofile.models import last_used_profile
-import logging
 from coip.settings import PREFIX_URL, NOREPLY
 
 class Invitation(models.Model):
@@ -29,8 +25,7 @@ class Invitation(models.Model):
     def __unicode__(self):
         return "%s invited to %s by %s" % (self.email,self.name,self.inviter)
         
-    def send_email(self):
-        pinviter = last_used_profile(self.inviter)
+    def send_email(self,user):
         send_mail('Invitation to join \'%s\'' % (self.name.shortname()),
                   '''
 %s (%s) has invited you to join \'%s\':
@@ -45,7 +40,7 @@ If you want to accept the invitation open this link in your browser:
 To view information about \'%s\' open this link in your browser:
 %s
 
-''' % (pinviter.display_name,pinviter.identifier,self.name.shortname(),self.message,PREFIX_URL,self.nonce,self.name.shortname(),self.name.url()),
+''' % (user.get_full_name,user.identifier.value,self.name.shortname(),self.message,PREFIX_URL,self.nonce,self.name.shortname(),self.name.url()),
                   NOREPLY,
                   [self.email], 
                   fail_silently=False)
