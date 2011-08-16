@@ -30,6 +30,9 @@ class MappedUserProxy(User):
         self.user = user
         self.identifier = identifier
         
+    def __call__(self,*args,**kwargs):
+        return self.user.__call__(args,kwargs)
+        
     def __unicode__(self):
         return self.identifier.display_name
     
