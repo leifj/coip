@@ -147,7 +147,7 @@ class MappedRemoteUserMiddleware(object):
         if user:
             # User is valid.  Set request.user and persist user in the session
             # by logging the user in.
-            request.user = MappedUserProxy(user,identifier)
+            user = MappedUserProxy(user,identifier)
             auth.login(request, user)
             
 
