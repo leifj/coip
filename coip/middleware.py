@@ -97,7 +97,7 @@ class MappedRemoteUserMiddleware(object):
             # around and authenticate the username as if it was received in the header.
             idp = meta1(request,'Shib-Identity-Provider')
             identifier = Identifier.objects.get(value=username,type=Identifier.FEDERATION,idp=idp,verified=True)
-            user = auth.authenticate(remote_user=id.user.username)
+            user = auth.authenticate(remote_user=identifier.user.username)
         except ObjectDoesNotExist:
             pass
         
@@ -122,7 +122,7 @@ class MappedRemoteUserMiddleware(object):
         if not cn and fn and ln:    
             cn = "%s %s" % (fn,ln)    
         if not cn:
-            cn = "%s according to %s" % (id.value,id.idp)
+            cn = "%s according to %s" % (identifier.value,identifier.idp)
         
         if identifier.display_name != cn:
             identifier.display_name = cn
