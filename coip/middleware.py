@@ -10,7 +10,7 @@ from django.contrib import auth
 from django.contrib.auth.models import UNUSABLE_PASSWORD, User
 import logging
 
-def meta(request,attr):
+def _headers(request,attr):
     v = request.META.get(attr)
     if not v:
         return None
@@ -18,7 +18,7 @@ def meta(request,attr):
     return values;
 
 def meta1(request,attr):
-    v = meta(request,attr)
+    v = _headers(request,attr)
     if v:
         return v[0]
     else:
