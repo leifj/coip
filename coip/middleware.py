@@ -114,13 +114,13 @@ class MappedRemoteUserMiddleware(object):
             
         update = False
         cn = meta1(request,'cn')
+        fn = meta1(request,'givenName')
+        ln = meta1(request,'sn')
+        
         if not cn:
             cn = meta1(request,'displayName')
-        if not cn:
-            fn = meta1(request,'givenName')
-            ln = meta1(request,'sn')
-            if fn and ln:
-                cn = "%s %s" % (fn,ln)
+        if not cn and fn and ln:    
+            cn = "%s %s" % (fn,ln)    
         if not cn:
             cn = "%s according to %s" % (id.value,id.idp)
         
@@ -135,10 +135,10 @@ class MappedRemoteUserMiddleware(object):
             update = True
             
         if fn:
-            id.user.first_name = fn
+            identifier.user.first_name = fn
             update = True
         if ln:
-            id.user.last_name = ln
+            identifier.user.last_name = ln
             update = True
             
         if update:
