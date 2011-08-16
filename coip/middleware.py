@@ -23,24 +23,7 @@ def meta1(request,attr):
         return v[0]
     else:
         return None
-
-class MappedUserProxy(User):
     
-    def __init__(self,user,identifier):
-        self.user = user
-        self.identifier = identifier
-        
-    def __unicode__(self):
-        return self.identifier.display_name
-    
-    def get_full_name(self):
-        return self.identifier.display_name
-        
-    def __getattr__(self,attr):
-        if attr == 'identifier':
-            return self.identifier
-        return getattr(self.user,attr)
-
 class MappedRemoteUserMiddleware(object):
     """
     Middleware for utilizing Web-server-provided authentication.
@@ -72,10 +55,10 @@ class MappedRemoteUserMiddleware(object):
 
         if request.user.is_authenticated():
             # this is to make internal users work too...
-            if not isinstance(request.user, MappedUserProxy) and not request.user.is_anonymous():
+            if not request.user.is_anonymous():
                 user = request.user
                 identifier,created = Identifier.objects.get_or_create(user=user,value=user.username,type=Identifier.INTERNAL,verified=True)
-                request.user = MappedUserProxy(user,identifier)
+                request.identifier = identifier
             return
         
         try:
@@ -147,8 +130,8 @@ class MappedRemoteUserMiddleware(object):
         if user:
             # User is valid.  Set request.user and persist user in the session
             # by logging the user in.
-            user = MappedUserProxy(user,identifier)
             auth.login(request, user)
+            request.identifier = identifier
             
 
     def clean_username(self, username, request):
