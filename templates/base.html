@@ -1,3 +1,4 @@
+{% load userdisplay %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US">
 <head>
@@ -75,7 +76,7 @@
 				{% if user.is_authenticated %}
 				<ul class="menubar">
 				   <li>
-				       <a href="#">{{profile.display_name}}</a>
+				       <a href="#">{{user|userdisplay}}</a>
 					   <ul>
 					   	<li><a href="/user/home">Dashboard</a></li>
 					   	<li><a href="/accounts/logout">Logout</a></li>
