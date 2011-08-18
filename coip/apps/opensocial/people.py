@@ -4,7 +4,6 @@ Created on Jun 19, 2011
 @author: leifj
 '''
 from tastypie.resources import ModelResource
-from coip.apps.userprofile.models import UserProfile, last_used_profile
 from django.contrib.auth.models import User
 from coip.apps.opensocial.serializer import OpenSocialSerializer
 from django.conf.urls.defaults import url
@@ -158,7 +157,7 @@ class PersonResource(OpenSocialResource):
     def dehydrate(self,bundle):
         bundle = super(PersonResource,self).dehydrate(bundle)
         bundle.data['id'] = bundle.data['username']
-        bundle.data['displayName'] = last_used_profile(bundle.obj).display_name
+        bundle.data['displayName'] = bundle.obj.get_profile().display_name
         del bundle.data['resource_uri']
         del bundle.data['username']
         return bundle

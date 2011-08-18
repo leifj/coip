@@ -6,10 +6,7 @@ Created on Jun 23, 2010
 from django.db import models
 from django.contrib.auth.models import User
 from coip.apps.name.models import Name
-import datetime
-from pprint import pformat
 from django.core.mail import send_mail
-from coip.apps.userprofile.models import last_used_profile
 import logging
 from coip.settings import PREFIX_URL, NOREPLY
 
@@ -29,8 +26,8 @@ class Invitation(models.Model):
     def __unicode__(self):
         return "%s invited to %s by %s" % (self.email,self.name,self.inviter)
         
-    def send_email(self):
-        pinviter = last_used_profile(self.inviter)
+    def send_email(self,request):
+        pinviter = request.user.get_profile()
         send_mail('Invitation to join \'%s\'' % (self.name.shortname()),
                   '''
 %s (%s) has invited you to join \'%s\':
