@@ -44,6 +44,7 @@ form .fieldset legend { font-size: 120%; font-weight: bold; }
 form .fieldset {  }
 form .fieldset input[type=text] { height: 25px; }
 form .fieldset label { font-weight: bold; }
+form .fieldset legend { border-bottom: 1px solid #CECECE; }
 ul.fieldinput { list-style: none inside; padding: 0; margin: 0; }
 .fieldinput li { padding: 0; margin: 0; display: inline; float: left; }
 ul.inputs { list-style: none inside; padding: 0; margin: 0; }
@@ -73,3 +74,6 @@ h2, h2 a {
 #left, #main { vertical-align: top; display: inline-block; }
 #left { width: 250px; padding-right: 20px;}
 #main { width: 60%; }
+
+.entity { background-color: yellow; }
+.sshkey,.gridcert { background-color: #CECECE; }
