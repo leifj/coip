@@ -4,3 +4,4 @@
 admin-media
 env
 db
+celery*
