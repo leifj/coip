@@ -34,10 +34,13 @@ class Name(models.Model):
     short = models.CharField(max_length=64,blank=True)
     creator = models.ForeignKey(User,blank=True, null=True)
     display = models.TextField(editable=False)
+    #icon = models.ImageField(blank=True, null=True)
     description = models.TextField(blank=True)
     format = models.SmallIntegerField(default=FMT_URN,choices=((FMT_URN,"URN"),(FMT_URL,"URL")))
     timecreated = models.DateTimeField(auto_now_add=True)
     lastupdated = models.DateTimeField(auto_now=True)
+    
+    nmembers = -1
     
     def mode(self):
         if not self.format:
@@ -202,6 +205,11 @@ class Name(models.Model):
     
     def permitted_children(self,user,perm):
         return filter(lambda s: s.has_permission(user,perm),self.children.all())
+    
+    def count_members(self):
+        if self.nmembers == -1:
+            self.nmembers = self.memberships.filter(hidden=False).count()
+        return self.nmembers
     
 def set_display(sender,**kwargs):
     kwargs['instance'].display = kwargs['instance'].display_str()

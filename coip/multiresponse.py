@@ -37,11 +37,12 @@ def make_response_dict(request,d={}):
         if name:
             d['render'] = {'delete': name.has_permission(request.user,'d'),
                            'edit': name.has_permission(request.user,'w'),
-                           'invite': name.has_permission(request.user,'i'),
+                           'invite': name.has_permission(request.user,'i') and (name.parent and not name.parent.value == 'user'),
                            'kick': name.has_permission(request.user,'i'),
                            'acl': name.has_permission(request.user,'a'),
                            'add': name.has_permission(request.user,'w'),
-                           'join': name.has_permission(request.user,'i') and not has_member(name,request.user),
+                           'join': name.has_permission(request.user,'i') and not has_member(name,request.user) and (name.parent and not name.parent.value == 'user'),
+                           'alias': name.parent and name.parent.value == 'user',
                            'up': (name.parent and name.parent.has_permission(request.user,'r')) or not name.parent}
 
     return d

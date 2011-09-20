@@ -16,7 +16,6 @@
    	});
 {% endblock %}
 {% block content %}
-    <h2>Summary</h2>
     {% if name %}
 	    <div class="ui-widget ui-widget-content ui-helper-reset ui-corner-all infopanel">
 		    {% if name.description  %}
@@ -47,6 +46,9 @@
 			 {% if render.join %}
 			 <li class="button"><a href="/name/{{name.id}}/join/{{user.username}}">Join</a></li>
 			 {% endif %}	 
+			 {% if render.alias %}
+			 <li class="button"><a href="/user/alias">Add Alias</a></li>
+			 {% endif %}
 		 </ul>
 	 	{% endif %}
 	{% endif %}
@@ -54,7 +56,7 @@
 	<h3>Members</h3>
 	<div id="memberships">
 		{% for m in memberships.all %}
-		<div id="m{{m.id}}" class="{{m.status}}">
+		<div id="m{{m.id}}" class="{{m.status}} {{m.type}}">
 		   <h3 class="listheader">{{m|memberdisplay}}</h3>
 		   <div>
 			   <div>
@@ -62,13 +64,13 @@
 				    {% if m.tags %}<h4>Role{{m.tags|pluralize}}</h4>
 				    <ul class="ilist">{% for tag in m.tags %}<li style="padding: 2px;">{{ tag|escape }}</li>{%endfor%}</ul>{%endif%}
 			   </div>
-			   <div class="rlist button">
+			   <div class="ilist" style="margin-top: 10px;" class="{{m.type}}">
 		         <ul>
 		            {% if render.edit and m.user %} <!-- only allow roles for users right now -->
-		            <li><a href="/tag/membership/{{m.id}}/modify">Modify Roles</a></li>
+		            <li class="button right"><a href="/tag/membership/{{m.id}}/modify">Modify Roles</a></li>
 		            {% endif %}
 		            {% if render.kick and m.user %} <!-- only allow removing members for users right now -->
-		            <li><a href="/name/{{name.id}}/leave/{{m.user.username}}">{% if m.user == user %}Leave{% else %}Remove from{% endif %} Group</a></li>
+		            <li class="button right"><a href="/name/{{name.id}}/leave/{{m.user.username}}">{% if m.user == user %}Leave{% else %}Remove from{% endif %} Group</a></li>
 		            {% endif %}
 		         </ul>
 		      </div>

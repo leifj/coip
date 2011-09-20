@@ -64,7 +64,7 @@ class GroupResource(OpenSocialResource):
         
         def override_urls(self):
             return [
-                url(r"^(?P<resource_name>%s)/(?P<username>[\@\w\d_.-:]+)/(?P<group_name_id>[\d]+)%s?" % (self._meta.resource_name,trailing_slash()),
+                url(r"^(?P<resource_name>%s)/(?P<username>[\@\w\d_.-:]+)/(?P<name_id>[\d]+)%s?" % (self._meta.resource_name,trailing_slash()),
                     self.wrap_view('list_memberships'), name="api_list_memberships"),
                 url(r"^(?P<resource_name>%s)/(?P<username>[\@\w\d_.-:]+)%s" % (self._meta.resource_name,trailing_slash()),
                     self.wrap_view('list_memberships'), name="api_list_memberships"), 

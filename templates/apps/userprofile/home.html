@@ -54,7 +54,7 @@
 	<div id="n{{n.id}}">
 	   <h3 class="listheader">{{n.shortname}}</h3>
 	   <div>
-		  <a href="{{n.url}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}} and has {{n.memberships|length}} member{{n.memberships|pluralize}}.
+		  <a href="{{n.url}}">{{n.shortname}}</a> was created by {{n.creator|userdisplay}} {{n.timecreated|datehumanize}}{% if n.count_members %}and has {{n.count_members}} member{{n.count_members|pluralize}}{%endif%}.
 	   </div>
 	</div>
 	{% empty %}

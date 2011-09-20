@@ -1,0 +1,18 @@
+{% extends "tree.html" %}
+{% block content %}
+<h2>Add Alias</h2>
+<div class="ui-widget" style="margin-bottom: 20px;">
+	<div class="ui-state-default ui-corner-all" style="padding: 0 .7em;"> 
+		<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span> 
+		By adding an alias to your identity you provide information about alternative identities to 
+		services. For instance by adding an SSH key alias a service can use this information to give
+		you access to compute resources and by adding an eScience Certificate you provide information
+		about your eScience Certificate to connected GRID services.
+	</div>
+	<ul class="ilist" style="margin-top: 10px;">
+		<li class="button"><a href="/user/alias/sshkey">Add SSH Key</a></li>
+		<li class="button"><a href="/user/alias/cert">Add eScience Certificate</a></li>
+		<li class="button"><a href="/name/{{profile.home.id}}/join">Add Other Identity</a></li>
+	</ul>
+</div>
+{% endblock %}

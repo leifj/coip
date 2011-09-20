@@ -4,14 +4,8 @@ Created on Jul 5, 2010
 @author: leifj
 '''
 from django.http import HttpResponseRedirect
-from coip.apps.userprofile.models import UserProfile, home_name
-from django.contrib.auth.models import User
-from coip.apps.auth.utils import anonid
-from coip.apps.name.models import lookup
-import datetime
+from coip.apps.userprofile.views import home_name
 from django.views.decorators.cache import never_cache
-import logging
-from coip.apps.membership.models import add_member
 
 def meta(request,attr):
     v = request.META.get(attr)

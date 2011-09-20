@@ -102,6 +102,9 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django_extensions',
     'tagging',
+    'djcelery',
+    'ghettoq',
+    'djkombu',
     'tastypie',
     'oauth_provider',
     'coip.extensions',
@@ -110,5 +113,9 @@ INSTALLED_APPS = (
     'coip.apps.invitation',
     'coip.apps.userprofile',
     'coip.apps.link',
-    'coip.apps.entity'
 )
+
+CARROT_BACKEND = "django"
+
+import djcelery
+djcelery.setup_loader()

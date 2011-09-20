@@ -1,6 +1,4 @@
 from django import template
-from pprint import pformat
-import logging
  
 register = template.Library()
  
@@ -23,10 +21,7 @@ userdisplay.is_safe = True
 register.filter(userdisplay)
 
 def memberdisplay(membership):
-    if membership.user:
-        return userdisplay(membership.user)
-    else:
-        return membership.entity.display_name
+    return userdisplay(membership.user)
     
 memberdisplay.is_safe = True
 register.filter(memberdisplay)

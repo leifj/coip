@@ -9,7 +9,7 @@
 			{% for fieldset in form.fieldsets %}
 			  <fieldset id="{{fieldset.name}}" class="fieldset {{ fieldset.classes }}">
 				  {% if fieldset.legend %}
-				  <legend class="ui-state-highlight ui-corner-all">{{ fieldset.legend }}</legend>
+				  <legend>{{ fieldset.legend }}</legend>
 				  {% endif %}
 				  {% if fieldset.description %}
 				  <p class="description">{{ fieldset.description }}</p>
@@ -33,9 +33,7 @@
 		   <ul class="ilist" style="padding-bottom: 30px; padding-top: 5px; padding-left: 0px;">
 		      <li class="button left"><input type="reset" value="Back"/></li>
 		      <li class="button left"><input type="submit" value="Finish"/></li>
-		      {% if name %}
-		      <li class="button right"><input type="button" onClick="document.location='{{name.url}}'" value="Cancel"/></li>
-		      {% endif %}
+		      <li class="button right"><input type="button" onClick="document.location='{% if name %}{{name.url}}{%else%}{{profile.home.url}}{%endif%}'" value="Cancel"/></li
 		   </ul>
 		</form>
 {% endblock %}

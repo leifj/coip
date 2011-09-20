@@ -1,0 +1,13 @@
+{% extends "edit_fieldsets.html" %}
+{% block widgets %}
+    $('#wizard').formwizard({
+    	validationEnabled: true,
+    	focusFirstInput: true,
+    	textSubmit: "Submit",
+    	validationOptions: {
+    		rules: {
+    			certificate: 'required'
+    		}
+    	}
+    });
+{% endblock %}
