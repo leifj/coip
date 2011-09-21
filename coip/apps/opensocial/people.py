@@ -3,7 +3,6 @@ Created on Jun 19, 2011
 
 @author: leifj
 '''
-from tastypie.resources import ModelResource
 from django.contrib.auth.models import User
 from coip.apps.opensocial.serializer import OpenSocialSerializer
 from django.conf.urls.defaults import url
@@ -17,42 +16,7 @@ from tastypie.constants import ALL_WITH_RELATIONS
 from django.shortcuts import get_object_or_404
 import logging
 from pprint import pformat
-from tastypie.bundle import Bundle
-
-_rekey = {
-          'objects': 'entry'
-}
-
-class OpenSocialResource(ModelResource):
-
-    def _restructure(self,request,data,depth):
-        if isinstance(data, (list,tuple)):
-            for v in data:
-                self._restructure(request,v,depth+1)
-        elif isinstance(data,dict):
-            for (key,value) in data.iteritems():
-                nkey = key
-                if _rekey.has_key(key):
-                    nkey = _rekey[key]
-                
-                data[nkey] = self._restructure(request,data.pop(key),depth+1)
-                
-            if data.has_key('meta') and depth == 1:
-                meta = data.pop('meta')
-                if request.GET.has_key('count'):
-                    data['totalResults'] = meta['total_count']
-                data['itemsPerPage'] = meta['limit']
-                data['startIndex'] = meta['offset']        
-        elif isinstance(data,Bundle):
-            pass
-        
-        return data
-
-    def alter_list_data_to_serialize(self,request,data):
-        return self._restructure(request,{'response':data},0)
-    
-    def alter_detail_data_to_serialize(self,request,data):
-        return self._restructure(request,{'response': data},0)
+from coip.apps.opensocial.common import OpenSocialResource
 
 class GroupResource(OpenSocialResource):
     

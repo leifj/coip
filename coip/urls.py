@@ -7,11 +7,13 @@ from django.http import HttpResponseRedirect
 from coip.apps.auth.views import logout
 from coip.apps.opensocial import opensocial_v1
 from coip.apps.api import v1_api
+from coip.multiresponse import respond_to
 
 admin.autodiscover()
 
 def welcome(request):
-    return HttpResponseRedirect('/user/home')
+    return respond_to(request, {'text/html':HttpResponseRedirect('/user/home'),
+                                'application/xrds+xml': 'xrds.xml'})
 
 urlpatterns = patterns('',
     (r'^admin-media/(?P<path>.*)$',                 'django.views.static.serve',{'document_root': ADMIN_MEDIA_ROOT}),
@@ -70,5 +72,6 @@ urlpatterns = patterns('',
     (r'^rtree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.rtree'),
     # APIs
     (r'^api/',                                       include(v1_api.urls)),
+    (r'^opensocial/1.0/rpc',                        'coip.apps.opensocial.common.system'),
     (r'^opensocial/',                                include(opensocial_v1.urls))
 )
