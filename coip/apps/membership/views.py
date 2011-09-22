@@ -41,7 +41,8 @@ def join(request,id,membername=None):
                               {'form': form,'name': name, 'formtitle': 'Add a member to %s' % name.short})
     else:
         if membername:
-            add_member(name, membername)
+            user = get_object_or_404(User,username=membername)
+            add_member(name, user)
             return HttpResponseRedirect(name.url())
         else:
             form = MembershipForm()
@@ -53,9 +54,6 @@ def join(request,id,membername=None):
 def leave(request,id,membername=None):
     name = get_object_or_404(Name,pk=id)
     if membername:
-        try:
-            member = User.objects.get(username=membername)
-            remove_member(name, member)
-        except ObjectDoesNotExist:
-            pass
+        user = get_object_or_404(User,username=membername)
+        remove_member(name, user)
     return HttpResponseRedirect(name.url())
