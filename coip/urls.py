@@ -74,5 +74,6 @@ urlpatterns = patterns('',
     (r'^api/',                                       include(v1_api.urls)),
     (r'^opensocial/1.0/rpc',                        'coip.apps.opensocial.common.system'),
     (r'^opensocial/',                                include(opensocial_v1.urls)),
-    (r'^oauth2/',                                     include('django_oauth2_lite.urls'))
+    (r'^hello/?',                                   'coip.apps.name.views.hello'),
+    (r'^oauth2/',                                    include('django_oauth2_lite.urls'))
 )

@@ -16,6 +16,7 @@ from coip.apps.name.forms import NameEditForm, NewNameForm, NameDeleteForm,\
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django_oauth2_lite.decorators import oauth2_required
 
 @login_required
 def delete(request,id):
@@ -236,3 +237,7 @@ def search(request):
         term = request.REQUEST['term']
         list = [{'label': name.shortname(),'value': name.id} for name in Name.objects.filter(Q(short__contains=term) | Q(value__contains=term))]
     return json_response(list)
+
+@oauth2_required(scope='memberships')
+def hello(request):
+    return json_response('world')
