@@ -66,7 +66,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,7 +105,8 @@ INSTALLED_APPS = (
     'ghettoq',
     'djkombu',
     'tastypie',
-    'oauth_provider',
+    'actstream',
+    'django_oauth2_lite',
     'coip.extensions',
     'coip.apps.name',
     'coip.apps.membership',
@@ -113,6 +114,8 @@ INSTALLED_APPS = (
     'coip.apps.userprofile',
     'coip.apps.link',
 )
+
+OAUTH_REALM_KEY_NAME = 'http://coip-test.sunet.se'
 
 CARROT_BACKEND = "django"
 
