@@ -5,23 +5,27 @@ Created on Nov 8, 2011
 '''
 from django.shortcuts import get_object_or_404
 from coip.apps.name.models import Name
-from coip.multiresponse import json_response
+from coip.multiresponse import json_response, render403
 from django_oauth2_lite.decorators import oauth2_required
 from actstream.models import Action
 from django.http import HttpResponseNotFound
 from coip.extensions.templatetags.userdisplay import userdisplay
+import socket
+
+def domain():
+    return socket.getfqdn(socket.gethostname())
 
 def user_to_json(o):
     return {
         'objectType': 'person',
-        'id': o.username,
+        'id': "%s:%s" % (domain(),o.username),
         'displayName': userdisplay(o)
     }
 
 def name_to_json(o):
     return {
          'objectType': 'group',
-         'id': o.id,
+         'id': "%s:%d" % (domain(),o.id),
          'url': o.url(),
          'displayName': o.shortname()
     }
@@ -46,6 +50,12 @@ def activity_to_json(activity):
      }
     return r
 
+def collection_to_json(lst):
+    return {
+            'totalItems': len(lst),
+            'items': lst
+    }
+
 @oauth2_required(scope='memberships')
 def name(request,id):
     name = get_object_or_404(Name,pk=id)
@@ -54,6 +64,6 @@ def name(request,id):
     # check ownership
     stream = Action.objects.stream_for_object_as_target(name)
     if stream:
-        return json_response([activity_to_json(activity) for activity in stream])
+        return json_response(collection_to_json([activity_to_json(activity) for activity in stream]))
     else:
         return HttpResponseNotFound()
