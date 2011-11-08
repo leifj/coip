@@ -3,11 +3,11 @@
        <Type>xri://$xrds*simple</Type>
        <Service>
          <Type>http://ns.opensocial.org/2008/opensocial/people</Type>
-         <URI>{{prefix_url}}/opensocial/1.0/people</URI>
+         <URI>{{prefix_url}}/api/opensocial/people</URI>
        </Service>
        <Service>
          <Type>http://ns.opensocial.org/2008/opensocial/groups</Type>
-         <URI>{{prefix_url}}/opensocial/1.0/groups</URI>
+         <URI>{{prefix_url}}/api/opensocial/groups</URI>
        </Service>
    </XRD>
 </XRDS>   
