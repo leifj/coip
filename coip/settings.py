@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'coip.apps.userprofile',
     'coip.apps.link',
     'actstream',
+    'coip.apps.opensocial',
     'coip.apps.activitystreams'
 )
 
