@@ -5,8 +5,6 @@ from settings import ADMIN_MEDIA_ROOT
 from settings import MEDIA_ROOT
 from django.http import HttpResponseRedirect
 from coip.apps.auth.views import logout
-from coip.apps.opensocial import opensocial_v1
-from coip.apps.api import v1_api
 from coip.multiresponse import respond_to
 
 admin.autodiscover()
@@ -74,6 +72,5 @@ urlpatterns = patterns('',
     (r'^api/activitystreams/',                       include('coip.apps.activitystreams.urls')),
     (r'^api/opensocial/',                            include('coip.apps.opensocial.urls')),
     (r'^api/hello/?',                                'coip.apps.name.views.hello'),
-    #(r'^api/',                                      include(v1_api.urls)),
     (r'^oauth2/',                                    include('django_oauth2_lite.urls'))
 )

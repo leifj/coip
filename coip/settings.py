@@ -104,7 +104,6 @@ INSTALLED_APPS = (
     'djcelery',
     'ghettoq',
     'djkombu',
-    'tastypie',
     'django_oauth2_lite',
     'coip.extensions',
     'coip.apps.name',
