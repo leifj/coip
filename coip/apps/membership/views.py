@@ -33,7 +33,7 @@ def join(request,id,membername=None):
         m = Membership(name=name,enabled=True)
         form = MembershipForm(request.POST,instance=m)
         if form.is_valid():
-            add_member(name,form.cleaned_data['user'])
+            add_member(name,form.cleaned_data['user'],actor=request.user)
             return HttpResponseRedirect(name.url())
         else:
             return respond_to(request,
@@ -42,7 +42,7 @@ def join(request,id,membername=None):
     else:
         if membername:
             user = get_object_or_404(User,username=membername)
-            add_member(name, user)
+            add_member(name, user,actor=request.user)
             return HttpResponseRedirect(name.url())
         else:
             form = MembershipForm()
@@ -55,5 +55,5 @@ def leave(request,id,membername=None):
     name = get_object_or_404(Name,pk=id)
     if membername:
         user = get_object_or_404(User,username=membername)
-        remove_member(name, user)
+        remove_member(name, user,actor=request.user)
     return HttpResponseRedirect(name.url())

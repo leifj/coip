@@ -71,7 +71,7 @@ To view information about \'%s\' open this link in your browser:
                   fail_silently=False)
         return
     
-def add_member(name,member_name,hidden=False):
+def add_member(name,member_name,hidden=False,actor=None):
     (m,created)  = Membership.objects.get_or_create(user=member_name,name=name)
     if created or not m.enabled or m.hidden != hidden:
         m.enabled = True
@@ -82,30 +82,30 @@ def add_member(name,member_name,hidden=False):
         name.nmembers = -1
         name.save()
     
-    if not m.hidden:
-        action.send(m.user,verb='added to',target=m.name)
+    if not m.hidden and actor:
+        action.send(actor,action_object=m.user,verb='added to',target=m.name)
     
     return m.send_notification("added to")
         
-def disable_member(name,member_name):
+def disable_member(name,member_name,actor=None):
     m = Membership.objects.get(name=name,user=member_name)
     if m:
         m.enabled = False
         m.save()
         m.send_notification("temporarily removed from")
-        if not m.hidden:
-            action.send(m.user,verb='temporarily removed from',target=m.name)
+        if not m.hidden and actor:
+            action.send(actor,action_object=m.user,verb='temporarily removed from',target=m.name)
         
     if name.nmembers != -1:
         name.nmembers = -1
         name.save()
         
-def remove_member(name,member_name):
+def remove_member(name,member_name,actor=None):
     m = Membership.objects.get(name=name,user=member_name)
     if m:
         m.send_notification("removed from")
-        if not m.hidden:
-            action.send(m.user,verb='removed from',target=m.name)
+        if not m.hidden and actor:
+            action.send(actor,action_object=m.user,verb='removed from',target=m.name)
         m.delete()
     
     if name.nmembers != -1:

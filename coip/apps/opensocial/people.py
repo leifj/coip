@@ -17,6 +17,8 @@ from django.shortcuts import get_object_or_404
 import logging
 from pprint import pformat
 from coip.apps.opensocial.common import OpenSocialResource
+from tastypie.authentication import OAuthAuthentication
+from tastypie.authorization import DjangoAuthorization
 
 class GroupResource(OpenSocialResource):
     
@@ -25,6 +27,8 @@ class GroupResource(OpenSocialResource):
         serializer = OpenSocialSerializer()
         resource_name = 'groups'
         fields = ['short','description','id']
+        authentication = OAuthAuthentication()
+        authorization = DjangoAuthorization()
         
         def override_urls(self):
             return [
@@ -68,6 +72,8 @@ class MembershipResource(OpenSocialResource):
     class Meta:
         queryset = Membership.objects.all()
         serializer = OpenSocialSerializer()
+        authentication = OAuthAuthentication()
+        authorization = DjangoAuthorization()
         resource_name = 'membership'
         fields = ['user','name']
         filtering = {
@@ -86,6 +92,8 @@ class PersonResource(OpenSocialResource):
     
     class Meta:
         queryset = User.objects.all()
+        authentication = OAuthAuthentication()
+        authorization = DjangoAuthorization()
         fields = ['username']
         resource_name = 'people'
         serializer = OpenSocialSerializer()

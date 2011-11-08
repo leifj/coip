@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'ghettoq',
     'djkombu',
     'tastypie',
-    'actstream',
     'django_oauth2_lite',
     'coip.extensions',
     'coip.apps.name',
@@ -113,6 +112,7 @@ INSTALLED_APPS = (
     'coip.apps.invitation',
     'coip.apps.userprofile',
     'coip.apps.link',
+    'actstream',
     'coip.apps.activitystreams'
 )
 
