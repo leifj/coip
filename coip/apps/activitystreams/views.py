@@ -49,6 +49,8 @@ def activity_to_json(activity):
 @oauth2_required(scope='memberships')
 def name(request,id):
     name = get_object_or_404(Name,pk=id)
+    if not name.has_permission(request.user,'r'):
+        return render403(request,"You do not have permission to view membership information for %s" % (name))
     # check ownership
     stream = Action.objects.stream_for_object_as_target(name)
     if stream:
