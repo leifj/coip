@@ -71,9 +71,11 @@ urlpatterns = patterns('',
     (r'^rtree.json$',                                'coip.apps.name.views.rtree'),
     (r'^rtree/(?P<id>[0-9]+).json$',                 'coip.apps.name.views.rtree'),
     # APIs
+    (r'^api/activitystreams',                        include('coip.apps.activitystreams.urls')),
+    (r'^api/opensocial/1.0/rpc',                     'coip.apps.opensocial.common.system'),
+    #(r'^opensocial/2.0/activitystreams',            include(opensocial_v2_as.urls)),
+    (r'^api/opensocial/',                            include(opensocial_v1.urls)),
+    (r'^api/hello/?',                                'coip.apps.name.views.hello'),
     (r'^api/',                                       include(v1_api.urls)),
-    (r'^opensocial/1.0/rpc',                        'coip.apps.opensocial.common.system'),
-    (r'^opensocial/',                                include(opensocial_v1.urls)),
-    (r'^hello/?',                                   'coip.apps.name.views.hello'),
     (r'^oauth2/',                                    include('django_oauth2_lite.urls'))
 )

@@ -113,6 +113,7 @@ INSTALLED_APPS = (
     'coip.apps.invitation',
     'coip.apps.userprofile',
     'coip.apps.link',
+    'coip.apps.activitystreams'
 )
 
 OAUTH_REALM_KEY_NAME = 'http://coip-test.sunet.se'
