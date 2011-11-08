@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from coip.settings import NOREPLY
 from coip.extensions.templatetags.userdisplay import userdisplay
 from coip.apps.userprofile.models import UserProfile
+from actstream.signals import action
 
 STATUS = {UserProfile.INTERNAL:'internal',
           UserProfile.ENTITY:'entity',
@@ -81,6 +82,9 @@ def add_member(name,member_name,hidden=False):
         name.nmembers = -1
         name.save()
     
+    if not m.hidden:
+        action.send(m.user,verb='added to',target=m.name)
+    
     return m.send_notification("added to")
         
 def disable_member(name,member_name):
@@ -89,6 +93,8 @@ def disable_member(name,member_name):
         m.enabled = False
         m.save()
         m.send_notification("temporarily removed from")
+        if not m.hidden:
+            action.send(m.user,verb='temporarily removed from',target=m.name)
         
     if name.nmembers != -1:
         name.nmembers = -1
@@ -98,6 +104,8 @@ def remove_member(name,member_name):
     m = Membership.objects.get(name=name,user=member_name)
     if m:
         m.send_notification("removed from")
+        if not m.hidden:
+            action.send(m.user,verb='removed from',target=m.name)
         m.delete()
     
     if name.nmembers != -1:

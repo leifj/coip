@@ -13,6 +13,7 @@ from coip.apps.name.models import Name
 import datetime
 from coip.apps.membership.models import Membership
 from django.shortcuts import get_object_or_404
+from actstream.signals import action
     
 @login_required
 def invite(request,id):
@@ -34,11 +35,15 @@ def invite(request,id):
         invitation=Invitation(message="Please consider joining my group!",expires=exp.strftime("%Y-%m-%d"))
         form = InvitationForm(instance=invitation);
     
+    action.send(user,verb='invited',target=name,action_object=invitation)
+    
     return respond_to(request,{'text/html': 'apps/invitation/edit.html'},{'form': form,'name': name,'formtitle': 'Invite someone to join %s' % (name.short),'submitname': 'Invite User'})
 
 @login_required
 def accept(request,nonce):
     invitation = get_object_or_404(Invitation,nonce=nonce)
+    
+    action.send(request.user,verb='accepted invitation',target=invitation.name,action_object=invitation)
     
     (membership,created) = Membership.objects.get_or_create(user=request.user,name=invitation.name)
     if created or not membership.enabled:
@@ -57,12 +62,16 @@ def cancel(request,id):
     if not name.has_permission(request.user,'w'):
         return render403(request,'You are not allowed to cancel pending invitations to %s' % (name))
     
+    action.send(request.user,verb='cancelled invitation',target=name,action_object=invitation)
+    
     invitation.delete()
     return HttpResponseRedirect("/name/id/%d" % (name.id))
 
 def resend(request,id):
     invitation = get_object_or_404(Invitation,pk=id)
     name = invitation.name
+    
+    action.send(request.user,verb='renewed invitation to',target=name,action_object=invitation)
     
     invitation.send_email()
     return HttpResponseRedirect("/name/id/%d" % (name.id))
