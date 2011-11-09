@@ -24,7 +24,7 @@ $.gravatar = function(emailAddress, overrides)
 
     $.extend(options, overrides);
 
-    var img = $('<img src="http://www.gravatar.com/avatar/' +
+    var img = $('<img src="https://secure.gravatar.com/avatar/' +
         hex_md5(emailAddress) +
         '.jpg?' +
         (options.size ? 's=' + options.size + '&' : '') +
