@@ -101,7 +101,8 @@
 			   		<ul>
 			   			<li><h3>Users</h3></li>
 			   			{% if user.is_authenticated %}
-			   			<li><a href="/user/home">My Dashboard</a></li>
+			   			<li><a class="tip" title="My Dashboard" href="/user/home">My Dashboard</a></li>
+			   			<li><a class="tip" title="Connected Applications" href="/oauth2/tokens">Connected Applications</a></li>
 			   			<li><a class="tip" title="Logout" id="logout" href="/accounts/logout/">Logout</a></li>
 			   			{% endif %}
 			   		</ul>
@@ -118,6 +119,7 @@
 			   	<li>
 			   		<ul>
 			   			<li><h3>Developers</h3></li>
+			   			<li><a href="/oauth2/clients">Application Keys</a></li>
 			   		</ul>
 			   	</li>
 			</ul>

@@ -22,6 +22,9 @@ ul.list-of-lists li ul li { display: block; }
 
 h3.listheader { padding-left: 20px; }
 
+ul.buttons { padding-top: 10px; list-style: none inside; margin: 0; padding 0; padding-left: 0px}
+.buttons li { display: inline-block; margin: 0; padding 0; }
+
 ul.ilist { list-style: none inside; margin: 0; padding 0; padding-left: 0px}
 .ilist li { display: inline-block; margin: 0; padding 0; }
 
