@@ -1,0 +1,25 @@
+{% extends "tree.html" %}
+{% block widgets %}
+$(".oauth2-clients").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false,
+        autoHeight: false
+   	});
+$(".oauth2-scopes").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false,
+        autoHeight: false
+   	});  
+$(".oauth2-tokens").accordion({
+   		header: 'h3',
+   		collapsible: true,
+        active: false,
+        autoHeight: false
+   	}); 
+{% endblock %}
+{% block headline %}{%endblock%}
+{% block content %}
+{% block body %}{% endblock %}
+{% endblock %}
