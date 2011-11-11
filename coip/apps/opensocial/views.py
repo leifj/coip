@@ -12,6 +12,7 @@ from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from coip.apps.name.models import Name
 import json
 from django.utils import simplejson
+from coip.apps.membership.models import Membership
 
 def _resolve_user(request,uid):
     if uid == '@me':
@@ -43,7 +44,7 @@ def _resolve_group(request,user,gid):
         return None   
     
     
-def _opensocial_response(lst):
+def _opensocial_collection(lst):
     return {
         "startIndex": 0,
         "totalResults": len(lst),
@@ -65,7 +66,7 @@ def person(request,uid,gid='@self'):
     user = _resolve_user(request,uid)
     
     if not user:
-        return HttpResponseNotFound()
+        return HttpResponseNotFound("No such user")
     
     name = _resolve_group(request,user,gid)
     
@@ -73,5 +74,15 @@ def person(request,uid,gid='@self'):
         return HttpResponseNotFound()
     
     ##TODO - implement listing people based on group memberships
-    return json_response(_opensocial_response([user]))
+    return json_response(_opensocial_collection([user]))
 
+@oauth2_required(scope='opensocial')
+def group(request,uid='@me'):
+    user = _resolve_user(request,uid)
+    if not user:
+        return HttpResponseNotFound("No such user")
+    
+    memberships = user.memberships.filter(hidden=False)
+    return json_response(_opensocial_collection([m.name for m in memberships]))
+    
+    
