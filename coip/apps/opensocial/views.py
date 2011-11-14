@@ -10,9 +10,7 @@ from coip.apps.activitystreams.views import object_to_json
 from django_oauth2_lite.decorators import oauth2_required
 from django.http import HttpResponseNotFound, HttpResponseBadRequest
 from coip.apps.name.models import Name
-import json
 from django.utils import simplejson
-from coip.apps.membership.models import Membership
 
 def _resolve_user(request,uid):
     if uid == '@me':
