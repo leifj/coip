@@ -1,6 +1,7 @@
 # Django settings for coip project.
 
 import coip.site_logging
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -9,7 +10,9 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
-BASE_DIR = "."
+#BASE_DIR = "."
+SRC_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.join(SRC_DIR, '..'))
 MANAGERS = ADMINS
 
 DATABASES = {
